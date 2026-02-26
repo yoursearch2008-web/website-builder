@@ -1,3 +1,4 @@
+import { toast } from 'sonner'
 import type { BlockConfig } from '../types'
 import { Send } from 'lucide-react'
 
@@ -48,7 +49,10 @@ export function ContactBlock({ block }: { block: BlockConfig }) {
               className="w-full px-3 py-2.5 rounded-lg border border-border-default bg-bg-2 text-text-0 text-[13px] outline-none focus:border-green placeholder:text-text-3 resize-y transition-colors"
             />
           </div>
-          <button className="w-full py-3 rounded-lg bg-green text-black text-sm font-semibold hover:bg-green-dim transition-all hover:shadow-[0_0_20px_rgba(34,197,94,0.25)] flex items-center justify-center gap-2">
+          <button
+            onClick={() => toast("Message sent! We'll be in touch soon.")}
+            className="w-full py-3 rounded-lg bg-green text-black text-sm font-semibold hover:bg-green-dim transition-all hover:shadow-[0_0_20px_rgba(34,197,94,0.25)] flex items-center justify-center gap-2"
+          >
             <Send size={14} />
             Send Message
           </button>
