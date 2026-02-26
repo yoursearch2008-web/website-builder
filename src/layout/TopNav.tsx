@@ -48,7 +48,7 @@ export function TopNav() {
 
       {/* Right side */}
       <div className="ml-auto flex items-center gap-2">
-        <div className="w-7 h-7 rounded-full bg-bg-4 border border-border-default flex items-center justify-center text-[11px] font-semibold text-text-1 cursor-pointer">
+        <div className="w-7 h-7 rounded-full bg-bg-4 border border-border-default flex items-center justify-center text-[11px] font-semibold text-text-1">
           F
         </div>
 
