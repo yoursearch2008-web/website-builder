@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OpenPage - Wireframes v3</title>
+<title>OpenPage - Wireframes v5</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@300;400;500&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
 <style>
@@ -360,6 +360,63 @@ body { font-family: var(--font); background: var(--bg-0); color: var(--text-0); 
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--bg-4); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--text-3); }
+
+/* ===== RESPONSIVE PREVIEW ===== */
+.canvas-frame.vp-tablet { max-width: 768px; transition: max-width 0.3s ease; }
+.canvas-frame.vp-mobile { max-width: 375px; transition: max-width 0.3s ease; }
+.canvas-frame.vp-desktop { max-width: 880px; transition: max-width 0.3s ease; }
+
+/* ===== PAGE TABS ===== */
+.page-tabs { display: flex; gap: 1px; background: var(--bg-2); border-radius: 6px; padding: 2px; margin-left: 8px; }
+.page-tab { padding: 4px 12px; border-radius: 5px; font-size: 11px; font-weight: 500; font-family: var(--font); border: none; cursor: pointer; background: transparent; color: var(--text-3); transition: all 0.12s; }
+.page-tab:hover { color: var(--text-1); }
+.page-tab.active { background: var(--bg-4); color: var(--text-0); }
+
+/* ===== INLINE EDITING ===== */
+.cb [contenteditable] { outline: none; cursor: text; border-radius: 3px; transition: box-shadow 0.15s; padding: 1px 3px; margin: -1px -3px; }
+.cb [contenteditable]:hover { box-shadow: 0 0 0 1px var(--border-hover); }
+.cb [contenteditable]:focus { box-shadow: 0 0 0 2px var(--green); background: rgba(34,197,94,0.04); }
+
+/* ===== KEYBOARD SHORTCUTS OVERLAY ===== */
+.shortcuts-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 300; display: none; align-items: center; justify-content: center; }
+.shortcuts-overlay.open { display: flex; }
+.shortcuts-box { background: var(--bg-1); border: 1px solid var(--border); border-radius: 16px; padding: 28px 32px; width: 480px; max-height: 80vh; overflow-y: auto; box-shadow: 0 24px 64px rgba(0,0,0,0.5); }
+.shortcuts-box h3 { font-size: 16px; font-weight: 600; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; }
+.sc-group { margin-bottom: 16px; }
+.sc-group-title { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-3); margin-bottom: 8px; }
+.sc-row { display: flex; align-items: center; justify-content: space-between; padding: 6px 0; }
+.sc-row span { font-size: 12.5px; color: var(--text-1); }
+.sc-keys { display: flex; gap: 4px; }
+.sc-key { font-size: 11px; padding: 3px 8px; border-radius: 5px; background: var(--bg-3); border: 1px solid var(--border); color: var(--text-2); font-family: var(--mono); min-width: 28px; text-align: center; }
+
+/* ===== DEPLOY PROGRESS ===== */
+.deploy-status { margin-top: 20px; background: var(--bg-1); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; }
+.deploy-status-hd { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.deploy-status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); }
+.deploy-status-dot.deploying { animation: pulse 1s infinite; background: var(--yellow); }
+.deploy-progress-bar { height: 4px; background: var(--bg-4); border-radius: 2px; overflow: hidden; margin-bottom: 8px; }
+.deploy-progress-fill { height: 100%; background: var(--green); border-radius: 2px; transition: width 0.5s ease; width: 100%; }
+.deploy-meta { display: flex; gap: 16px; font-size: 11px; color: var(--text-2); }
+
+/* ===== SETTINGS SUB-PANELS ===== */
+.set-panel { display: none; }
+.set-panel.active { display: block; }
+.seo-preview { background: var(--bg-2); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; margin-bottom: 20px; }
+.seo-preview-label { font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-3); margin-bottom: 10px; }
+.seo-goog { font-family: Arial, sans-serif; }
+.seo-goog-title { font-size: 18px; color: #8ab4f8; margin-bottom: 2px; cursor: pointer; }
+.seo-goog-title:hover { text-decoration: underline; }
+.seo-goog-url { font-size: 12px; color: #bdc1c6; margin-bottom: 4px; }
+.seo-goog-desc { font-size: 13px; color: #969ba1; line-height: 1.5; }
+.danger-item { padding: 16px 0; border-bottom: 1px solid var(--border-subtle); max-width: 540px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.danger-item:last-child { border-bottom: none; }
+
+/* ===== BLOCK JSON VIEW (right sidebar) ===== */
+.block-json-toggle { padding: 8px 14px; border-top: 1px solid var(--border-subtle); }
+.block-json-btn { width: 100%; padding: 6px; border-radius: 5px; border: 1px solid var(--border); background: var(--bg-2); color: var(--text-2); font-family: var(--font); font-size: 11px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; transition: all 0.12s; }
+.block-json-btn:hover { border-color: var(--green); color: var(--green); background: var(--green-glow2); }
+.block-json-code { display: none; padding: 10px 14px; font-family: var(--mono); font-size: 10.5px; line-height: 1.6; color: var(--text-2); background: var(--bg-0); border-top: 1px solid var(--border-subtle); white-space: pre; overflow-x: auto; max-height: 180px; }
+.block-json-code.open { display: block; }
 </style>
 </head>
 <body>
@@ -497,6 +554,9 @@ body { font-family: var(--font); background: var(--bg-0); color: var(--text-0); 
             <div class="acp-item" onclick="showToast('Video added');toggleAddComp()"><div class="acp-ico">&#9656;</div> Video</div>
             <div class="acp-item" onclick="showToast('Gallery added');toggleAddComp()"><div class="acp-ico">&#9638;</div> Gallery</div>
             <div class="acp-item" onclick="showToast('Logo Cloud added');toggleAddComp()"><div class="acp-ico">&#9679;</div> Logo Cloud</div>
+            <div style="border-top:1px solid var(--border);margin-top:4px;padding-top:6px;">
+              <div class="acp-item" onclick="nav('components');toggleAddComp()" style="color:var(--green);font-weight:500;justify-content:center;">Browse all components &rarr;</div>
+            </div>
           </div>
         </div>
       </div>
@@ -550,19 +610,26 @@ body { font-family: var(--font); background: var(--bg-0); color: var(--text-0); 
     <div class="ed-center">
       <div class="canvas-tb">
         <div class="bc"><span onclick="nav('dashboard')">Projects</span><span style="cursor:default;color:var(--text-3)">/</span><span class="cur">Rocketlist Landing</span></div>
+        <div class="page-tabs">
+          <button class="page-tab active" onclick="switchPage(this)">Home</button>
+          <button class="page-tab" onclick="switchPage(this)">About</button>
+          <button class="page-tab" onclick="switchPage(this)">Pricing</button>
+          <button class="page-tab" onclick="switchPage(this)" style="color:var(--green);font-size:13px;padding:4px 8px;">+</button>
+        </div>
         <div class="tb-sep"></div>
         <button class="icon-btn" title="Undo  Cmd+Z">&#8617;</button>
         <button class="icon-btn" title="Redo  Cmd+Shift+Z">&#8618;</button>
         <div class="tb-sep"></div>
-        <button class="icon-btn active" title="Desktop">&#9633;</button>
-        <button class="icon-btn" title="Tablet" style="font-size:11px">&#8862;</button>
-        <button class="icon-btn" title="Mobile" style="font-size:10px">&#9646;</button>
+        <button class="icon-btn active" id="vp-desktop" title="Desktop" onclick="setViewport('desktop')">&#9633;</button>
+        <button class="icon-btn" id="vp-tablet" title="Tablet" onclick="setViewport('tablet')" style="font-size:11px">&#8862;</button>
+        <button class="icon-btn" id="vp-mobile" title="Mobile" onclick="setViewport('mobile')" style="font-size:10px">&#9646;</button>
         <div class="tb-right">
           <button class="icon-btn" title="Preview in new tab">&#9654;</button>
           <div class="tb-sep"></div>
-          <span class="vp-badge">1440 x 900</span>
+          <span class="vp-badge" id="vp-badge">1440 x 900</span>
           <div class="tb-sep"></div>
           <button class="icon-btn" id="json-btn" title="Toggle JSON (J)" onclick="toggleJSON()" style="font-family:var(--mono);font-size:10px;font-weight:600;">{ }</button>
+          <button class="icon-btn" title="Keyboard Shortcuts (?)" onclick="toggleShortcuts()" style="font-size:11px;">?</button>
         </div>
       </div>
 
@@ -574,29 +641,29 @@ body { font-family: var(--font); background: var(--bg-0); color: var(--text-0); 
               <span class="cb-tag">Hero</span>
               <div class="cb-drag"><i></i><i></i><i></i></div>
               <div class="cb-actions"><button class="cb-act" title="Move up">&#8593;</button><button class="cb-act" title="Move down">&#8595;</button><button class="cb-act" title="Duplicate">&#8911;</button><button class="cb-act del" title="Delete">&#10005;</button></div>
-              <h2>Ship faster with Rocketlist</h2>
-              <p>The task management tool built for teams that move fast. Organize, prioritize, and launch.</p>
+              <h2 contenteditable="true" spellcheck="false">Ship faster with Rocketlist</h2>
+              <p contenteditable="true" spellcheck="false">The task management tool built for teams that move fast. Organize, prioritize, and launch.</p>
               <div class="hero-btns"><button class="btn btn-green btn-sm">Get Started Free</button><button class="btn btn-sm">Watch Demo</button></div>
             </div>
             <div class="cb" onclick="selBlock(this,'Features','config.blocks[1]','features')">
               <span class="cb-tag">Features</span>
               <div class="cb-drag"><i></i><i></i><i></i></div>
               <div class="cb-actions"><button class="cb-act" title="Move up">&#8593;</button><button class="cb-act" title="Move down">&#8595;</button><button class="cb-act" title="Duplicate">&#8911;</button><button class="cb-act del" title="Delete">&#10005;</button></div>
-              <div class="slabel">Features</div>
-              <div class="stitle">Everything you need</div>
-              <div class="ssub">Built for modern teams</div>
+              <div class="slabel" contenteditable="true" spellcheck="false">Features</div>
+              <div class="stitle" contenteditable="true" spellcheck="false">Everything you need</div>
+              <div class="ssub" contenteditable="true" spellcheck="false">Built for modern teams</div>
               <div class="features-grid">
-                <div class="fcard"><div class="fcard-ico">&#9889;</div><h4>Lightning Fast</h4><p>Sub-100ms response times.</p></div>
-                <div class="fcard"><div class="fcard-ico">&#9876;</div><h4>AI-Powered</h4><p>Smart suggestions built in.</p></div>
-                <div class="fcard"><div class="fcard-ico">&#128274;</div><h4>Secure</h4><p>Enterprise-grade encryption.</p></div>
+                <div class="fcard"><div class="fcard-ico">&#9889;</div><h4 contenteditable="true" spellcheck="false">Lightning Fast</h4><p contenteditable="true" spellcheck="false">Sub-100ms response times.</p></div>
+                <div class="fcard"><div class="fcard-ico">&#9876;</div><h4 contenteditable="true" spellcheck="false">AI-Powered</h4><p contenteditable="true" spellcheck="false">Smart suggestions built in.</p></div>
+                <div class="fcard"><div class="fcard-ico">&#128274;</div><h4 contenteditable="true" spellcheck="false">Secure</h4><p contenteditable="true" spellcheck="false">Enterprise-grade encryption.</p></div>
               </div>
             </div>
             <div class="cb" onclick="selBlock(this,'CTA','config.blocks[2]','cta')" style="text-align:center;padding:32px 36px;background:var(--green-glow2);">
               <span class="cb-tag">CTA</span>
               <div class="cb-drag"><i></i><i></i><i></i></div>
               <div class="cb-actions"><button class="cb-act" title="Move up">&#8593;</button><button class="cb-act" title="Move down">&#8595;</button><button class="cb-act" title="Duplicate">&#8911;</button><button class="cb-act del" title="Delete">&#10005;</button></div>
-              <div class="stitle">Ready to launch?</div>
-              <div class="ssub" style="margin-bottom:10px">Join 2,000+ teams already shipping faster.</div>
+              <div class="stitle" contenteditable="true" spellcheck="false">Ready to launch?</div>
+              <div class="ssub" contenteditable="true" spellcheck="false" style="margin-bottom:10px">Join 2,000+ teams already shipping faster.</div>
               <button class="btn btn-green btn-sm">Start Free Trial</button>
             </div>
             <div class="cb" onclick="selBlock(this,'Footer','config.blocks[3]','footer')" style="padding:18px 36px;">
@@ -675,6 +742,16 @@ body { font-family: var(--font); background: var(--bg-0); color: var(--text-0); 
           <div class="pf"><label>Padding</label><select class="pf-select"><option>Large</option><option>Medium</option><option>Small</option></select></div>
           <div class="pf"><label>Align</label><select class="pf-select"><option>Center</option><option>Left</option><option>Right</option></select></div>
         </div>
+        <div class="block-json-toggle"><button class="block-json-btn" onclick="toggleBlockJSON('hero')"><span style="font-family:var(--mono);font-size:10px;">{ }</span> View Block JSON</button></div>
+        <div class="block-json-code" id="bjson-hero"><span class="jp">{</span>
+  <span class="jk">"type"</span>: <span class="js">"hero"</span>,
+  <span class="jk">"variant"</span>: <span class="js">"centered"</span>,
+  <span class="jk">"headline"</span>: <span class="js">"Ship faster with Rocketlist"</span>,
+  <span class="jk">"subheadline"</span>: <span class="js">"The task management..."</span>,
+  <span class="jk">"primaryCta"</span>: { <span class="jk">"label"</span>: <span class="js">"Get Started Free"</span> },
+  <span class="jk">"secondaryCta"</span>: { <span class="jk">"label"</span>: <span class="js">"Watch Demo"</span> },
+  <span class="jk">"background"</span>: <span class="js">"#09090b"</span>
+<span class="jp">}</span></div>
       </div>
 
       <!-- Features properties -->
@@ -693,6 +770,17 @@ body { font-family: var(--font); background: var(--bg-0); color: var(--text-0); 
           <div style="background:var(--bg-2);border:1px solid var(--border);border-radius:6px;padding:8px;margin-bottom:6px;font-size:12px;display:flex;align-items:center;justify-content:space-between;"><span>&#128274; Secure</span><button class="btn-xs btn">Edit</button></div>
           <button class="btn btn-sm" style="width:100%;justify-content:center;margin-top:4px;">+ Add Item</button>
         </div>
+        <div class="block-json-toggle"><button class="block-json-btn" onclick="toggleBlockJSON('features')"><span style="font-family:var(--mono);font-size:10px;">{ }</span> View Block JSON</button></div>
+        <div class="block-json-code" id="bjson-features"><span class="jp">{</span>
+  <span class="jk">"type"</span>: <span class="js">"features"</span>,
+  <span class="jk">"variant"</span>: <span class="js">"grid"</span>,
+  <span class="jk">"title"</span>: <span class="js">"Everything you need"</span>,
+  <span class="jk">"items"</span>: [
+    { <span class="jk">"icon"</span>: <span class="js">"zap"</span>, <span class="jk">"title"</span>: <span class="js">"Lightning Fast"</span> },
+    { <span class="jk">"icon"</span>: <span class="js">"brain"</span>, <span class="jk">"title"</span>: <span class="js">"AI-Powered"</span> },
+    { <span class="jk">"icon"</span>: <span class="js">"lock"</span>, <span class="jk">"title"</span>: <span class="js">"Secure"</span> }
+  ]
+<span class="jp">}</span></div>
       </div>
 
       <!-- CTA properties -->
@@ -709,6 +797,14 @@ body { font-family: var(--font); background: var(--bg-0); color: var(--text-0); 
         <div class="psec"><div class="psec-title">Style</div>
           <div class="pf"><label>Background</label><div class="pcolors"><div class="pswatch active" style="background:rgba(34,197,94,0.06)"></div><div class="pswatch" style="background:var(--bg-2)"></div><div class="pswatch" style="background:#0a2540"></div></div></div>
         </div>
+        <div class="block-json-toggle"><button class="block-json-btn" onclick="toggleBlockJSON('cta')"><span style="font-family:var(--mono);font-size:10px;">{ }</span> View Block JSON</button></div>
+        <div class="block-json-code" id="bjson-cta"><span class="jp">{</span>
+  <span class="jk">"type"</span>: <span class="js">"cta"</span>,
+  <span class="jk">"title"</span>: <span class="js">"Ready to launch?"</span>,
+  <span class="jk">"subtitle"</span>: <span class="js">"Join 2,000+ teams..."</span>,
+  <span class="jk">"buttonLabel"</span>: <span class="js">"Start Free Trial"</span>,
+  <span class="jk">"buttonHref"</span>: <span class="js">"/signup"</span>
+<span class="jp">}</span></div>
       </div>
 
       <!-- Footer properties -->
@@ -720,6 +816,12 @@ body { font-family: var(--font); background: var(--bg-0); color: var(--text-0); 
           <div class="pf"><label>Copyright</label><input type="text" class="pf-input" value="Rocketlist 2026"></div>
           <div class="pf"><label>Links</label><textarea class="pf-textarea" style="min-height:40px;">Privacy, Terms, Contact</textarea></div>
         </div>
+        <div class="block-json-toggle"><button class="block-json-btn" onclick="toggleBlockJSON('footer')"><span style="font-family:var(--mono);font-size:10px;">{ }</span> View Block JSON</button></div>
+        <div class="block-json-code" id="bjson-footer"><span class="jp">{</span>
+  <span class="jk">"type"</span>: <span class="js">"footer"</span>,
+  <span class="jk">"variant"</span>: <span class="js">"simple"</span>,
+  <span class="jk">"links"</span>: [<span class="js">"Privacy"</span>, <span class="js">"Terms"</span>, <span class="js">"Contact"</span>]
+<span class="jp">}</span></div>
       </div>
 
       <div class="pf-path" id="pf-path">config.blocks[0]</div>
@@ -792,6 +894,20 @@ body { font-family: var(--font); background: var(--bg-0); color: var(--text-0); 
     <div class="dcard"><div class="dcard-ico">&#9670;</div><div class="dcard-body"><div class="dcard-title">Export as Next.js</div><div class="dcard-desc">Full project with App Router, TypeScript, Tailwind.</div></div><button class="btn btn-sm" onclick="showToast('Next.js project exported')">Export</button></div>
     <div class="dcard"><div class="dcard-ico">{ }</div><div class="dcard-body"><div class="dcard-title">Download JSON Config</div><div class="dcard-desc">Raw config for CLI, Git, or other OpenPage instances.</div></div><button class="btn btn-sm" onclick="showToast('config.json downloaded')">Download</button></div>
     <div class="dcard"><div class="dcard-ico">&#128279;</div><div class="dcard-body"><div class="dcard-title">Share Link</div><div class="dcard-desc">Shareable preview. No deploy needed.</div></div><button class="btn btn-sm" onclick="showToast('Link copied to clipboard')">Copy</button></div>
+    <div class="deploy-status">
+      <div class="deploy-status-hd">
+        <div class="deploy-status-dot"></div>
+        <span style="font-size:13px;font-weight:600;">Last Deployment</span>
+        <span style="font-size:11px;color:var(--green);margin-left:auto;font-weight:500;">Live</span>
+      </div>
+      <div class="deploy-progress-bar"><div class="deploy-progress-fill"></div></div>
+      <div class="deploy-meta">
+        <span>rocketlist.openpage.dev</span>
+        <span>Deployed 12 min ago</span>
+        <span>Build: 4.2s</span>
+        <span style="margin-left:auto;cursor:pointer;color:var(--text-1);">View logs &rarr;</span>
+      </div>
+    </div>
     <div class="durl"><label>Custom Domain</label><div class="durl-row"><input type="text" class="durl-input" value="rocketlist.openpage.dev" readonly><button class="btn btn-sm">Change</button><button class="btn btn-sm">Add Custom Domain</button></div></div>
   </div>
 </div>
@@ -799,28 +915,196 @@ body { font-family: var(--font); background: var(--bg-0); color: var(--text-0); 
 <!-- ===== SETTINGS ===== -->
 <div id="settings" class="screen">
   <nav class="set-nav">
-    <button class="set-nav-item active">General</button><button class="set-nav-item">SEO & Meta</button><button class="set-nav-item">Domain</button><button class="set-nav-item">Analytics</button><button class="set-nav-item">Integrations</button><button class="set-nav-item">API Keys</button><button class="set-nav-item" style="color:var(--red);">Danger Zone</button>
+    <button class="set-nav-item active" onclick="switchSettings('general',this)">General</button>
+    <button class="set-nav-item" onclick="switchSettings('seo',this)">SEO & Meta</button>
+    <button class="set-nav-item" onclick="switchSettings('domain',this)">Domain</button>
+    <button class="set-nav-item" onclick="switchSettings('analytics',this)">Analytics</button>
+    <button class="set-nav-item" onclick="switchSettings('integrations',this)">Integrations</button>
+    <button class="set-nav-item" onclick="switchSettings('api',this)">API Keys</button>
+    <button class="set-nav-item" onclick="switchSettings('danger',this)" style="color:var(--red);">Danger Zone</button>
   </nav>
   <div class="set-body">
-    <h2>General Settings</h2><p>Configure your site's basic information</p>
-    <div class="sg"><div class="sg-title">Site Info</div>
-      <div class="sf"><label>Site Name</label><input type="text" value="Rocketlist Landing"></div>
-      <div class="sf"><label>Description <em>(SEO + sharing)</em></label><input type="text" value="Task management for fast-moving teams"></div>
-      <div class="sf"><label>Favicon URL</label><input type="text" value="/favicon.ico" style="font-family:var(--mono);font-size:12px;"></div>
+    <!-- General -->
+    <div class="set-panel active" id="sp-general">
+      <h2>General Settings</h2><p>Configure your site's basic information</p>
+      <div class="sg"><div class="sg-title">Site Info</div>
+        <div class="sf"><label>Site Name</label><input type="text" value="Rocketlist Landing"></div>
+        <div class="sf"><label>Description <em>(SEO + sharing)</em></label><input type="text" value="Task management for fast-moving teams"></div>
+        <div class="sf"><label>Favicon URL</label><input type="text" value="/favicon.ico" style="font-family:var(--mono);font-size:12px;"></div>
+      </div>
+      <div class="sg"><div class="sg-title">Theme</div>
+        <div class="sf"><label>Color Mode</label><select style="width:200px;cursor:pointer;"><option>Dark</option><option>Light</option><option>System</option></select></div>
+        <div class="sf"><label>Primary Color</label><div style="display:flex;align-items:center;gap:8px;margin-top:4px;"><div style="width:28px;height:28px;border-radius:6px;background:var(--green);border:2px solid var(--text-0);cursor:pointer;"></div><input type="text" value="#22c55e" style="width:120px;font-family:var(--mono);font-size:12px;"></div></div>
+        <div class="sf"><label>Heading Font</label><select style="width:240px;cursor:pointer;"><option>Space Grotesk</option><option>Inter</option><option>Poppins</option></select></div>
+        <div class="sf"><label>Body Font</label><select style="width:240px;cursor:pointer;"><option>DM Sans</option><option>Inter</option><option>Lato</option></select></div>
+      </div>
+      <div class="sg"><div class="sg-title">Features</div>
+        <div class="trow"><div><div class="trow-label">Agent API</div><div class="trow-desc">Allow agents to modify this site via API</div></div><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
+        <div class="trow"><div><div class="trow-label">Version History</div><div class="trow-desc">Keep a history of all config changes</div></div><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
+        <div class="trow"><div><div class="trow-label">Analytics</div><div class="trow-desc">Collect anonymous visitor analytics</div></div><div class="tog" onclick="this.classList.toggle('on')"></div></div>
+        <div class="trow"><div><div class="trow-label">Password Protection</div><div class="trow-desc">Require password to view site</div></div><div class="tog" onclick="this.classList.toggle('on')"></div></div>
+      </div>
+      <div style="padding-top:16px;"><button class="btn btn-green" onclick="showToast('Settings saved')">Save Changes</button><button class="btn" style="margin-left:8px;">Reset</button></div>
     </div>
-    <div class="sg"><div class="sg-title">Theme</div>
-      <div class="sf"><label>Color Mode</label><select style="width:200px;cursor:pointer;"><option>Dark</option><option>Light</option><option>System</option></select></div>
-      <div class="sf"><label>Primary Color</label><div style="display:flex;align-items:center;gap:8px;margin-top:4px;"><div style="width:28px;height:28px;border-radius:6px;background:var(--green);border:2px solid var(--text-0);cursor:pointer;"></div><input type="text" value="#22c55e" style="width:120px;font-family:var(--mono);font-size:12px;"></div></div>
-      <div class="sf"><label>Heading Font</label><select style="width:240px;cursor:pointer;"><option>Space Grotesk</option><option>Inter</option><option>Poppins</option></select></div>
-      <div class="sf"><label>Body Font</label><select style="width:240px;cursor:pointer;"><option>DM Sans</option><option>Inter</option><option>Lato</option></select></div>
+
+    <!-- SEO & Meta -->
+    <div class="set-panel" id="sp-seo">
+      <h2>SEO & Meta</h2><p>Optimize your site for search engines and social sharing</p>
+      <div class="seo-preview">
+        <div class="seo-preview-label">Google Search Preview</div>
+        <div class="seo-goog">
+          <div class="seo-goog-title">Rocketlist - Task Management for Fast Teams</div>
+          <div class="seo-goog-url">https://rocketlist.openpage.dev</div>
+          <div class="seo-goog-desc">Task management for fast-moving teams. Organize, prioritize, and launch with the tool built for speed.</div>
+        </div>
+      </div>
+      <div class="sg"><div class="sg-title">Meta Tags</div>
+        <div class="sf"><label>Page Title</label><input type="text" value="Rocketlist - Task Management for Fast Teams"></div>
+        <div class="sf"><label>Meta Description</label><textarea style="padding:8px 12px;border-radius:6px;border:1px solid var(--border);background:var(--bg-2);color:var(--text-0);font-family:var(--font);font-size:13px;width:100%;max-width:440px;min-height:60px;outline:none;resize:vertical;">Task management for fast-moving teams. Organize, prioritize, and launch with the tool built for speed.</textarea></div>
+        <div class="sf"><label>Keywords</label><input type="text" value="task management, productivity, teams, project management"></div>
+      </div>
+      <div class="sg"><div class="sg-title">Open Graph (Social Sharing)</div>
+        <div class="sf"><label>OG Title</label><input type="text" value="Rocketlist - Task Management for Fast Teams"></div>
+        <div class="sf"><label>OG Description</label><input type="text" value="Task management for fast-moving teams."></div>
+        <div class="sf"><label>OG Image URL</label><input type="text" value="" placeholder="https://..." style="font-family:var(--mono);font-size:12px;"></div>
+      </div>
+      <div style="padding-top:16px;"><button class="btn btn-green" onclick="showToast('SEO settings saved')">Save Changes</button></div>
     </div>
-    <div class="sg"><div class="sg-title">Features</div>
-      <div class="trow"><div><div class="trow-label">Agent API</div><div class="trow-desc">Allow agents to modify this site via API</div></div><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
-      <div class="trow"><div><div class="trow-label">Version History</div><div class="trow-desc">Keep a history of all config changes</div></div><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
-      <div class="trow"><div><div class="trow-label">Analytics</div><div class="trow-desc">Collect anonymous visitor analytics</div></div><div class="tog" onclick="this.classList.toggle('on')"></div></div>
-      <div class="trow"><div><div class="trow-label">Password Protection</div><div class="trow-desc">Require password to view site</div></div><div class="tog" onclick="this.classList.toggle('on')"></div></div>
+
+    <!-- Domain -->
+    <div class="set-panel" id="sp-domain">
+      <h2>Domain</h2><p>Configure custom domains for your site</p>
+      <div class="sg"><div class="sg-title">Current Domain</div>
+        <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--bg-2);border:1px solid var(--border);border-radius:8px;max-width:440px;">
+          <div class="deploy-status-dot"></div>
+          <span style="font-family:var(--mono);font-size:13px;">rocketlist.openpage.dev</span>
+          <span style="font-size:10px;color:var(--green);margin-left:auto;">Active</span>
+        </div>
+      </div>
+      <div class="sg"><div class="sg-title">Custom Domain</div>
+        <div class="sf"><label>Domain Name</label><input type="text" value="" placeholder="www.rocketlist.com" style="font-family:var(--mono);font-size:12px;"></div>
+        <div style="margin-top:8px;padding:12px;background:var(--bg-2);border:1px solid var(--border);border-radius:8px;max-width:440px;">
+          <div style="font-size:11px;font-weight:600;margin-bottom:8px;color:var(--text-2);">DNS Configuration</div>
+          <div style="font-family:var(--mono);font-size:11px;color:var(--text-2);line-height:1.8;">
+            <div>Type: <span style="color:var(--text-0)">CNAME</span></div>
+            <div>Name: <span style="color:var(--text-0)">www</span></div>
+            <div>Value: <span style="color:var(--text-0)">cname.openpage.dev</span></div>
+          </div>
+        </div>
+        <div style="padding-top:12px;"><button class="btn btn-green" onclick="showToast('Domain saved')">Add Domain</button></div>
+      </div>
     </div>
-    <div style="padding-top:16px;"><button class="btn btn-green" onclick="showToast('Settings saved')">Save Changes</button><button class="btn" style="margin-left:8px;">Reset</button></div>
+
+    <!-- Analytics -->
+    <div class="set-panel" id="sp-analytics">
+      <h2>Analytics</h2><p>Track visitor behavior and site performance</p>
+      <div class="sg"><div class="sg-title">Built-in Analytics</div>
+        <div class="trow"><div><div class="trow-label">Page Views</div><div class="trow-desc">Track page views and unique visitors</div></div><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
+        <div class="trow"><div><div class="trow-label">Click Tracking</div><div class="trow-desc">Track CTA and link clicks</div></div><div class="tog" onclick="this.classList.toggle('on')"></div></div>
+        <div class="trow"><div><div class="trow-label">Scroll Depth</div><div class="trow-desc">Track how far visitors scroll</div></div><div class="tog" onclick="this.classList.toggle('on')"></div></div>
+      </div>
+      <div class="sg"><div class="sg-title">Third-Party</div>
+        <div class="sf"><label>Google Analytics ID</label><input type="text" value="" placeholder="G-XXXXXXXXXX" style="font-family:var(--mono);font-size:12px;"></div>
+        <div class="sf"><label>PostHog Project Key</label><input type="text" value="" placeholder="phc_..." style="font-family:var(--mono);font-size:12px;"></div>
+      </div>
+      <div style="padding-top:16px;"><button class="btn btn-green" onclick="showToast('Analytics settings saved')">Save Changes</button></div>
+    </div>
+
+    <!-- Integrations -->
+    <div class="set-panel" id="sp-integrations">
+      <h2>Integrations</h2><p>Connect third-party services</p>
+      <div class="sg"><div class="sg-title">Connected</div>
+        <div style="display:flex;align-items:center;gap:12px;padding:14px;background:var(--bg-2);border:1px solid var(--border);border-radius:8px;max-width:440px;margin-bottom:8px;">
+          <div style="width:36px;height:36px;border-radius:8px;background:var(--bg-4);display:flex;align-items:center;justify-content:center;font-size:16px;">&#9650;</div>
+          <div style="flex:1;"><div style="font-size:13px;font-weight:600;">Vercel</div><div style="font-size:11px;color:var(--text-2);">Auto-deploy on publish</div></div>
+          <span style="font-size:10px;color:var(--green);">Connected</span>
+        </div>
+      </div>
+      <div class="sg"><div class="sg-title">Available</div>
+        <div style="display:flex;align-items:center;gap:12px;padding:14px;background:var(--bg-2);border:1px solid var(--border);border-radius:8px;max-width:440px;margin-bottom:8px;cursor:pointer;" onclick="showToast('Coming soon')">
+          <div style="width:36px;height:36px;border-radius:8px;background:var(--bg-4);display:flex;align-items:center;justify-content:center;font-size:14px;">&#9679;</div>
+          <div style="flex:1;"><div style="font-size:13px;font-weight:600;">Netlify</div><div style="font-size:11px;color:var(--text-2);">Deploy to Netlify</div></div>
+          <button class="btn btn-sm">Connect</button>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;padding:14px;background:var(--bg-2);border:1px solid var(--border);border-radius:8px;max-width:440px;cursor:pointer;" onclick="showToast('Coming soon')">
+          <div style="width:36px;height:36px;border-radius:8px;background:var(--bg-4);display:flex;align-items:center;justify-content:center;font-size:14px;">&#8734;</div>
+          <div style="flex:1;"><div style="font-size:13px;font-weight:600;">Slack</div><div style="font-size:11px;color:var(--text-2);">Get deploy notifications</div></div>
+          <button class="btn btn-sm">Connect</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- API Keys -->
+    <div class="set-panel" id="sp-api">
+      <h2>API Keys</h2><p>Manage API access for agents and automations</p>
+      <div class="sg"><div class="sg-title">Your Keys</div>
+        <div style="display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--bg-2);border:1px solid var(--border);border-radius:8px;max-width:540px;margin-bottom:8px;">
+          <span style="font-size:12px;font-weight:600;min-width:80px;">Production</span>
+          <span style="font-family:var(--mono);font-size:11px;color:var(--text-2);flex:1;">op_live_sk_...7f3a</span>
+          <button class="btn btn-xs" onclick="showToast('Copied')">Copy</button>
+          <button class="btn btn-xs btn-danger">Revoke</button>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--bg-2);border:1px solid var(--border);border-radius:8px;max-width:540px;">
+          <span style="font-size:12px;font-weight:600;min-width:80px;">Development</span>
+          <span style="font-family:var(--mono);font-size:11px;color:var(--text-2);flex:1;">op_test_sk_...9b2c</span>
+          <button class="btn btn-xs" onclick="showToast('Copied')">Copy</button>
+          <button class="btn btn-xs btn-danger">Revoke</button>
+        </div>
+      </div>
+      <div style="padding-top:8px;"><button class="btn btn-green btn-sm" onclick="showToast('New API key created')">+ Create New Key</button></div>
+      <div class="sg" style="margin-top:28px;"><div class="sg-title">Agent Endpoint</div>
+        <div style="padding:12px;background:var(--bg-2);border:1px solid var(--border);border-radius:8px;max-width:540px;font-family:var(--mono);font-size:11px;color:var(--text-1);line-height:1.8;">
+          POST https://api.openpage.dev/v1/sites/{site_id}/patch<br>
+          Authorization: Bearer op_live_sk_...
+        </div>
+      </div>
+    </div>
+
+    <!-- Danger Zone -->
+    <div class="set-panel" id="sp-danger">
+      <h2 style="color:var(--red);">Danger Zone</h2><p>Irreversible actions. Proceed with caution.</p>
+      <div class="danger-item">
+        <div><div class="trow-label">Transfer Ownership</div><div class="trow-desc">Transfer this site to another account</div></div>
+        <button class="btn btn-sm">Transfer</button>
+      </div>
+      <div class="danger-item">
+        <div><div class="trow-label">Unpublish Site</div><div class="trow-desc">Remove from public URL. Config is preserved.</div></div>
+        <button class="btn btn-sm btn-danger" onclick="showToast('Site unpublished')">Unpublish</button>
+      </div>
+      <div class="danger-item">
+        <div><div class="trow-label">Delete Site</div><div class="trow-desc">Permanently delete this site and all its data.</div></div>
+        <button class="btn btn-sm btn-danger">Delete Site</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- KEYBOARD SHORTCUTS OVERLAY -->
+<div class="shortcuts-overlay" id="shortcuts-overlay" onclick="if(event.target===this)toggleShortcuts()">
+  <div class="shortcuts-box">
+    <h3>Keyboard Shortcuts <button class="icon-btn" onclick="toggleShortcuts()">&#10005;</button></h3>
+    <div class="sc-group">
+      <div class="sc-group-title">Navigation</div>
+      <div class="sc-row"><span>Dashboard</span><div class="sc-keys"><span class="sc-key">1</span></div></div>
+      <div class="sc-row"><span>Editor</span><div class="sc-keys"><span class="sc-key">2</span></div></div>
+      <div class="sc-row"><span>Components</span><div class="sc-keys"><span class="sc-key">3</span></div></div>
+      <div class="sc-row"><span>Deploy</span><div class="sc-keys"><span class="sc-key">4</span></div></div>
+      <div class="sc-row"><span>Settings</span><div class="sc-keys"><span class="sc-key">5</span></div></div>
+    </div>
+    <div class="sc-group">
+      <div class="sc-group-title">Editor</div>
+      <div class="sc-row"><span>Toggle JSON drawer</span><div class="sc-keys"><span class="sc-key">J</span></div></div>
+      <div class="sc-row"><span>Version history</span><div class="sc-keys"><span class="sc-key">H</span></div></div>
+      <div class="sc-row"><span>Empty state (demo)</span><div class="sc-keys"><span class="sc-key">E</span></div></div>
+      <div class="sc-row"><span>Undo</span><div class="sc-keys"><span class="sc-key">&#8984;</span><span class="sc-key">Z</span></div></div>
+      <div class="sc-row"><span>Redo</span><div class="sc-keys"><span class="sc-key">&#8984;</span><span class="sc-key">&#8679;</span><span class="sc-key">Z</span></div></div>
+    </div>
+    <div class="sc-group">
+      <div class="sc-group-title">General</div>
+      <div class="sc-row"><span>Publish site</span><div class="sc-keys"><span class="sc-key">&#8984;</span><span class="sc-key">&#8679;</span><span class="sc-key">P</span></div></div>
+      <div class="sc-row"><span>Show shortcuts</span><div class="sc-keys"><span class="sc-key">?</span></div></div>
+      <div class="sc-row"><span>Close overlay</span><div class="sc-keys"><span class="sc-key">Esc</span></div></div>
+    </div>
   </div>
 </div>
 
@@ -905,10 +1189,47 @@ function toggleEmpty() {
   document.getElementById('canvas-empty').classList.toggle('visible');
 }
 
+// Responsive preview
+function setViewport(mode) {
+  const frame = document.querySelector('.canvas-frame');
+  const badge = document.getElementById('vp-badge');
+  frame.classList.remove('vp-desktop','vp-tablet','vp-mobile');
+  document.querySelectorAll('[id^="vp-"]').forEach(b => { if(b.id !== 'vp-badge') b.classList.remove('active'); });
+  frame.classList.add('vp-' + mode);
+  document.getElementById('vp-' + mode).classList.add('active');
+  const sizes = { desktop: '1440 x 900', tablet: '768 x 1024', mobile: '375 x 812' };
+  badge.textContent = sizes[mode];
+}
+
+// Page tabs
+function switchPage(btn) {
+  btn.parentElement.querySelectorAll('.page-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  if (btn.textContent === '+') { showToast('New page created'); btn.classList.remove('active'); btn.previousElementSibling.classList.add('active'); }
+}
+
+// Settings sub-panels
+function switchSettings(panel, btn) {
+  document.querySelectorAll('.set-nav-item').forEach(x => x.classList.remove('active'));
+  document.querySelectorAll('.set-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  const sp = document.getElementById('sp-' + panel);
+  if (sp) sp.classList.add('active');
+}
+
+// Block JSON view
+function toggleBlockJSON(id) {
+  const el = document.getElementById('bjson-' + id);
+  if (el) el.classList.toggle('open');
+}
+
+// Keyboard shortcuts overlay
+function toggleShortcuts() {
+  document.getElementById('shortcuts-overlay').classList.toggle('open');
+}
+
 // Chips
 document.querySelectorAll('.chip').forEach(c => { c.addEventListener('click', function() { this.parentElement.querySelectorAll('.chip').forEach(x => x.classList.remove('active')); this.classList.add('active'); }); });
-// Settings nav
-document.querySelectorAll('.set-nav-item').forEach(i => { i.addEventListener('click', function() { this.parentElement.querySelectorAll('.set-nav-item').forEach(x => x.classList.remove('active')); this.classList.add('active'); }); });
 // Color swatches
 document.querySelectorAll('.pswatch').forEach(s => { s.addEventListener('click', function() { this.parentElement.querySelectorAll('.pswatch').forEach(x => x.classList.remove('active')); this.classList.add('active'); }); });
 // History items
@@ -918,17 +1239,23 @@ document.addEventListener('click', e => {
   const pop = document.getElementById('add-popover');
   if (pop.classList.contains('open') && !e.target.closest('.add-comp-wrap')) pop.classList.remove('open');
 });
-// Escape to close popover
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { document.getElementById('add-popover').classList.remove('open'); document.getElementById('history-panel').classList.remove('open'); }
-});
 // Keyboard
 document.addEventListener('keydown', e => {
+  const tag = document.activeElement.tagName;
+  const editable = document.activeElement.isContentEditable;
+  const skip = ['INPUT','TEXTAREA'].includes(tag) || editable;
+  if (e.key === 'Escape') {
+    document.getElementById('add-popover').classList.remove('open');
+    document.getElementById('history-panel').classList.remove('open');
+    document.getElementById('shortcuts-overlay').classList.remove('open');
+  }
+  if (skip) return;
   const screens = ['dashboard','editor','components','deploy','settings'];
-  if (e.key >= '1' && e.key <= '5' && !['INPUT','TEXTAREA'].includes(document.activeElement.tagName)) nav(screens[+e.key - 1]);
-  if (e.key === 'j' && !['INPUT','TEXTAREA'].includes(document.activeElement.tagName)) toggleJSON();
-  if (e.key === 'h' && !['INPUT','TEXTAREA'].includes(document.activeElement.tagName)) toggleHistory();
-  if (e.key === 'e' && !['INPUT','TEXTAREA'].includes(document.activeElement.tagName)) toggleEmpty();
+  if (e.key >= '1' && e.key <= '5') nav(screens[+e.key - 1]);
+  if (e.key === 'j') toggleJSON();
+  if (e.key === 'h') toggleHistory();
+  if (e.key === 'e') toggleEmpty();
+  if (e.key === '?') toggleShortcuts();
 });
 </script>
 </body>
