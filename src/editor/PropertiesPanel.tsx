@@ -314,6 +314,22 @@ function PropertyField({ field, block }: { field: FieldDef; block: BlockConfig }
 
     case 'array-items': {
       const items = (Array.isArray(value) ? value : []) as Array<Record<string, string>>
+
+      // Infer new item shape from existing items, or use sensible defaults per field key
+      function createEmptyItem(): Record<string, string> {
+        if (items.length > 0) {
+          const template: Record<string, string> = {}
+          for (const key of Object.keys(items[0])) template[key] = ''
+          return template
+        }
+        // Fallback templates by field key
+        const templates: Record<string, Record<string, string>> = {
+          items: { title: '', description: '' },
+          members: { name: '', role: '' },
+        }
+        return templates[field.key] || { title: '', description: '' }
+      }
+
       return (
         <div className="mb-2.5">
           <label className="block text-[11.5px] text-text-2 mb-1 font-medium">{field.label}</label>
@@ -346,7 +362,7 @@ function PropertyField({ field, block }: { field: FieldDef; block: BlockConfig }
             </div>
           ))}
           <button
-            onClick={() => onChange([...items, { title: '', description: '' }])}
+            onClick={() => onChange([...items, createEmptyItem()])}
             className="text-[10px] text-green hover:text-green-dim transition-colors"
           >
             + Add item

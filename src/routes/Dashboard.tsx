@@ -33,9 +33,8 @@ function ProjectCard({ project }: { project: Project }) {
 
   function openProject() {
     setActiveProject(project.id)
-    if (project.config) {
-      setConfig(project.config)
-    }
+    if (project.config) setConfig(project.config)
+    // If no config stored yet, keep current default config
     navigate('/editor')
   }
 
@@ -101,9 +100,11 @@ function ProjectCard({ project }: { project: Project }) {
 
 function NewProjectCard() {
   const addProject = useProjectsStore((s) => s.addProject)
+  const setActiveProject = useEditorStore((s) => s.setActiveProject)
+  const navigate = useNavigate()
   return (
     <div
-      onClick={() => addProject('Untitled Project')}
+      onClick={() => { const id = addProject('Untitled Project'); setActiveProject(id); navigate('/editor') }}
       className="bg-transparent border border-dashed border-border-default rounded-xl flex items-center justify-center min-h-[234px] cursor-pointer transition-all hover:border-green hover:bg-green-glow2"
     >
       <div className="text-center text-text-2">

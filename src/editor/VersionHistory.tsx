@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import { X, Clock, RotateCcw } from 'lucide-react'
 import { useEditorStore } from '@/store/editorStore'
 import { useConfigStore } from '@/store/configStore'
@@ -15,11 +16,36 @@ function timeAgo(ts: number): string {
 export function VersionHistory() {
   const { historyOpen, toggleHistory } = useEditorStore()
   const undoStack = useConfigStore((s) => s.undoStack)
+  const panelRef = useRef<HTMLDivElement>(null)
 
   const entries = [...undoStack].reverse()
 
+  // Close on Escape
+  useEffect(() => {
+    if (!historyOpen) return
+    function handleKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') { e.preventDefault(); toggleHistory() }
+    }
+    window.addEventListener('keydown', handleKey)
+    return () => window.removeEventListener('keydown', handleKey)
+  }, [historyOpen, toggleHistory])
+
+  // Close on click outside
+  useEffect(() => {
+    if (!historyOpen) return
+    function handleClick(e: MouseEvent) {
+      if (panelRef.current && !panelRef.current.contains(e.target as Node)) {
+        toggleHistory()
+      }
+    }
+    // Delay to avoid catching the toggle button click itself
+    const id = setTimeout(() => window.addEventListener('mousedown', handleClick), 0)
+    return () => { clearTimeout(id); window.removeEventListener('mousedown', handleClick) }
+  }, [historyOpen, toggleHistory])
+
   return (
     <div
+      ref={panelRef}
       className={`absolute top-0 right-0 bottom-0 w-80 bg-bg-1 border-l border-border-default z-50 flex flex-col transition-transform duration-250 ease-in-out ${
         historyOpen ? 'translate-x-0' : 'translate-x-full'
       }`}
@@ -56,7 +82,6 @@ export function VersionHistory() {
           <div
             key={i}
             onClick={() => {
-              // Use getState() to bypass React batching, each call reads fresh state
               for (let n = 0; n <= i; n++) useConfigStore.getState().undo()
             }}
             className="p-3 rounded-lg cursor-pointer transition-colors mb-0.5 hover:bg-bg-3 group"

@@ -1,6 +1,8 @@
+import { useNavigate } from 'react-router-dom'
 import { Monitor, Tablet, Smartphone, Undo2, Redo2, Code, Clock } from 'lucide-react'
 import { useEditorStore, type Viewport } from '@/store/editorStore'
 import { useConfigStore } from '@/store/configStore'
+import { useProjectsStore } from '@/store/projectsStore'
 
 const viewports: { value: Viewport; icon: typeof Monitor; label: string }[] = [
   { value: 'desktop', icon: Monitor, label: 'Desktop' },
@@ -9,16 +11,27 @@ const viewports: { value: Viewport; icon: typeof Monitor; label: string }[] = [
 ]
 
 export function CanvasToolbar() {
-  const { viewport, setViewport, toggleJsonDrawer, jsonDrawerOpen, toggleHistory } = useEditorStore()
+  const navigate = useNavigate()
+  const { viewport, setViewport, toggleJsonDrawer, jsonDrawerOpen, toggleHistory, activeProjectId } = useEditorStore()
   const { undo, redo, canUndo, canRedo } = useConfigStore()
+  const projects = useProjectsStore((s) => s.projects)
+  const configName = useConfigStore((s) => s.config.name)
+
+  const activeProject = activeProjectId ? projects.find((p) => p.id === activeProjectId) : null
+  const projectName = activeProject?.name || configName
 
   return (
     <div className="h-10 bg-bg-1 border-b border-border-default flex items-center px-3 gap-1">
       {/* Breadcrumb */}
       <div className="flex items-center gap-1.5 text-xs text-text-3">
-        <span className="cursor-pointer hover:text-text-1 transition-colors">Projects</span>
+        <span
+          className="cursor-pointer hover:text-text-1 transition-colors"
+          onClick={() => navigate('/')}
+        >
+          Projects
+        </span>
         <span>/</span>
-        <span className="text-text-0 font-medium">My Website</span>
+        <span className="text-text-0 font-medium">{projectName}</span>
       </div>
 
       <div className="w-px h-5 bg-border-default mx-1.5" />

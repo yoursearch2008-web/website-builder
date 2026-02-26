@@ -5,7 +5,6 @@ import { Canvas } from './Canvas'
 import { RightSidebar } from './RightSidebar'
 import { JsonDrawer } from './JsonDrawer'
 import { VersionHistory } from './VersionHistory'
-import { ShortcutsModal } from './ShortcutsModal'
 import { useConfigStore } from '@/store/configStore'
 import { useEditorStore } from '@/store/editorStore'
 import { useProjectsStore } from '@/store/projectsStore'
@@ -50,7 +49,6 @@ export function EditorLayout() {
         <RightSidebar />
       </div>
       <VersionHistory />
-      <ShortcutsModal />
     </div>
   )
 }

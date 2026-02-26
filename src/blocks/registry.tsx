@@ -1,4 +1,4 @@
-import type { BlockConfig, BlockType } from './types'
+import type { BlockConfig } from './types'
 import type { ReactNode } from 'react'
 
 import { NavbarBlock } from './navbar/NavbarBlock'
@@ -38,10 +38,6 @@ const blockRenderers: Record<string, React.ComponentType<{ block: BlockConfig }>
   contact: ContactBlock,
   newsletter: NewsletterBlock,
   logocloud: LogoCloudBlock,
-}
-
-export function registerBlock(type: BlockType, component: React.ComponentType<{ block: BlockConfig }>) {
-  blockRenderers[type] = component
 }
 
 export function renderBlock(block: BlockConfig): ReactNode {

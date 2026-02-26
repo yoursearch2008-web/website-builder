@@ -39,7 +39,7 @@ function AccordionItem({ item, isOpen, onToggle }: { item: FaqItem; isOpen: bool
       </button>
       <div
         className={`overflow-hidden transition-all duration-200 ${
-          isOpen ? 'max-h-48 pb-4' : 'max-h-0'
+          isOpen ? 'max-h-[500px] pb-4' : 'max-h-0'
         }`}
       >
         <p className="text-[12.5px] text-text-2 leading-relaxed pr-8">

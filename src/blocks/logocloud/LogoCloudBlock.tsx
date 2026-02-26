@@ -12,6 +12,7 @@ function LogoPlaceholder({ name }: { name: string }) {
     <div className="group cursor-pointer transition-all">
       <div className="flex items-center gap-2 opacity-50 group-hover:opacity-100 transition-all group-hover:scale-105 grayscale group-hover:grayscale-0">
         <svg
+          aria-hidden="true"
           width="28"
           height="28"
           viewBox="0 0 28 28"

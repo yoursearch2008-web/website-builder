@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom'
 import { TopNav } from './TopNav'
 import { Toaster } from 'sonner'
+import { ShortcutsModal } from '@/editor/ShortcutsModal'
 
 export function AppLayout() {
   return (
@@ -20,6 +21,7 @@ export function AppLayout() {
           },
         }}
       />
+      <ShortcutsModal />
     </div>
   )
 }

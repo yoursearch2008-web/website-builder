@@ -3,6 +3,8 @@ import {
   Settings2, Search as SearchIcon, Globe, BarChart3, Puzzle, Key, AlertTriangle,
 } from 'lucide-react'
 import { toast } from 'sonner'
+import { useProjectsStore, type ProjectSettings } from '@/store/projectsStore'
+import { useEditorStore } from '@/store/editorStore'
 
 type SettingsTab = 'general' | 'seo' | 'domain' | 'analytics' | 'integrations' | 'api' | 'danger'
 
@@ -16,21 +18,25 @@ const tabDefs: { value: SettingsTab; label: string; icon: typeof Settings2 }[] =
   { value: 'danger', label: 'Danger Zone', icon: AlertTriangle },
 ]
 
-// Simple local settings state (persisted in localStorage)
 function useSettingsState() {
-  const [data, setData] = useState<Record<string, string>>(() => {
-    try {
-      return JSON.parse(localStorage.getItem('openpage-settings') || '{}')
-    } catch { return {} }
-  })
+  const activeProjectId = useEditorStore((s) => s.activeProjectId)
+  const projects = useProjectsStore((s) => s.projects)
+  const updateProjectSettings = useProjectsStore((s) => s.updateProjectSettings)
+
+  const activeProject = activeProjectId ? projects.find((p) => p.id === activeProjectId) : null
+  const projectSettings = activeProject?.settings || {}
+
+  // Flatten ProjectSettings to Record<string, string> for the form
+  const [localOverrides, setLocalOverrides] = useState<Record<string, string>>({})
+
+  const data: Record<string, string> = { ...Object.fromEntries(Object.entries(projectSettings).map(([k, v]) => [k, v || ''])), ...localOverrides }
 
   const update = useCallback((key: string, value: string) => {
-    setData((prev) => {
-      const next = { ...prev, [key]: value }
-      localStorage.setItem('openpage-settings', JSON.stringify(next))
-      return next
-    })
-  }, [])
+    setLocalOverrides((prev) => ({ ...prev, [key]: value }))
+    if (activeProjectId) {
+      updateProjectSettings(activeProjectId, { [key]: value } as Partial<ProjectSettings>)
+    }
+  }, [activeProjectId, updateProjectSettings])
 
   return { data, update }
 }
