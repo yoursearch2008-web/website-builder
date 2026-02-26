@@ -1,6 +1,8 @@
 import type { ReactNode } from 'react'
 import { Copy, Trash2, ChevronUp, ChevronDown } from 'lucide-react'
+import { toast } from 'sonner'
 import { useConfigStore } from '@/store/configStore'
+import { useEditorStore } from '@/store/editorStore'
 import type { BlockConfig } from './types'
 
 interface Props {
@@ -13,6 +15,7 @@ interface Props {
 export function BlockWrapper({ block, isSelected, onSelect, children }: Props) {
   const blocks = useConfigStore((s) => s.config.blocks)
   const { duplicateBlock, removeBlock, moveBlock } = useConfigStore()
+  const { selectedBlockId, selectBlock } = useEditorStore()
 
   const index = blocks.findIndex((b) => b.id === block.id)
   const isFirst = index === 0
@@ -71,7 +74,21 @@ export function BlockWrapper({ block, isSelected, onSelect, children }: Props) {
           <Copy size={12} />
         </button>
         <button
-          onClick={(e) => { e.stopPropagation(); removeBlock(block.id) }}
+          onClick={(e) => {
+            e.stopPropagation()
+            if (selectedBlockId === block.id) selectBlock(null)
+            removeBlock(block.id)
+            toast('Block removed', {
+              action: {
+                label: 'Undo',
+                onClick: () => {
+                  useConfigStore.getState().undo()
+                  toast('Block restored')
+                },
+              },
+              duration: 3000,
+            })
+          }}
           className="w-6 h-6 rounded bg-bg-2/80 border border-border-default backdrop-blur-sm flex items-center justify-center text-text-3 hover:text-status-red hover:bg-status-red/10 transition-colors"
           title="Delete"
         >

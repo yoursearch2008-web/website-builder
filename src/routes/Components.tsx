@@ -121,7 +121,10 @@ export function Components() {
                   <div className="flex gap-1.5">
                     {/* JSON schema tooltip hint */}
                     {hoveredBlock === meta.type && (
-                      <button className="flex items-center gap-1 px-2 py-1 rounded text-[10px] text-text-3 hover:text-text-1 hover:bg-bg-3 transition-colors">
+                      <button
+                        onClick={(e) => { e.stopPropagation(); toast(`${meta.label} schema: ${Object.keys(meta.defaultProps).join(', ')}`) }}
+                        className="flex items-center gap-1 px-2 py-1 rounded text-[10px] text-text-3 hover:text-text-1 hover:bg-bg-3 transition-colors"
+                      >
                         <Code size={10} />
                         Schema
                       </button>

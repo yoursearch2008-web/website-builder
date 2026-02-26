@@ -185,9 +185,12 @@ function IntegrationsPanel() {
               <div className="text-sm font-semibold">{int.name}</div>
               <div className="text-[11px] text-text-3">{int.description}</div>
             </div>
-            <button className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
-              int.connected ? 'bg-green/10 text-green' : 'bg-bg-3 text-text-2 border border-border-default hover:bg-bg-4'
-            }`}>
+            <button
+              onClick={() => toast(int.connected ? `${int.name} is connected` : `${int.name} integration coming soon`)}
+              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
+                int.connected ? 'bg-green/10 text-green' : 'bg-bg-3 text-text-2 border border-border-default hover:bg-bg-4'
+              }`}
+            >
               {int.connected ? 'Connected' : 'Connect'}
             </button>
           </div>
@@ -204,7 +207,10 @@ function ApiPanel() {
       <div className="p-4 rounded-xl bg-bg-2 border border-border-default mb-4">
         <div className="flex items-center justify-between mb-2">
           <span className="text-[12px] font-semibold">Project API Key</span>
-          <button className="text-[10px] px-2 py-1 rounded bg-bg-3 text-text-2 border border-border-default hover:bg-bg-4 transition-colors">
+          <button
+            onClick={() => toast('API key regeneration coming soon')}
+            className="text-[10px] px-2 py-1 rounded bg-bg-3 text-text-2 border border-border-default hover:bg-bg-4 transition-colors"
+          >
             Regenerate
           </button>
         </div>
@@ -227,7 +233,10 @@ function DangerPanel() {
             <div className="text-sm font-semibold">Transfer Project</div>
             <div className="text-[11px] text-text-3">Transfer this project to another account</div>
           </div>
-          <button className="px-3 py-1.5 rounded-lg text-xs font-medium text-status-red border border-status-red/30 hover:bg-status-red/10 transition-colors">
+          <button
+            onClick={() => toast('Contact support to transfer your project')}
+            className="px-3 py-1.5 rounded-lg text-xs font-medium text-status-red border border-status-red/30 hover:bg-status-red/10 transition-colors"
+          >
             Transfer
           </button>
         </div>
