@@ -128,7 +128,7 @@ function PromptSection() {
             rows={4}
             disabled={generating}
             placeholder="A landing page for a modern fitness app with dark theme..."
-            className="w-full px-5 pt-4 pb-2 bg-transparent text-text-0 text-[13.5px] outline-none focus:outline-none focus-visible:outline-none placeholder:text-text-3 resize-none leading-relaxed disabled:opacity-50"
+            className="w-full px-5 pt-4 pb-2 bg-transparent text-text-0 text-[13.5px] placeholder:text-text-3 resize-none leading-relaxed disabled:opacity-50"
           />
 
           {/* Attachments preview */}
