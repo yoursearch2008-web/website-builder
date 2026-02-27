@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import { type ReactNode, useRef, useEffect } from 'react'
 import { Copy, Trash2, ChevronUp, ChevronDown } from 'lucide-react'
 import { toast } from 'sonner'
 import { useConfigStore } from '@/store/configStore'
@@ -16,13 +16,21 @@ export function BlockWrapper({ block, isSelected, onSelect, children }: Props) {
   const blocks = useConfigStore((s) => s.config.blocks)
   const { duplicateBlock, removeBlock, moveBlock } = useConfigStore()
   const { selectedBlockId, selectBlock } = useEditorStore()
+  const wrapperRef = useRef<HTMLDivElement>(null)
 
   const index = blocks.findIndex((b) => b.id === block.id)
   const isFirst = index === 0
   const isLast = index === blocks.length - 1
 
+  useEffect(() => {
+    if (isSelected && wrapperRef.current) {
+      wrapperRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+    }
+  }, [isSelected])
+
   return (
     <div
+      ref={wrapperRef}
       onClick={(e) => {
         e.stopPropagation()
         onSelect()
