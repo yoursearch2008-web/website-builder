@@ -104,10 +104,8 @@ function HeroGradient({ props }: { props: HeroProps }) {
           </div>
         )}
 
-        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight leading-[1.1] mb-4 max-w-3xl mx-auto">
-          <span className="bg-gradient-to-r from-text-0 via-green to-text-0 bg-clip-text text-transparent">
-            {props.headline}
-          </span>
+        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight leading-[1.1] mb-4 max-w-3xl mx-auto" style={{ color: 'var(--color-text-0)' }}>
+          {props.headline}
         </h1>
 
         <p className="text-text-2 text-base sm:text-lg leading-relaxed max-w-xl mx-auto mb-8">
