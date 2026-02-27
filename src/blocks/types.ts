@@ -22,7 +22,37 @@ export interface BlockConfig {
   props: Record<string, unknown>
 }
 
+export interface ThemeConfig {
+  // Backgrounds
+  bg0: string
+  bg1: string
+  bg2: string
+  bg3: string
+  bg4: string
+  bg5: string
+  // Text
+  text0: string
+  text1: string
+  text2: string
+  text3: string
+  // Accent
+  accent: string
+  accentDim: string
+  // Borders
+  borderDefault: string
+  borderSubtle: string
+  borderHover: string
+  // Fonts
+  fontSans: string
+  fontDisplay: string
+  fontMono: string
+  // Radius
+  radius: number
+  radiusLg: number
+}
+
 export interface SiteConfig {
   name: string
   blocks: BlockConfig[]
+  theme?: Partial<ThemeConfig>
 }

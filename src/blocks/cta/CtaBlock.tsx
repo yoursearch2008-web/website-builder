@@ -22,7 +22,7 @@ function CtaSimple({ props }: { props: CtaProps }) {
             {props.subheadline}
           </p>
         )}
-        <button className="px-8 py-3 rounded-lg bg-green text-black text-sm font-semibold hover:bg-green-dim transition-all hover:shadow-[0_0_24px_rgba(34,197,94,0.3)] inline-flex items-center gap-2">
+        <button className="px-8 py-3 rounded-lg bg-green text-black text-sm font-semibold hover:bg-green-dim transition-all hover:accent-glow-xl inline-flex items-center gap-2">
           {props.buttonText}
           <ArrowRight size={16} />
         </button>

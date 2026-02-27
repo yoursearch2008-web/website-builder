@@ -63,7 +63,7 @@ function PricingSimple({ props }: { props: PricingProps }) {
             key={i}
             className={`relative rounded-xl p-6 flex flex-col transition-all ${
               tier.featured
-                ? 'bg-bg-2 border-2 border-green shadow-[0_0_32px_rgba(34,197,94,0.1)]'
+                ? 'bg-bg-2 border-2 border-green accent-glow-ring'
                 : 'bg-bg-2 border border-border-default hover:border-border-hover'
             }`}
           >
@@ -100,7 +100,7 @@ function PricingSimple({ props }: { props: PricingProps }) {
             <button
               className={`w-full py-2.5 rounded-lg text-sm font-semibold transition-all ${
                 tier.featured
-                  ? 'bg-green text-black hover:bg-green-dim hover:shadow-[0_0_20px_rgba(34,197,94,0.25)]'
+                  ? 'bg-green text-black hover:bg-green-dim hover:accent-glow-lg'
                   : 'bg-bg-3 text-text-0 border border-border-default hover:bg-bg-4 hover:border-border-hover'
               }`}
             >

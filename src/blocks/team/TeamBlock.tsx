@@ -37,7 +37,7 @@ export function TeamBlock({ block }: { block: BlockConfig }) {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
         {members.map((member, i) => (
           <div key={i} className="text-center group">
-            <div className="w-20 h-20 mx-auto rounded-full bg-bg-3 border-2 border-border-default flex items-center justify-center text-xl font-bold text-text-3 mb-3 transition-all group-hover:border-green/30 group-hover:shadow-[0_0_16px_rgba(34,197,94,0.1)]">
+            <div className="w-20 h-20 mx-auto rounded-full bg-bg-3 border-2 border-border-default flex items-center justify-center text-xl font-bold text-text-3 mb-3 transition-all group-hover:border-green/30 group-hover:accent-glow-sm">
               {member.name.split(' ').map(n => n[0]).join('')}
             </div>
             <h3 className="text-sm font-semibold">{member.name}</h3>

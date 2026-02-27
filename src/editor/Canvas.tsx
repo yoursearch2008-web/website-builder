@@ -1,12 +1,20 @@
+import { useMemo } from 'react'
 import { useConfigStore } from '@/store/configStore'
 import { useEditorStore } from '@/store/editorStore'
 import { CanvasEmpty } from './CanvasEmpty'
 import { BlockWrapper } from '@/blocks/BlockWrapper'
 import { renderBlock } from '@/blocks/registry'
+import { resolveTheme, themeToCSS } from '@/lib/theme-presets'
+import { useGoogleFonts } from '@/lib/useGoogleFonts'
 
 export function Canvas() {
   const blocks = useConfigStore((s) => s.config.blocks)
+  const theme = useConfigStore((s) => s.config.theme)
   const { selectedBlockId, selectBlock, viewport } = useEditorStore()
+
+  const resolved = useMemo(() => resolveTheme(theme), [theme])
+  const cssVars = useMemo(() => themeToCSS(resolved), [resolved])
+  useGoogleFonts([resolved.fontSans, resolved.fontDisplay, resolved.fontMono])
 
   const maxWidth = viewport === 'desktop' ? '880px' : viewport === 'tablet' ? '768px' : '375px'
 
@@ -17,7 +25,7 @@ export function Canvas() {
   const canvasContent = (
     <div
       className="bg-bg-1 border border-border-default rounded-xl min-h-[400px] relative z-[1] overflow-hidden transition-all duration-300"
-      style={{ width: '100%', maxWidth }}
+      style={{ width: '100%', maxWidth, ...cssVars } as React.CSSProperties}
       onClick={(e) => {
         if (e.target === e.currentTarget) selectBlock(null)
       }}

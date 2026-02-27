@@ -36,14 +36,14 @@ export function Components() {
     <div className="h-full overflow-y-auto">
       {/* Header */}
       <div className="px-12 pt-8">
-        <h1 className="text-[22px] font-semibold tracking-tight">Component Library</h1>
-        <p className="text-text-2 text-[13px] mt-1">
+        <h1 className="text-[22px] font-display font-semibold tracking-tight animate-fade-in-up stagger-1">Component Library</h1>
+        <p className="text-text-2 text-[13px] mt-1 animate-fade-in-up stagger-2">
           {blockMetadata.length} components across {categories.length} categories
         </p>
       </div>
 
       {/* Category filters */}
-      <div className="px-12 pt-5 flex gap-1.5 flex-wrap">
+      <div className="px-12 pt-5 flex gap-1.5 flex-wrap animate-fade-in stagger-3">
         <button
           onClick={() => setActiveCategory(null)}
           className={`px-3 py-1.5 rounded-full text-xs transition-all ${
@@ -85,7 +85,7 @@ export function Components() {
           return (
             <div
               key={meta.type}
-              className="bg-bg-1 border border-border-default rounded-xl overflow-hidden transition-all hover:border-border-hover hover:-translate-y-0.5 hover:shadow-[0_4px_16px_rgba(0,0,0,0.25)] cursor-pointer"
+              className="bg-bg-1 border border-border-default rounded-xl overflow-hidden card-lift hover:border-border-hover hover:card-lift-hover cursor-pointer"
               onMouseEnter={() => setHoveredBlock(meta.type)}
               onMouseLeave={() => setHoveredBlock(null)}
             >

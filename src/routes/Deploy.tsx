@@ -40,8 +40,8 @@ export function Deploy() {
   return (
     <div className="h-full overflow-y-auto">
       <div className="px-12 pt-8">
-        <h1 className="text-[22px] font-semibold tracking-tight">Deploy</h1>
-        <p className="text-text-2 text-[13px] mt-1">Export and publish your site</p>
+        <h1 className="text-[22px] font-display font-semibold tracking-tight animate-fade-in-up stagger-1">Deploy</h1>
+        <p className="text-text-2 text-[13px] mt-1 animate-fade-in-up stagger-2">Export and publish your site</p>
       </div>
 
       {/* Export options */}
@@ -52,9 +52,9 @@ export function Deploy() {
             <div
               key={opt.label}
               onClick={() => opt.status === 'ready' && handleExport(opt.action)}
-              className={`flex items-start gap-3 p-4 rounded-xl border transition-all ${
+              className={`flex items-start gap-3 p-4 rounded-xl border ${
                 opt.status === 'ready'
-                  ? 'bg-bg-1 border-border-default hover:border-border-hover cursor-pointer hover:-translate-y-0.5'
+                  ? 'bg-bg-1 border-border-default card-lift hover:border-border-hover cursor-pointer hover:card-lift-hover'
                   : 'bg-bg-1 border-border-subtle opacity-60'
               }`}
             >

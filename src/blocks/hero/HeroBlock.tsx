@@ -32,7 +32,7 @@ function HeroCentered({ props }: { props: HeroProps }) {
 
       {/* CTAs */}
       <div className="flex items-center justify-center gap-3">
-        <button className="px-6 py-3 rounded-lg bg-green text-black text-sm font-semibold hover:bg-green-dim transition-all hover:shadow-[0_0_24px_rgba(34,197,94,0.3)] flex items-center gap-2">
+        <button className="px-6 py-3 rounded-lg bg-green text-black text-sm font-semibold hover:bg-green-dim transition-all hover:accent-glow-xl flex items-center gap-2">
           {props.primaryCta}
           <ArrowRight size={16} />
         </button>
@@ -115,7 +115,7 @@ function HeroGradient({ props }: { props: HeroProps }) {
         </p>
 
         <div className="flex items-center justify-center gap-3">
-          <button className="px-6 py-3 rounded-lg bg-green text-black text-sm font-semibold hover:bg-green-dim transition-all hover:shadow-[0_0_24px_rgba(34,197,94,0.3)] flex items-center gap-2">
+          <button className="px-6 py-3 rounded-lg bg-green text-black text-sm font-semibold hover:bg-green-dim transition-all hover:accent-glow-xl flex items-center gap-2">
             {props.primaryCta}
             <ArrowRight size={16} />
           </button>

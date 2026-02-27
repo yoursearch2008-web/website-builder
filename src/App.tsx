@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { ErrorBoundary } from './layout/ErrorBoundary'
 import { AppLayout } from './layout/AppLayout'
 import { Dashboard } from './routes/Dashboard'
@@ -16,6 +16,7 @@ function AppRoutes() {
     <Routes>
       <Route element={<AppLayout />}>
         <Route index element={<Dashboard />} />
+        <Route path="new" element={<Navigate to="/" replace />} />
         <Route path="editor" element={<Editor />} />
         <Route path="components" element={<Components />} />
         <Route path="deploy" element={<Deploy />} />

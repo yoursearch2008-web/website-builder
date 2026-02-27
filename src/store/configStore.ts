@@ -1,10 +1,11 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { produce } from 'immer'
-import type { BlockConfig, SiteConfig } from '@/blocks/types'
+import type { BlockConfig, SiteConfig, ThemeConfig } from '@/blocks/types'
 
 interface UndoEntry {
   blocks: BlockConfig[]
+  theme?: Partial<ThemeConfig>
   label: string
   timestamp: number
 }
@@ -20,13 +21,16 @@ interface ConfigState {
   removeBlock: (id: string) => void
   duplicateBlock: (id: string) => void
   moveBlock: (fromIndex: number, toIndex: number) => void
+  setTheme: (theme: Partial<ThemeConfig>) => void
+  updateTheme: (partial: Partial<ThemeConfig>) => void
+  previewTheme: (partial: Partial<ThemeConfig>) => void
   undo: () => void
   redo: () => void
   canUndo: () => boolean
   canRedo: () => boolean
 }
 
-const defaultConfig: SiteConfig = {
+export const defaultConfig: SiteConfig = {
   name: 'My Website',
   blocks: [
     {
@@ -89,9 +93,17 @@ const defaultConfig: SiteConfig = {
   ],
 }
 
-function pushUndo(state: ConfigState, label: string): Partial<ConfigState> {
+function snapshot(state: ConfigState): { blocks: BlockConfig[]; theme?: Partial<ThemeConfig> } {
   return {
-    undoStack: [...state.undoStack, { blocks: JSON.parse(JSON.stringify(state.config.blocks)), label, timestamp: Date.now() }],
+    blocks: JSON.parse(JSON.stringify(state.config.blocks)),
+    theme: state.config.theme ? JSON.parse(JSON.stringify(state.config.theme)) : undefined,
+  }
+}
+
+function pushUndo(state: ConfigState, label: string): Partial<ConfigState> {
+  const snap = snapshot(state)
+  return {
+    undoStack: [...state.undoStack, { ...snap, label, timestamp: Date.now() }],
     redoStack: [],
   }
 }
@@ -169,14 +181,32 @@ export const useConfigStore = create<ConfigState>()(
           }),
         })),
 
+      setTheme: (theme) =>
+        set((state) => ({
+          ...pushUndo(state, 'Change theme'),
+          config: { ...state.config, theme },
+        })),
+
+      updateTheme: (partial) =>
+        set((state) => ({
+          ...pushUndo(state, 'Update theme'),
+          config: { ...state.config, theme: { ...state.config.theme, ...partial } },
+        })),
+
+      previewTheme: (partial) =>
+        set((state) => ({
+          config: { ...state.config, theme: { ...state.config.theme, ...partial } },
+        })),
+
       undo: () =>
         set((state) => {
           if (state.undoStack.length === 0) return state
           const prev = state.undoStack[state.undoStack.length - 1]
+          const snap = snapshot(state)
           return {
             undoStack: state.undoStack.slice(0, -1),
-            redoStack: [...state.redoStack, { blocks: JSON.parse(JSON.stringify(state.config.blocks)), label: prev.label, timestamp: Date.now() }],
-            config: { ...state.config, blocks: prev.blocks },
+            redoStack: [...state.redoStack, { ...snap, label: prev.label, timestamp: Date.now() }],
+            config: { ...state.config, blocks: prev.blocks, theme: prev.theme },
           }
         }),
 
@@ -184,10 +214,11 @@ export const useConfigStore = create<ConfigState>()(
         set((state) => {
           if (state.redoStack.length === 0) return state
           const next = state.redoStack[state.redoStack.length - 1]
+          const snap = snapshot(state)
           return {
             redoStack: state.redoStack.slice(0, -1),
-            undoStack: [...state.undoStack, { blocks: JSON.parse(JSON.stringify(state.config.blocks)), label: next.label, timestamp: Date.now() }],
-            config: { ...state.config, blocks: next.blocks },
+            undoStack: [...state.undoStack, { ...snap, label: next.label, timestamp: Date.now() }],
+            config: { ...state.config, blocks: next.blocks, theme: next.theme },
           }
         }),
 

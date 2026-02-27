@@ -53,7 +53,7 @@ function FeaturesGrid({ props }: { props: FeaturesProps }) {
               key={i}
               className="group bg-bg-2 border border-border-default rounded-xl p-5 transition-all hover:-translate-y-0.5 hover:border-border-hover hover:shadow-[0_8px_24px_rgba(0,0,0,0.2)]"
             >
-              <div className="w-10 h-10 rounded-lg bg-green/10 border border-green/20 flex items-center justify-center text-green mb-3 transition-all group-hover:bg-green/15 group-hover:shadow-[0_0_16px_rgba(34,197,94,0.15)]">
+              <div className="w-10 h-10 rounded-lg bg-green/10 border border-green/20 flex items-center justify-center text-green mb-3 transition-all group-hover:bg-green/15 group-hover:accent-glow-md">
                 <Icon size={18} />
               </div>
               <h3 className="text-sm font-semibold mb-1">{item.title}</h3>
