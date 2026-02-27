@@ -104,15 +104,16 @@ function PromptSection() {
     <div className="relative overflow-hidden">
       {/* Subtle glow background */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-green/[0.03] rounded-full blur-[80px]" />
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[500px] bg-green/[0.05] rounded-full blur-[120px]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(34,197,94,0.03)_0%,transparent_70%)]" />
       </div>
 
-      <div className="relative px-12 pt-12 pb-4">
-        <h1 className="text-[32px] font-display font-bold tracking-tight mb-1.5 animate-fade-in-up stagger-1">What will you build?</h1>
-        <p className="text-text-2 text-sm mb-6 animate-fade-in-up stagger-2">Describe your site and AI generates the layout, copy, and theme.</p>
+      <div className="relative flex flex-col items-center pt-16 pb-6 px-6">
+        <h1 className="text-[32px] font-display font-bold tracking-tight mb-2 text-center animate-fade-in-up stagger-1">What will you build?</h1>
+        <p className="text-text-2 text-sm mb-6 text-center animate-fade-in-up stagger-2">Describe your site and AI generates the layout, copy, and theme.</p>
 
         {/* Prompt card */}
-        <div className={`rounded-2xl border bg-bg-1 transition-all animate-scale-in stagger-3 ${generating ? 'border-green/30 accent-glow-sm' : 'border-border-default focus-within:border-green/40 focus-within:accent-glow-md'}`}>
+        <div className={`w-full max-w-[640px] rounded-2xl border bg-bg-1 transition-all animate-scale-in stagger-3 ${generating ? 'border-green/30 shadow-[0_0_60px_rgba(34,197,94,0.12)]' : 'border-border-hover shadow-[0_0_80px_rgba(34,197,94,0.06)] focus-within:border-green/40 focus-within:shadow-[0_0_60px_rgba(34,197,94,0.12)]'}`}>
           <textarea
             ref={textareaRef}
             value={prompt}
@@ -122,21 +123,21 @@ function PromptSection() {
                 generate(prompt)
               }
             }}
-            rows={3}
+            rows={2}
             disabled={generating}
-            placeholder="A landing page for a modern fitness app with dark theme, pricing plans, and testimonials..."
+            placeholder="A landing page for a modern fitness app with dark theme..."
             className="w-full px-5 pt-4 pb-2 bg-transparent text-text-0 text-[13.5px] outline-none placeholder:text-text-3 resize-none leading-relaxed disabled:opacity-50"
           />
 
           {/* Bottom bar */}
           <div className="flex items-center justify-between px-4 pb-3 pt-1">
-            <div className="flex items-center gap-1.5 flex-wrap animate-fade-in stagger-4">
+            <div className="flex items-center gap-1 animate-fade-in stagger-4">
               {suggestions.map((s) => (
                 <button
                   key={s}
                   onClick={() => { setPrompt(s); generate(s) }}
                   disabled={generating}
-                  className="px-2.5 py-1 rounded-lg text-text-3 text-[11px] hover:text-text-1 hover:bg-bg-3 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                  className="px-2 py-1 rounded-lg text-text-3 text-[11px] hover:text-text-1 hover:bg-bg-3 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
                 >
                   {s}
                 </button>
@@ -161,7 +162,7 @@ function PromptSection() {
                   <button
                     onClick={() => generate(prompt)}
                     disabled={!prompt.trim()}
-                    className="px-4 py-1.5 rounded-lg bg-green text-black text-[12px] font-semibold hover:bg-green-dim hover:accent-glow-md transition-all disabled:opacity-30 disabled:cursor-not-allowed inline-flex items-center gap-1.5"
+                    className="px-5 py-2 rounded-lg bg-green text-black text-[12.5px] font-semibold hover:bg-green-dim hover:accent-glow-md active:scale-[0.97] transition-all disabled:opacity-30 disabled:cursor-not-allowed inline-flex items-center gap-1.5"
                   >
                     <Sparkles size={13} />
                     Generate
@@ -174,7 +175,7 @@ function PromptSection() {
 
         {/* Error */}
         {error && (
-          <div className="mt-3 px-4 py-2.5 rounded-xl bg-status-red/10 border border-status-red/20 text-status-red text-[12px] flex items-center justify-between">
+          <div className="w-full max-w-[640px] mt-3 px-4 py-2.5 rounded-xl bg-status-red/10 border border-status-red/20 text-status-red text-[12px] flex items-center justify-between">
             <span>{error}</span>
             <button onClick={() => setError('')} className="ml-2 hover:text-text-0 transition-colors"><X size={14} /></button>
           </div>
@@ -182,7 +183,7 @@ function PromptSection() {
 
         {/* Generating progress */}
         {generating && (
-          <div className="mt-3 px-4 py-2.5 rounded-xl bg-green/5 border border-green/20 text-green text-[12.5px] flex items-center gap-2.5">
+          <div className="w-full max-w-[640px] mt-3 px-4 py-2.5 rounded-xl bg-green/5 border border-green/20 text-green text-[12.5px] flex items-center gap-2.5">
             <Loader2 size={15} className="animate-spin shrink-0" />
             <span>Building your site<span className="animate-pulse">...</span></span>
             <span className="tabular-nums text-green/60">{elapsed}s</span>
@@ -190,7 +191,7 @@ function PromptSection() {
         )}
 
         {/* Start blank */}
-        <div className="mt-3 flex items-center justify-end">
+        <div className="mt-3">
           <button
             onClick={startBlank}
             disabled={generating}

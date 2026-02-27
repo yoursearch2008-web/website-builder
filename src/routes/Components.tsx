@@ -11,6 +11,7 @@ import type { BlockConfig } from '@/blocks/types'
 export function Components() {
   const [activeCategory, setActiveCategory] = useState<string | null>(null)
   const [hoveredBlock, setHoveredBlock] = useState<string | null>(null)
+  const [activeVariants, setActiveVariants] = useState<Record<string, number>>({})
   const navigate = useNavigate()
   const addBlock = useConfigStore((s) => s.addBlock)
   const selectBlock = useEditorStore((s) => s.selectBlock)
@@ -20,10 +21,11 @@ export function Components() {
     : blockMetadata
 
   function handleAdd(meta: typeof blockMetadata[number]) {
+    const variantIdx = activeVariants[meta.type] ?? 0
     const block: BlockConfig = {
       id: `block-${Date.now()}`,
       type: meta.type,
-      variant: meta.variants[0],
+      variant: meta.variants[variantIdx],
       props: { ...meta.defaultProps },
     }
     addBlock(block)
@@ -74,18 +76,20 @@ export function Components() {
 
       {/* Component grid */}
       <div className="px-12 pt-6 pb-12 grid grid-cols-[repeat(auto-fill,minmax(320px,1fr))] gap-4">
-        {filtered.map((meta) => {
+        {filtered.map((meta, i) => {
+          const variantIdx = activeVariants[meta.type] ?? 0
           const previewBlock: BlockConfig = {
             id: `preview-${meta.type}`,
             type: meta.type,
-            variant: meta.variants[0],
+            variant: meta.variants[variantIdx],
             props: meta.defaultProps,
           }
 
           return (
             <div
               key={meta.type}
-              className="bg-bg-1 border border-border-default rounded-xl overflow-hidden card-lift hover:border-border-hover hover:card-lift-hover cursor-pointer"
+              style={{ animationDelay: `${i * 50}ms` }}
+              className="bg-bg-1 border border-border-default rounded-xl overflow-hidden card-lift hover:border-border-hover hover:card-lift-hover cursor-pointer animate-fade-in-up"
               onMouseEnter={() => setHoveredBlock(meta.type)}
               onMouseLeave={() => setHoveredBlock(null)}
             >
@@ -99,6 +103,25 @@ export function Components() {
                     {renderBlock(previewBlock)}
                   </div>
                 </div>
+
+                {/* Variant tabs */}
+                {meta.variants.length > 1 && (
+                  <div className="absolute bottom-0 left-0 right-0 flex gap-1 px-2 py-1.5 backdrop-blur-sm bg-bg-0/60">
+                    {meta.variants.map((v, vi) => (
+                      <button
+                        key={v}
+                        onClick={(e) => { e.stopPropagation(); setActiveVariants((prev) => ({ ...prev, [meta.type]: vi })) }}
+                        className={`px-2 py-0.5 rounded-md text-[10px] transition-all ${
+                          vi === variantIdx
+                            ? 'bg-green/10 text-green border border-green/20'
+                            : 'bg-bg-3/80 text-text-2 border border-transparent hover:text-text-0'
+                        }`}
+                      >
+                        {v}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
 
               {/* Body */}
@@ -131,7 +154,7 @@ export function Components() {
                     )}
                     <button
                       onClick={(e) => { e.stopPropagation(); handleAdd(meta) }}
-                      className="flex items-center gap-1 px-2 py-1 rounded text-[10px] bg-green/10 text-green hover:bg-green/20 transition-colors font-medium"
+                      className="flex items-center gap-1 px-2 py-1 rounded text-[10px] bg-green/10 text-green hover:bg-green/20 active:scale-[0.97] transition-all font-medium"
                     >
                       <Plus size={10} />
                       Add

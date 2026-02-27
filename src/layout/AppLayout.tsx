@@ -10,7 +10,7 @@ export function AppLayout() {
     <div className="h-screen w-screen flex flex-col overflow-hidden">
       <TopNav />
       <main className="flex-1 mt-12 overflow-hidden">
-        <div key={location.pathname} className="h-full animate-fade-in">
+        <div key={location.pathname} className="h-full animate-fade-in-up">
           <Outlet />
         </div>
       </main>

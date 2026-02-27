@@ -1,19 +1,15 @@
-import { useState, useCallback, useMemo } from 'react'
+import { useState, useCallback, useEffect, useRef } from 'react'
 import {
-  Settings2, Search as SearchIcon, Globe, BarChart3, Puzzle, Key, AlertTriangle, Palette, ChevronDown,
+  Settings2, Search as SearchIcon, Globe, BarChart3, Puzzle, Key, AlertTriangle, Check,
 } from 'lucide-react'
 import { toast } from 'sonner'
 import { useProjectsStore, type ProjectSettings } from '@/store/projectsStore'
 import { useEditorStore } from '@/store/editorStore'
-import { useConfigStore } from '@/store/configStore'
-import type { ThemeConfig } from '@/blocks/types'
-import { themePresets, resolveTheme, googleFontOptions } from '@/lib/theme-presets'
 
-type SettingsTab = 'general' | 'design' | 'seo' | 'domain' | 'analytics' | 'integrations' | 'api' | 'danger'
+type SettingsTab = 'general' | 'seo' | 'domain' | 'analytics' | 'integrations' | 'api' | 'danger'
 
 const tabDefs: { value: SettingsTab; label: string; icon: typeof Settings2 }[] = [
   { value: 'general', label: 'General', icon: Settings2 },
-  { value: 'design', label: 'Design', icon: Palette },
   { value: 'seo', label: 'SEO', icon: SearchIcon },
   { value: 'domain', label: 'Domain', icon: Globe },
   { value: 'analytics', label: 'Analytics', icon: BarChart3 },
@@ -31,6 +27,8 @@ function useSettingsState() {
   const projectSettings = activeProject?.settings || {}
 
   const [localOverrides, setLocalOverrides] = useState<Record<string, string>>({})
+  const [showSaved, setShowSaved] = useState(false)
+  const savedTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const data: Record<string, string> = { ...Object.fromEntries(Object.entries(projectSettings).map(([k, v]) => [k, v || ''])), ...localOverrides }
 
@@ -39,9 +37,16 @@ function useSettingsState() {
     if (activeProjectId) {
       updateProjectSettings(activeProjectId, { [key]: value } as Partial<ProjectSettings>)
     }
+    setShowSaved(true)
+    if (savedTimer.current) clearTimeout(savedTimer.current)
+    savedTimer.current = setTimeout(() => setShowSaved(false), 2000)
   }, [activeProjectId, updateProjectSettings])
 
-  return { data, update }
+  useEffect(() => {
+    return () => { if (savedTimer.current) clearTimeout(savedTimer.current) }
+  }, [])
+
+  return { data, update, showSaved }
 }
 
 function FieldGroup({ label, children }: { label: string; children: React.ReactNode }) {
@@ -92,293 +97,6 @@ function GeneralPanel({ settings }: { settings: ReturnType<typeof useSettingsSta
           <option>English</option><option>German</option><option>Spanish</option><option>French</option>
         </select>
       </FieldGroup>
-    </div>
-  )
-}
-
-// Color picker with hex input
-function ColorInput({ value, onInput, onChange }: { value: string; onInput: (v: string) => void; onChange: (v: string) => void }) {
-  return (
-    <div className="flex items-center gap-2">
-      <input
-        type="color"
-        value={value}
-        onInput={(e) => onInput((e.target as HTMLInputElement).value)}
-        onChange={(e) => onChange(e.target.value)}
-        className="w-8 h-8 rounded-lg border border-border-default bg-bg-2 cursor-pointer p-0.5"
-      />
-      <input
-        type="text"
-        value={value}
-        onChange={(e) => {
-          const v = e.target.value
-          if (/^#[0-9a-fA-F]{6}$/.test(v)) {
-            onChange(v)
-          }
-        }}
-        onBlur={(e) => {
-          const v = e.target.value
-          if (/^#[0-9a-fA-F]{6}$/.test(v)) {
-            onChange(v)
-          }
-        }}
-        className="w-[90px] px-2 py-1.5 rounded-lg border border-border-default bg-bg-2 text-text-1 text-[11px] font-mono outline-none focus:border-green"
-      />
-    </div>
-  )
-}
-
-function ColorSection({ title, colors, defaultOpen = false }: {
-  title: string
-  colors: { key: keyof ThemeConfig; label: string }[]
-  defaultOpen?: boolean
-}) {
-  const [open, setOpen] = useState(defaultOpen)
-  const theme = useConfigStore((s) => s.config.theme)
-  const previewTheme = useConfigStore((s) => s.previewTheme)
-  const updateTheme = useConfigStore((s) => s.updateTheme)
-  const resolved = useMemo(() => resolveTheme(theme), [theme])
-
-  return (
-    <div className="border border-border-default rounded-xl overflow-hidden">
-      <button
-        onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between px-4 py-3 bg-bg-2 hover:bg-bg-3 transition-colors text-left"
-      >
-        <div className="flex items-center gap-3">
-          <span className="text-[12.5px] font-semibold">{title}</span>
-          <div className="flex gap-1">
-            {colors.slice(0, 4).map((c) => (
-              <div
-                key={c.key}
-                className="w-3.5 h-3.5 rounded-sm border border-border-subtle"
-                style={{ backgroundColor: resolved[c.key] as string }}
-              />
-            ))}
-          </div>
-        </div>
-        <ChevronDown size={14} className={`text-text-3 transition-transform ${open ? 'rotate-180' : ''}`} />
-      </button>
-      {open && (
-        <div className="px-4 py-3 space-y-3 bg-bg-1">
-          {colors.map((c) => (
-            <div key={c.key} className="flex items-center justify-between">
-              <span className="text-[11.5px] text-text-2">{c.label}</span>
-              <ColorInput
-                value={resolved[c.key] as string}
-                onInput={(v) => previewTheme({ [c.key]: v })}
-                onChange={(v) => updateTheme({ [c.key]: v })}
-              />
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  )
-}
-
-function ThemePreview() {
-  const theme = useConfigStore((s) => s.config.theme)
-  const t = useMemo(() => resolveTheme(theme), [theme])
-
-  return (
-    <div className="rounded-xl border border-border-default overflow-hidden mb-6">
-      {/* Browser chrome */}
-      <div className="flex items-center gap-1.5 px-3 py-2" style={{ background: t.bg1, borderBottom: `1px solid ${t.borderDefault}` }}>
-        <div className="w-2 h-2 rounded-full bg-[#ef4444]" />
-        <div className="w-2 h-2 rounded-full bg-[#eab308]" />
-        <div className="w-2 h-2 rounded-full bg-[#22c55e]" />
-        <div className="flex-1 h-4 rounded-sm mx-2" style={{ background: t.bg3 }} />
-      </div>
-
-      {/* Page content */}
-      <div style={{ background: t.bg0, padding: '16px 20px', fontFamily: `"${t.fontSans}", sans-serif` }}>
-        {/* Navbar */}
-        <div className="flex items-center justify-between mb-4 pb-3" style={{ borderBottom: `1px solid ${t.borderDefault}` }}>
-          <div className="flex items-center gap-2">
-            <div className="w-4 h-4 rounded-sm" style={{ background: t.accent }} />
-            <div className="h-2 w-14 rounded-sm" style={{ background: t.text0, opacity: 0.8 }} />
-          </div>
-          <div className="flex items-center gap-3">
-            <div className="h-1.5 w-8 rounded-sm" style={{ background: t.text2 }} />
-            <div className="h-1.5 w-8 rounded-sm" style={{ background: t.text2 }} />
-            <div className="h-5 px-2 flex items-center" style={{ background: t.accent, borderRadius: `${t.radius}px` }}>
-              <div className="h-1.5 w-6 rounded-sm" style={{ background: t.bg0, opacity: 0.9 }} />
-            </div>
-          </div>
-        </div>
-
-        {/* Hero */}
-        <div className="text-center mb-4">
-          <div className="h-3 w-36 mx-auto mb-2 rounded-sm" style={{ background: t.text0 }} />
-          <div className="h-1.5 w-48 mx-auto mb-1 rounded-sm" style={{ background: t.text1, opacity: 0.6 }} />
-          <div className="h-1.5 w-40 mx-auto rounded-sm" style={{ background: t.text2, opacity: 0.4 }} />
-          <div className="flex gap-2 justify-center mt-3">
-            <div className="h-5 w-16" style={{ background: t.accent, borderRadius: `${t.radius}px` }} />
-            <div className="h-5 w-16" style={{ background: t.bg3, borderRadius: `${t.radius}px`, border: `1px solid ${t.borderDefault}` }} />
-          </div>
-        </div>
-
-        {/* Feature cards */}
-        <div className="flex gap-2">
-          {[0, 1, 2].map((i) => (
-            <div key={i} className="flex-1 p-2.5" style={{ background: t.bg1, border: `1px solid ${t.borderDefault}`, borderRadius: `${t.radius}px` }}>
-              <div className="w-5 h-5 mb-2 flex items-center justify-center" style={{ background: `${t.accent}18`, borderRadius: `${Math.max(t.radius - 2, 4)}px` }}>
-                <div className="w-2.5 h-2.5 rounded-full" style={{ background: t.accent }} />
-              </div>
-              <div className="h-2 w-3/4 mb-1.5 rounded-sm" style={{ background: t.text0, opacity: 0.7 }} />
-              <div className="h-1.5 w-full mb-1 rounded-sm" style={{ background: t.text2, opacity: 0.4 }} />
-              <div className="h-1.5 w-2/3 rounded-sm" style={{ background: t.text2, opacity: 0.4 }} />
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  )
-}
-
-function DesignPanel() {
-  const theme = useConfigStore((s) => s.config.theme)
-  const setTheme = useConfigStore((s) => s.setTheme)
-  const updateTheme = useConfigStore((s) => s.updateTheme)
-  const resolved = useMemo(() => resolveTheme(theme), [theme])
-
-  // Find active preset
-  const activePresetId = useMemo(() => {
-    for (const preset of themePresets) {
-      const match = Object.keys(preset.theme).every(
-        (k) => resolved[k as keyof ThemeConfig] === preset.theme[k as keyof ThemeConfig]
-      )
-      if (match) return preset.id
-    }
-    return null
-  }, [resolved])
-
-  return (
-    <div>
-      <h2 className="text-lg font-display font-semibold mb-4">Design</h2>
-
-      {/* Live theme preview */}
-      <ThemePreview />
-
-      {/* Preset grid */}
-      <div className="mb-6">
-        <div className="text-[10px] font-semibold uppercase tracking-wider text-text-3 mb-3">Presets</div>
-        <div className="grid grid-cols-5 gap-2">
-          {themePresets.map((preset) => (
-            <button
-              key={preset.id}
-              onClick={() => setTheme(preset.theme)}
-              className={`p-2.5 rounded-xl border transition-all text-left ${
-                activePresetId === preset.id
-                  ? 'border-green bg-green/5'
-                  : 'border-border-default bg-bg-2 hover:border-border-hover hover:bg-bg-3'
-              }`}
-            >
-              <div className="flex gap-1 mb-2">
-                <div className="w-4 h-4 rounded-sm" style={{ backgroundColor: preset.theme.bg0 }} />
-                <div className="w-4 h-4 rounded-sm" style={{ backgroundColor: preset.theme.bg2 }} />
-                <div className="w-4 h-4 rounded-sm" style={{ backgroundColor: preset.theme.accent }} />
-                <div className="w-4 h-4 rounded-sm" style={{ backgroundColor: preset.theme.text0 }} />
-              </div>
-              <div className="text-[10.5px] font-medium truncate">{preset.name}</div>
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Color sections */}
-      <div className="space-y-3 mb-6">
-        <ColorSection
-          title="Backgrounds"
-          defaultOpen
-          colors={[
-            { key: 'bg0', label: 'Base' },
-            { key: 'bg1', label: 'Surface 1' },
-            { key: 'bg2', label: 'Surface 2' },
-            { key: 'bg3', label: 'Surface 3' },
-            { key: 'bg4', label: 'Surface 4' },
-            { key: 'bg5', label: 'Surface 5' },
-          ]}
-        />
-        <ColorSection
-          title="Text"
-          colors={[
-            { key: 'text0', label: 'Primary' },
-            { key: 'text1', label: 'Secondary' },
-            { key: 'text2', label: 'Muted' },
-            { key: 'text3', label: 'Dimmed' },
-          ]}
-        />
-        <ColorSection
-          title="Accent"
-          defaultOpen
-          colors={[
-            { key: 'accent', label: 'Accent' },
-            { key: 'accentDim', label: 'Accent Dim' },
-          ]}
-        />
-        <ColorSection
-          title="Borders"
-          colors={[
-            { key: 'borderDefault', label: 'Default' },
-            { key: 'borderSubtle', label: 'Subtle' },
-            { key: 'borderHover', label: 'Hover' },
-          ]}
-        />
-      </div>
-
-      {/* Fonts */}
-      <div className="mb-6">
-        <div className="text-[10px] font-semibold uppercase tracking-wider text-text-3 mb-3">Fonts</div>
-        <div className="space-y-3">
-          {([
-            { key: 'fontSans' as const, label: 'Body Font' },
-            { key: 'fontDisplay' as const, label: 'Display Font' },
-            { key: 'fontMono' as const, label: 'Mono Font' },
-          ]).map(({ key, label }) => (
-            <FieldGroup key={key} label={label}>
-              <select
-                value={resolved[key]}
-                onChange={(e) => updateTheme({ [key]: e.target.value })}
-                className="w-full px-3 py-2 rounded-lg border border-border-default bg-bg-2 text-text-0 text-[13px] outline-none focus:border-green cursor-pointer"
-                style={{ fontFamily: `"${resolved[key]}", sans-serif` }}
-              >
-                {googleFontOptions.map((f) => (
-                  <option key={f} value={f}>{f}</option>
-                ))}
-              </select>
-            </FieldGroup>
-          ))}
-        </div>
-      </div>
-
-      {/* Radius */}
-      <div>
-        <div className="text-[10px] font-semibold uppercase tracking-wider text-text-3 mb-3">Border Radius</div>
-        <div className="grid grid-cols-2 gap-3">
-          <FieldGroup label="Default (px)">
-            <input
-              type="number"
-              min={0}
-              max={24}
-              value={resolved.radius}
-              onChange={(e) => updateTheme({ radius: Number(e.target.value) })}
-              className="w-full px-3 py-2 rounded-lg border border-border-default bg-bg-2 text-text-0 text-[13px] outline-none focus:border-green"
-            />
-          </FieldGroup>
-          <FieldGroup label="Large (px)">
-            <input
-              type="number"
-              min={0}
-              max={32}
-              value={resolved.radiusLg}
-              onChange={(e) => updateTheme({ radiusLg: Number(e.target.value) })}
-              className="w-full px-3 py-2 rounded-lg border border-border-default bg-bg-2 text-text-0 text-[13px] outline-none focus:border-green"
-            />
-          </FieldGroup>
-        </div>
-      </div>
     </div>
   )
 }
@@ -460,10 +178,10 @@ function AnalyticsPanel({ settings }: { settings: ReturnType<typeof useSettingsS
 
 function IntegrationsPanel() {
   const integrations = [
-    { name: 'Stripe', description: 'Accept payments', connected: false },
-    { name: 'Mailchimp', description: 'Email marketing', connected: false },
-    { name: 'Slack', description: 'Form notifications', connected: true },
-    { name: 'Zapier', description: 'Workflow automation', connected: false },
+    { name: 'Stripe', description: 'Accept payments' },
+    { name: 'Mailchimp', description: 'Email marketing' },
+    { name: 'Slack', description: 'Form notifications' },
+    { name: 'Zapier', description: 'Workflow automation' },
   ]
   return (
     <div>
@@ -475,17 +193,13 @@ function IntegrationsPanel() {
               <div className="text-sm font-semibold">{int.name}</div>
               <div className="text-[11px] text-text-3">{int.description}</div>
             </div>
-            <button
-              onClick={() => toast(int.connected ? `${int.name} is connected` : `${int.name} integration coming soon`)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
-                int.connected ? 'bg-green/10 text-green' : 'bg-bg-3 text-text-2 border border-border-default hover:bg-bg-4'
-              }`}
-            >
-              {int.connected ? 'Connected' : 'Connect'}
-            </button>
+            <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-bg-3 text-text-3 font-medium uppercase tracking-wider">
+              Coming Soon
+            </span>
           </div>
         ))}
       </div>
+      <p className="text-[11px] text-text-3 mt-4">Integrations are on the roadmap. Stay tuned for updates.</p>
     </div>
   )
 }
@@ -494,21 +208,10 @@ function ApiPanel() {
   return (
     <div>
       <h2 className="text-lg font-semibold mb-4">API Keys</h2>
-      <div className="p-4 rounded-xl bg-bg-2 border border-border-default mb-4">
-        <div className="flex items-center justify-between mb-2">
-          <span className="text-[12px] font-semibold">Project API Key</span>
-          <button
-            onClick={() => toast('API key regeneration coming soon')}
-            className="text-[10px] px-2 py-1 rounded bg-bg-3 text-text-2 border border-border-default hover:bg-bg-4 transition-colors"
-          >
-            Regenerate
-          </button>
-        </div>
-        <div className="font-mono text-[11px] text-text-2 bg-bg-3 rounded px-3 py-2 select-all">
-          op_sk_xxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        </div>
+      <div className="p-4 rounded-xl bg-bg-2 border border-border-default">
+        <p className="text-[13px] text-text-1 mb-2">API access will be available in a future release.</p>
+        <p className="text-[11px] text-text-3">You'll be able to read and update your site config programmatically, enabling CI/CD workflows and headless CMS integrations.</p>
       </div>
-      <p className="text-[11px] text-text-3">Use this key to authenticate API requests. Keep it secret.</p>
     </div>
   )
 }
@@ -553,7 +256,6 @@ export function Settings() {
 
   const panels: Record<SettingsTab, React.ReactNode> = {
     general: <GeneralPanel settings={settings} />,
-    design: <DesignPanel />,
     seo: <SeoPanel settings={settings} />,
     domain: <DomainPanel settings={settings} />,
     analytics: <AnalyticsPanel settings={settings} />,
@@ -566,11 +268,12 @@ export function Settings() {
     <div className="h-full flex overflow-hidden">
       {/* Sidebar */}
       <div className="w-52 bg-bg-1 border-r border-border-default p-2 shrink-0">
-        {tabDefs.map(({ value, label, icon: Icon }) => (
+        {tabDefs.map(({ value, label, icon: Icon }, i) => (
           <button
             key={value}
             onClick={() => setActiveTab(value)}
-            className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-[12.5px] transition-all text-left ${
+            style={{ animationDelay: `${i * 40}ms` }}
+            className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-[12.5px] transition-all text-left animate-fade-in-up ${
               activeTab === value
                 ? value === 'danger'
                   ? 'bg-status-red/10 text-status-red'
@@ -587,8 +290,14 @@ export function Settings() {
       </div>
 
       {/* Content */}
-      <div className="flex-1 overflow-y-auto p-8 max-w-2xl">
-        <div key={activeTab} className="animate-fade-in">
+      <div className="flex-1 overflow-y-auto p-8 max-w-2xl relative">
+        {settings.showSaved && (
+          <div className="absolute top-3 right-6 flex items-center gap-1.5 text-green text-[11px] animate-fade-in">
+            <Check size={12} />
+            Saved
+          </div>
+        )}
+        <div key={activeTab} className="animate-fade-in-up">
           {panels[activeTab]}
         </div>
       </div>

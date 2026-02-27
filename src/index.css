@@ -169,7 +169,8 @@ select:focus-visible {
 
 @utility card-lift-hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35), 0 4px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35), 0 4px 10px rgba(0, 0, 0, 0.2), 0 0 16px rgba(34, 197, 94, 0.06);
+  border-color: var(--color-border-hover);
 }
 
 /* Accent glow shadows - @utility so Tailwind v4 generates hover:/group-hover: variants */

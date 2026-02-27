@@ -33,10 +33,10 @@ export function TopNav() {
             to={to}
             end={to === '/'}
             className={({ isActive }) =>
-              `px-3.5 flex items-center text-[13px] relative transition-colors whitespace-nowrap gap-1.5 ${
+              `px-3.5 flex items-center text-[13px] relative transition-colors whitespace-nowrap gap-1.5 after:content-[""] after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:rounded-t after:transition-all after:duration-200 ${
                 isActive
-                  ? 'text-text-0 after:content-[""] after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-green after:rounded-t'
-                  : 'text-text-2 hover:text-text-1'
+                  ? 'text-text-0 after:bg-green after:opacity-100'
+                  : 'text-text-2 hover:text-text-1 after:bg-transparent after:opacity-0'
               }`
             }
           >

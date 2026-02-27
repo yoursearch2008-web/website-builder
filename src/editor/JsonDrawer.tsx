@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { toast } from 'sonner'
 import { useConfigStore } from '@/store/configStore'
 import { useEditorStore } from '@/store/editorStore'
@@ -38,6 +38,9 @@ export function JsonDrawer() {
   const [editing, setEditing] = useState(false)
   const [editValue, setEditValue] = useState('')
   const [error, setError] = useState<string | null>(null)
+  const [syncing, setSyncing] = useState(false)
+  const prevConfigRef = useRef(config)
+  const syncTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   // Reset edit state when drawer closes
   useEffect(() => {
@@ -46,6 +49,17 @@ export function JsonDrawer() {
       setError(null)
     }
   }, [jsonDrawerOpen])
+
+  // Track config changes for sync indicator
+  useEffect(() => {
+    if (config !== prevConfigRef.current) {
+      prevConfigRef.current = config
+      setSyncing(true)
+      if (syncTimer.current) clearTimeout(syncTimer.current)
+      syncTimer.current = setTimeout(() => setSyncing(false), 300)
+    }
+    return () => { if (syncTimer.current) clearTimeout(syncTimer.current) }
+  }, [config])
 
   const jsonStr = JSON.stringify(config, null, 2)
   const highlighted = syntaxHighlight(jsonStr)
@@ -115,9 +129,9 @@ export function JsonDrawer() {
               </button>
             </>
           )}
-          <div className="flex items-center gap-1 text-[10px] text-green">
-            <span className="w-1.5 h-1.5 rounded-full bg-green animate-pulse" />
-            Synced
+          <div className={`flex items-center gap-1 text-[10px] transition-colors ${syncing ? 'text-status-yellow' : 'text-green'}`}>
+            <span className={`w-1.5 h-1.5 rounded-full ${syncing ? 'bg-status-yellow animate-pulse' : 'bg-green'}`} />
+            {syncing ? 'Saving...' : 'Synced'}
           </div>
         </div>
       </div>
