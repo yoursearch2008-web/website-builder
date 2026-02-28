@@ -29,6 +29,8 @@ export function Canvas() {
       onClick={(e) => {
         if (e.target === e.currentTarget) selectBlock(null)
       }}
+      role="region"
+      aria-label={`Site preview, ${blocks.length} blocks, ${viewport} viewport`}
     >
       {blocks.map((block) => (
         <BlockWrapper

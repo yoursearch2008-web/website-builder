@@ -104,12 +104,66 @@ function FeaturesList({ props }: { props: FeaturesProps }) {
   )
 }
 
+function FeaturesAlternating({ props }: { props: FeaturesProps }) {
+  return (
+    <section className="px-6 @md:px-10 py-16 @md:py-20">
+      <div className="text-center mb-12">
+        {props.label && (
+          <div className="text-[11px] font-semibold uppercase tracking-widest text-green mb-2">
+            {props.label}
+          </div>
+        )}
+        <h2 className="text-2xl @md:text-3xl font-bold tracking-tight mb-2">{props.title}</h2>
+        {props.subtitle && (
+          <p className="text-text-2 text-sm max-w-lg mx-auto">{props.subtitle}</p>
+        )}
+      </div>
+
+      <div className="space-y-8">
+        {props.items.map((item, i) => {
+          const Icon = getIcon(item.icon)
+          const imageUrl = (item as unknown as Record<string, unknown>).image as string | undefined
+          const isReversed = i % 2 === 1
+
+          return (
+            <div
+              key={i}
+              className={`flex flex-col @lg:flex-row items-center gap-6 @lg:gap-10 ${isReversed ? '@lg:flex-row-reverse' : ''}`}
+            >
+              {/* Image / placeholder */}
+              <div className="flex-1 w-full">
+                {imageUrl ? (
+                  <img src={imageUrl} alt={item.title} className="w-full h-48 @lg:h-56 object-cover rounded-xl" />
+                ) : (
+                  <div className="w-full h-48 @lg:h-56 rounded-xl bg-bg-2 border border-border-default flex items-center justify-center">
+                    <Icon size={32} className="text-green/30" />
+                  </div>
+                )}
+              </div>
+              {/* Text */}
+              <div className="flex-1">
+                <div className="w-10 h-10 rounded-lg bg-green/10 border border-green/20 flex items-center justify-center text-green mb-3">
+                  <Icon size={18} />
+                </div>
+                <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
+                <p className="text-text-2 text-[13px] leading-relaxed">{item.description}</p>
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    </section>
+  )
+}
+
 export function FeaturesBlock({ block }: { block: BlockConfig }) {
   const props = block.props as unknown as FeaturesProps
 
   switch (block.variant) {
     case 'list':
       return <FeaturesList props={props} />
+    case 'alternating':
+      return <FeaturesAlternating props={props} />
     default:
       return <FeaturesGrid props={props} />
   }

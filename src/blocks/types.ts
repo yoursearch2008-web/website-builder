@@ -12,6 +12,12 @@ export type BlockType =
   | 'contact'
   | 'newsletter'
   | 'logocloud'
+  | 'divider'
+  | 'banner'
+  | 'content'
+  | 'image'
+  | 'video'
+  | 'gallery'
 
 export type BlockVariant = string
 

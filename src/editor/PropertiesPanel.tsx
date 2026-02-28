@@ -21,6 +21,12 @@ const blockFields: Partial<Record<BlockType, { sections: { title: string; fields
           { key: 'links', label: 'Nav Links', type: 'array-strings' },
         ],
       },
+      {
+        title: 'Style',
+        fields: [
+          { key: 'variant', label: 'Variant', type: 'select', options: ['default', 'centered'] },
+        ],
+      },
     ],
   },
   hero: {
@@ -38,7 +44,7 @@ const blockFields: Partial<Record<BlockType, { sections: { title: string; fields
       {
         title: 'Style',
         fields: [
-          { key: 'variant', label: 'Variant', type: 'select', options: ['centered', 'split', 'gradient'] },
+          { key: 'variant', label: 'Variant', type: 'select', options: ['centered', 'split', 'gradient', 'minimal'] },
         ],
       },
     ],
@@ -62,7 +68,7 @@ const blockFields: Partial<Record<BlockType, { sections: { title: string; fields
       {
         title: 'Style',
         fields: [
-          { key: 'variant', label: 'Variant', type: 'select', options: ['grid', 'list'] },
+          { key: 'variant', label: 'Variant', type: 'select', options: ['grid', 'list', 'alternating'] },
         ],
       },
     ],
@@ -133,7 +139,7 @@ const blockFields: Partial<Record<BlockType, { sections: { title: string; fields
       {
         title: 'Style',
         fields: [
-          { key: 'variant', label: 'Variant', type: 'select', options: ['cards', 'carousel'] },
+          { key: 'variant', label: 'Variant', type: 'select', options: ['cards', 'carousel', 'spotlight'] },
         ],
       },
     ],
@@ -150,7 +156,7 @@ const blockFields: Partial<Record<BlockType, { sections: { title: string; fields
       {
         title: 'Style',
         fields: [
-          { key: 'variant', label: 'Variant', type: 'select', options: ['grid', 'bar'] },
+          { key: 'variant', label: 'Variant', type: 'select', options: ['grid', 'bar', 'counter'] },
         ],
       },
     ],
@@ -210,6 +216,112 @@ const blockFields: Partial<Record<BlockType, { sections: { title: string; fields
         fields: [
           { key: 'title', label: 'Title', type: 'text' },
           { key: 'logos', label: 'Logos', type: 'array-strings' },
+        ],
+      },
+    ],
+  },
+  content: {
+    sections: [
+      {
+        title: 'Content',
+        fields: [
+          { key: 'body', label: 'Body', type: 'textarea' },
+        ],
+      },
+      {
+        title: 'Style',
+        fields: [
+          { key: 'variant', label: 'Variant', type: 'select', options: ['prose', 'columns', 'highlight'] },
+        ],
+      },
+    ],
+  },
+  image: {
+    sections: [
+      {
+        title: 'Content',
+        fields: [
+          { key: 'src', label: 'Image URL', type: 'text' },
+          { key: 'alt', label: 'Alt Text', type: 'text' },
+          { key: 'title', label: 'Title', type: 'text' },
+          { key: 'subtitle', label: 'Subtitle', type: 'text' },
+          { key: 'imageSide', label: 'Image Side', type: 'select', options: ['left', 'right'] },
+        ],
+      },
+      {
+        title: 'Grid Images',
+        fields: [
+          { key: 'images', label: 'Images', type: 'array-items' },
+        ],
+      },
+      {
+        title: 'Style',
+        fields: [
+          { key: 'variant', label: 'Variant', type: 'select', options: ['hero-image', 'side-by-side', 'grid'] },
+        ],
+      },
+    ],
+  },
+  video: {
+    sections: [
+      {
+        title: 'Content',
+        fields: [
+          { key: 'url', label: 'Video URL', type: 'text' },
+          { key: 'title', label: 'Title', type: 'text' },
+        ],
+      },
+      {
+        title: 'Style',
+        fields: [
+          { key: 'variant', label: 'Platform', type: 'select', options: ['youtube', 'vimeo'] },
+        ],
+      },
+    ],
+  },
+  gallery: {
+    sections: [
+      {
+        title: 'Content',
+        fields: [
+          { key: 'title', label: 'Title', type: 'text' },
+          { key: 'images', label: 'Images', type: 'array-items' },
+        ],
+      },
+      {
+        title: 'Style',
+        fields: [
+          { key: 'variant', label: 'Variant', type: 'select', options: ['grid', 'masonry'] },
+        ],
+      },
+    ],
+  },
+  divider: {
+    sections: [
+      {
+        title: 'Style',
+        fields: [
+          { key: 'variant', label: 'Variant', type: 'select', options: ['line', 'space', 'dots'] },
+          { key: 'width', label: 'Width', type: 'select', options: ['full', 'centered', 'narrow'] },
+          { key: 'height', label: 'Height (px)', type: 'text' },
+        ],
+      },
+    ],
+  },
+  banner: {
+    sections: [
+      {
+        title: 'Content',
+        fields: [
+          { key: 'text', label: 'Text', type: 'text' },
+          { key: 'linkText', label: 'Link Text', type: 'text' },
+          { key: 'linkUrl', label: 'Link URL', type: 'text' },
+        ],
+      },
+      {
+        title: 'Style',
+        fields: [
+          { key: 'variant', label: 'Variant', type: 'select', options: ['ribbon', 'bar'] },
         ],
       },
     ],
@@ -329,6 +441,8 @@ function PropertyField({ field, block }: { field: FieldDef; block: BlockConfig }
           faq: { items: { question: '', answer: '' } },
           team: { members: { name: '', role: '' } },
           features: { items: { title: '', description: '' } },
+          image: { images: { src: '', alt: '' } },
+          gallery: { images: { src: '', alt: '', caption: '' } },
         }
         return blockTemplates[block.type]?.[field.key] || { title: '', description: '' }
       }

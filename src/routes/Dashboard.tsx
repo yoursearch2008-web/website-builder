@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Search, Sparkles, Loader2, X, ArrowRight, Trash2, FolderOpen, Paperclip, Image as ImageIcon } from 'lucide-react'
+import { toast } from 'sonner'
+import { Search, Sparkles, Loader2, X, ArrowRight, Trash2, FolderOpen, Paperclip, Image as ImageIcon, Copy } from 'lucide-react'
 import { useProjectsStore, type Project } from '@/store/projectsStore'
 import { useConfigStore, defaultConfig } from '@/store/configStore'
 import { useEditorStore } from '@/store/editorStore'
@@ -144,7 +145,7 @@ function PromptSection() {
                   <div key={i} className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-bg-3 border border-border-default text-[11px] text-text-1">
                     <ImageIcon size={11} className="text-text-3" />
                     <span className="max-w-[120px] truncate">{file.name}</span>
-                    <button onClick={() => setAttachments((prev) => prev.filter((_, j) => j !== i))} className="text-text-3 hover:text-text-0 transition-colors">
+                    <button onClick={() => setAttachments((prev) => prev.filter((_, j) => j !== i))} className="text-text-3 hover:text-text-0 transition-colors" aria-label={`Remove ${file.name}`}>
                       <X size={10} />
                     </button>
                   </div>
@@ -171,6 +172,7 @@ function PromptSection() {
                   disabled={generating}
                   className="p-1.5 rounded-lg text-text-3 hover:text-text-1 hover:bg-bg-3 transition-all disabled:opacity-30"
                   title="Attach reference images"
+                  aria-label="Attach reference images"
                 >
                   <Paperclip size={14} />
                 </button>
@@ -253,6 +255,7 @@ function ProjectCard({ project }: { project: Project }) {
   const navigate = useNavigate()
   const renameProject = useProjectsStore((s) => s.renameProject)
   const deleteProject = useProjectsStore((s) => s.deleteProject)
+  const duplicateProject = useProjectsStore((s) => s.duplicateProject)
   const setConfig = useConfigStore((s) => s.setConfig)
   const setActiveProject = useEditorStore((s) => s.setActiveProject)
   const [editing, setEditing] = useState(false)
@@ -311,17 +314,27 @@ function ProjectCard({ project }: { project: Project }) {
           style={{ background: `linear-gradient(135deg, ${accent}, transparent)` }}
         />
 
-        {/* Delete button */}
-        <button
-          onClick={handleDelete}
-          className={`absolute top-2 right-2 z-10 rounded-md border transition-all ${
-            confirming
-              ? 'px-2 py-1 bg-status-red/90 border-status-red text-white text-[10px] font-medium opacity-100'
-              : 'p-1.5 bg-bg-0/80 border-border-default text-text-3 opacity-0 group-hover:opacity-100 hover:text-status-red hover:border-status-red/30'
-          }`}
-        >
-          {confirming ? 'Delete?' : <Trash2 size={12} />}
-        </button>
+        {/* Action buttons */}
+        <div className="absolute top-2 right-2 z-10 flex gap-1">
+          <button
+            onClick={(e) => { e.stopPropagation(); duplicateProject(project.id); toast('Project duplicated') }}
+            aria-label={`Duplicate ${project.name}`}
+            className="p-1.5 rounded-md border bg-bg-0/80 border-border-default text-text-3 opacity-0 group-hover:opacity-100 hover:text-green hover:border-green/30 transition-all"
+          >
+            <Copy size={12} />
+          </button>
+          <button
+            onClick={handleDelete}
+            aria-label={confirming ? `Confirm delete ${project.name}` : `Delete ${project.name}`}
+            className={`rounded-md border transition-all ${
+              confirming
+                ? 'px-2 py-1 bg-status-red/90 border-status-red text-white text-[10px] font-medium opacity-100'
+                : 'p-1.5 bg-bg-0/80 border-border-default text-text-3 opacity-0 group-hover:opacity-100 hover:text-status-red hover:border-status-red/30'
+            }`}
+          >
+            {confirming ? 'Delete?' : <Trash2 size={12} />}
+          </button>
+        </div>
 
         {/* Wireframe - varies by project name hash */}
         <div className="absolute inset-3 flex flex-col gap-1.5 p-2.5">

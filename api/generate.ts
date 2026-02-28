@@ -47,13 +47,13 @@ Return a JSON object matching this exact schema:
 
 ## Available Block Types
 
-1. **navbar** (variants: default)
+1. **navbar** (variants: default, centered)
    Props: { logo: string, links: string[], ctaText: string }
 
-2. **hero** (variants: centered, split, gradient)
+2. **hero** (variants: centered, split, gradient, minimal)
    Props: { badge?: string, headline: string, subheadline: string, primaryCta: string, secondaryCta?: string }
 
-3. **features** (variants: grid, list)
+3. **features** (variants: grid, list, alternating)
    Props: { label?: string, title: string, subtitle?: string, items: [{ icon?: string, title: string, description: string }] }
    Available icons: Blocks, Code, Bot, Zap, Shield, Globe, Layers, Palette, Rocket, Star, Lock, Settings
 
@@ -66,10 +66,10 @@ Return a JSON object matching this exact schema:
 6. **footer** (variants: simple, multi-column, minimal)
    Props: { logo: string, copyright: string, links: string[] }
 
-7. **testimonials** (variants: cards, carousel)
+7. **testimonials** (variants: cards, carousel, spotlight)
    Props: { title?: string, items?: [{ name: string, role?: string, company?: string, quote: string, rating?: number }] }
 
-8. **stats** (variants: grid, bar)
+8. **stats** (variants: grid, bar, counter)
    Props: { title?: string, items?: [{ value: string, label: string }] }
 
 9. **faq** (variants: accordion)
@@ -86,6 +86,24 @@ Return a JSON object matching this exact schema:
 
 13. **logocloud** (variants: default)
     Props: { title?: string }
+
+14. **content** (variants: prose, columns, highlight)
+    Props: { body: string } (supports markdown: **bold**, *italic*, ## headers, - lists)
+
+15. **image** (variants: hero-image, side-by-side, grid)
+    Props: { src?: string, alt?: string, title?: string, subtitle?: string, images?: [{ src: string, alt: string }], imageSide?: 'left' | 'right' }
+
+16. **video** (variants: youtube, vimeo)
+    Props: { url: string, title?: string }
+
+17. **gallery** (variants: grid, masonry)
+    Props: { title?: string, images?: [{ src?: string, alt?: string, caption?: string }] }
+
+18. **divider** (variants: line, space, dots)
+    Props: { height?: number, width?: 'full' | 'centered' | 'narrow' }
+
+19. **banner** (variants: ribbon, bar)
+    Props: { text: string, linkText?: string, linkUrl?: string }
 
 ## Theme Examples
 

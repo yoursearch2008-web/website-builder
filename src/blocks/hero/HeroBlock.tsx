@@ -128,6 +128,23 @@ function HeroGradient({ props }: { props: HeroProps }) {
   )
 }
 
+function HeroMinimal({ props }: { props: HeroProps }) {
+  return (
+    <section className="px-6 @md:px-10 py-24 @md:py-36 text-center">
+      <h1 className="text-5xl @md:text-7xl font-bold tracking-tighter leading-[1.05] mb-6 max-w-4xl mx-auto">
+        {props.headline}
+      </h1>
+      <p className="text-text-2 text-lg @md:text-xl leading-relaxed max-w-lg mx-auto mb-10">
+        {props.subheadline}
+      </p>
+      <button className="px-8 py-4 rounded-lg bg-green text-black text-sm font-semibold hover:bg-green-dim transition-all hover:accent-glow-xl flex items-center gap-2 mx-auto">
+        {props.primaryCta}
+        <ArrowRight size={16} />
+      </button>
+    </section>
+  )
+}
+
 export function HeroBlock({ block }: { block: BlockConfig }) {
   const props = block.props as unknown as HeroProps
 
@@ -136,6 +153,8 @@ export function HeroBlock({ block }: { block: BlockConfig }) {
       return <HeroSplit props={props} />
     case 'gradient':
       return <HeroGradient props={props} />
+    case 'minimal':
+      return <HeroMinimal props={props} />
     default:
       return <HeroCentered props={props} />
   }

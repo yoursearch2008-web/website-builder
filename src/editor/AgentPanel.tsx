@@ -2,6 +2,9 @@ import { useState, useRef, useEffect } from 'react'
 import { Send, Check, X } from 'lucide-react'
 import { toast } from 'sonner'
 import { useConfigStore } from '@/store/configStore'
+import { blockMetadata } from '@/lib/block-metadata'
+import { themePresets } from '@/lib/theme-presets'
+import type { BlockConfig } from '@/blocks/types'
 
 interface ChatMessage {
   id: string
@@ -49,11 +52,12 @@ function TypingIndicator() {
   )
 }
 
-// Simple pattern matching for demo agent responses
-function generateResponse(input: string, blocks: { id: string; type: string; props: Record<string, unknown> }[]): ChatMessage {
+// Pattern matching for demo agent responses
+function generateResponse(input: string, blocks: { id: string; type: string; variant: string; props: Record<string, unknown> }[]): ChatMessage | { action: 'addBlock'; block: BlockConfig; message: string } | { action: 'removeBlock'; blockId: string; message: string } | { action: 'changeVariant'; blockId: string; variant: string; message: string } | { action: 'changeTheme'; themeId: string; message: string } {
   const lower = input.toLowerCase()
   const heroBlock = blocks.find((b) => b.type === 'hero')
 
+  // Change headline
   if (lower.includes('change') && lower.includes('headline') && heroBlock) {
     const match = input.match(/["'](.+?)["']/) || input.match(/to\s+(.+)/i)
     const newHeadline = match?.[1]?.trim() || 'Your New Headline'
@@ -73,10 +77,61 @@ function generateResponse(input: string, blocks: { id: string; type: string; pro
     }
   }
 
+  // Add block: "add a pricing section", "add FAQ", "add testimonials"
+  const addMatch = lower.match(/add\s+(?:a\s+)?(\w+)/)
+  if (addMatch) {
+    const blockType = addMatch[1].replace(/s$/, '') // strip trailing s
+    const meta = blockMetadata.find((b) => b.type === blockType || b.label.toLowerCase().includes(blockType))
+    if (meta) {
+      const block: BlockConfig = {
+        id: `block-${Date.now()}`,
+        type: meta.type,
+        variant: meta.variants[0],
+        props: { ...meta.defaultProps },
+      }
+      return { action: 'addBlock', block, message: `Adding a ${meta.label} block.` }
+    }
+  }
+
+  // Remove block: "remove the FAQ", "delete the pricing"
+  const removeMatch = lower.match(/(?:remove|delete)\s+(?:the\s+)?(\w+)/)
+  if (removeMatch) {
+    const blockType = removeMatch[1].replace(/s$/, '')
+    const found = blocks.find((b) => b.type === blockType || b.type.includes(blockType))
+    if (found) {
+      return { action: 'removeBlock', blockId: found.id, message: `Removing the ${found.type} block.` }
+    }
+  }
+
+  // Change variant: "make the hero a split layout", "change hero to minimal"
+  const variantMatch = lower.match(/(?:make|change|switch)\s+(?:the\s+)?(\w+)\s+(?:to\s+|a\s+)?(\w+)/)
+  if (variantMatch) {
+    const blockType = variantMatch[1]
+    const variant = variantMatch[2]
+    const found = blocks.find((b) => b.type === blockType || b.type.includes(blockType))
+    if (found) {
+      const meta = blockMetadata.find((b) => b.type === found.type)
+      const matchedVariant = meta?.variants.find((v) => v.includes(variant))
+      if (matchedVariant) {
+        return { action: 'changeVariant', blockId: found.id, variant: matchedVariant, message: `Changing ${found.type} to ${matchedVariant} variant.` }
+      }
+    }
+  }
+
+  // Change theme: "make it blue", "switch to ocean theme", "use midnight theme"
+  const themeMatch = lower.match(/(?:make it|switch to|use|apply)\s+(?:the\s+)?(\w+)\s*(?:theme)?/)
+  if (themeMatch) {
+    const themeName = themeMatch[1]
+    const preset = themePresets.find((p) => p.id.includes(themeName) || p.name.toLowerCase().includes(themeName))
+    if (preset) {
+      return { action: 'changeTheme', themeId: preset.id, message: `Switching to the ${preset.name} theme.` }
+    }
+  }
+
   return {
     id: `msg-${Date.now()}`,
     role: 'agent',
-    text: "I'm a demo agent. I can change the hero headline if you ask me to. Try: \"Change the headline to 'Your New Title'\"",
+    text: "I can help with your site. Try:\n- \"Change the headline to 'New Title'\"\n- \"Add a pricing section\"\n- \"Remove the FAQ\"\n- \"Make the hero a split layout\"\n- \"Switch to midnight theme\"",
   }
 }
 
@@ -85,6 +140,10 @@ export function AgentPanel() {
   const [input, setInput] = useState('')
   const [showTyping, setShowTyping] = useState(false)
   const updateBlockProps = useConfigStore((s) => s.updateBlockProps)
+  const addBlock = useConfigStore((s) => s.addBlock)
+  const removeBlock = useConfigStore((s) => s.removeBlock)
+  const updateBlock = useConfigStore((s) => s.updateBlock)
+  const setTheme = useConfigStore((s) => s.setTheme)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -124,7 +183,31 @@ export function AgentPanel() {
       const currentBlocks = useConfigStore.getState().config.blocks
       const response = generateResponse(text, currentBlocks)
       setShowTyping(false)
-      setMessages((prev) => [...prev, response])
+
+      // Handle action-based responses
+      if ('action' in response) {
+        const agentMsg: ChatMessage = { id: `msg-${Date.now()}`, role: 'agent', text: response.message }
+        setMessages((prev) => [...prev, agentMsg])
+
+        if (response.action === 'addBlock') {
+          addBlock(response.block)
+          toast(`${response.block.type} block added`)
+        } else if (response.action === 'removeBlock') {
+          removeBlock(response.blockId)
+          toast('Block removed')
+        } else if (response.action === 'changeVariant') {
+          updateBlock(response.blockId, { variant: response.variant })
+          toast(`Variant changed to ${response.variant}`)
+        } else if (response.action === 'changeTheme') {
+          const preset = themePresets.find((p) => p.id === response.themeId)
+          if (preset) {
+            setTheme(preset.theme)
+            toast(`Theme changed to ${preset.name}`)
+          }
+        }
+      } else {
+        setMessages((prev) => [...prev, response])
+      }
     }, 800 + Math.random() * 600)
   }
 
@@ -209,12 +292,13 @@ export function AgentPanel() {
           <button
             onClick={handleSend}
             className="w-9 h-9 rounded-lg bg-green flex items-center justify-center text-black shrink-0 hover:bg-green-dim transition-colors"
+            aria-label="Send message"
           >
             <Send size={14} />
           </button>
         </div>
         <div className="flex gap-1 mt-1.5 flex-wrap">
-          {['Change the headline', 'Add pricing', 'Make it minimal'].map((hint) => (
+          {['Change the headline', 'Add a pricing section', 'Make the hero split', 'Switch to midnight theme'].map((hint) => (
             <span
               key={hint}
               onClick={() => handleHint(hint)}

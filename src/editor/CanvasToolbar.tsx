@@ -48,6 +48,8 @@ export function CanvasToolbar() {
           <button
             key={value}
             title={label}
+            aria-label={label}
+            aria-pressed={viewport === value}
             onClick={() => setViewport(value)}
             className={`w-7 h-7 rounded flex items-center justify-center text-xs transition-all ${
               viewport === value
@@ -67,6 +69,7 @@ export function CanvasToolbar() {
           disabled={!canUndo()}
           className="w-7 h-7 rounded flex items-center justify-center text-text-3 hover:text-text-1 hover:bg-bg-3 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
           title="Undo"
+          aria-label="Undo"
         >
           <Undo2 size={14} />
         </button>
@@ -75,6 +78,7 @@ export function CanvasToolbar() {
           disabled={!canRedo()}
           className="w-7 h-7 rounded flex items-center justify-center text-text-3 hover:text-text-1 hover:bg-bg-3 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
           title="Redo"
+          aria-label="Redo"
         >
           <Redo2 size={14} />
         </button>
@@ -88,6 +92,8 @@ export function CanvasToolbar() {
             previewMode ? 'bg-green-glow text-green' : 'text-text-3 hover:text-text-1 hover:bg-bg-3'
           }`}
           title="Preview (P)"
+          aria-label="Toggle preview mode"
+          aria-pressed={previewMode}
         >
           <Eye size={14} />
         </button>
@@ -99,6 +105,8 @@ export function CanvasToolbar() {
             jsonDrawerOpen ? 'bg-green-glow text-green' : 'text-text-3 hover:text-text-1 hover:bg-bg-3'
           }`}
           title="JSON Drawer (J)"
+          aria-label="Toggle JSON drawer"
+          aria-pressed={jsonDrawerOpen}
         >
           <Code size={14} />
         </button>
@@ -108,6 +116,7 @@ export function CanvasToolbar() {
           onClick={toggleHistory}
           className="w-7 h-7 rounded flex items-center justify-center text-text-3 hover:text-text-1 hover:bg-bg-3 transition-all"
           title="History (H)"
+          aria-label="Toggle version history"
         >
           <Clock size={14} />
         </button>

@@ -8,8 +8,9 @@ export function AppLayout() {
 
   return (
     <div className="h-screen w-screen flex flex-col overflow-hidden">
+      <a href="#main-content" className="skip-to-content">Skip to content</a>
       <TopNav />
-      <main className="flex-1 mt-12 overflow-hidden">
+      <main id="main-content" className="flex-1 mt-12 overflow-hidden" role="main">
         <div key={location.pathname} className="h-full animate-fade-in-up">
           <Outlet />
         </div>

@@ -14,6 +14,12 @@ import { TeamBlock } from './team/TeamBlock'
 import { ContactBlock } from './contact/ContactBlock'
 import { NewsletterBlock } from './newsletter/NewsletterBlock'
 import { LogoCloudBlock } from './logocloud/LogoCloudBlock'
+import { DividerBlock } from './divider/DividerBlock'
+import { BannerBlock } from './banner/BannerBlock'
+import { ContentBlock } from './content/ContentBlock'
+import { ImageBlock } from './image/ImageBlock'
+import { VideoBlock } from './video/VideoBlock'
+import { GalleryBlock } from './gallery/GalleryBlock'
 
 // Fallback for unregistered block types
 function PlaceholderBlock({ block }: { block: BlockConfig }) {
@@ -38,6 +44,12 @@ const blockRenderers: Record<string, React.ComponentType<{ block: BlockConfig }>
   contact: ContactBlock,
   newsletter: NewsletterBlock,
   logocloud: LogoCloudBlock,
+  divider: DividerBlock,
+  banner: BannerBlock,
+  content: ContentBlock,
+  image: ImageBlock,
+  video: VideoBlock,
+  gallery: GalleryBlock,
 }
 
 export function renderBlock(block: BlockConfig): ReactNode {

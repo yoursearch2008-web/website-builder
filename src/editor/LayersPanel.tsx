@@ -3,7 +3,8 @@ import { toast } from 'sonner'
 import {
   Layout, Type, Grid3X3, DollarSign, Megaphone, PanelBottom,
   MessageSquare, BarChart3, HelpCircle, Users, Mail, Newspaper, Image,
-  Copy, Trash2, GripVertical, Plus, Search,
+  Copy, Trash2, GripVertical, Plus, Search, Minus, Flag,
+  FileText, ImageIcon, Play, GalleryHorizontalEnd,
 } from 'lucide-react'
 import {
   DndContext,
@@ -30,14 +31,16 @@ const blockIcons: Record<BlockType, typeof Layout> = {
   navbar: Layout, hero: Type, features: Grid3X3, pricing: DollarSign,
   cta: Megaphone, footer: PanelBottom, testimonials: MessageSquare,
   stats: BarChart3, faq: HelpCircle, team: Users, contact: Mail,
-  newsletter: Newspaper, logocloud: Image,
+  newsletter: Newspaper, logocloud: Image, divider: Minus, banner: Flag,
+  content: FileText, image: ImageIcon, video: Play, gallery: GalleryHorizontalEnd,
 }
 
 const blockLabels: Record<BlockType, string> = {
   navbar: 'Navbar', hero: 'Hero', features: 'Features', pricing: 'Pricing',
   cta: 'CTA', footer: 'Footer', testimonials: 'Testimonials', stats: 'Stats',
   faq: 'FAQ', team: 'Team', contact: 'Contact', newsletter: 'Newsletter',
-  logocloud: 'Logo Cloud',
+  logocloud: 'Logo Cloud', divider: 'Divider', banner: 'Banner',
+  content: 'Content', image: 'Image', video: 'Video', gallery: 'Gallery',
 }
 
 function SortableLayer({ block, isSelected, onSelect, onDuplicate, onRemove }: {
@@ -69,6 +72,7 @@ function SortableLayer({ block, isSelected, onSelect, onDuplicate, onRemove }: {
         {...attributes}
         {...listeners}
         className="opacity-0 group-hover:opacity-100 transition-opacity text-text-3 cursor-grab active:cursor-grabbing"
+        aria-label={`Drag to reorder ${blockLabels[block.type]}`}
       >
         <GripVertical size={12} />
       </div>
@@ -85,12 +89,14 @@ function SortableLayer({ block, isSelected, onSelect, onDuplicate, onRemove }: {
         <button
           onClick={(e) => { e.stopPropagation(); onDuplicate() }}
           className="w-[22px] h-[22px] rounded flex items-center justify-center text-text-3 hover:bg-bg-4 hover:text-text-0 transition-all"
+          aria-label={`Duplicate ${blockLabels[block.type]}`}
         >
           <Copy size={11} />
         </button>
         <button
           onClick={(e) => { e.stopPropagation(); onRemove() }}
           className="w-[22px] h-[22px] rounded flex items-center justify-center text-text-3 hover:bg-status-red/10 hover:text-status-red transition-all"
+          aria-label={`Remove ${blockLabels[block.type]}`}
         >
           <Trash2 size={11} />
         </button>

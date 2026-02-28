@@ -227,7 +227,15 @@ export const useConfigStore = create<ConfigState>()(
     }),
     {
       name: 'openpage-config',
+      version: 1,
       partialize: (state) => ({ config: state.config }),
+      migrate: (persisted, version) => {
+        if (version === 0 || version === undefined) {
+          // v0 -> v1: no structural changes, just adding version tracking
+          return persisted as Record<string, unknown>
+        }
+        return persisted as Record<string, unknown>
+      },
     }
   )
 )

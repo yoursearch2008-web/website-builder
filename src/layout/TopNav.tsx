@@ -26,7 +26,7 @@ export function TopNav() {
       </NavLink>
 
       {/* Desktop nav */}
-      <nav className="hidden md:flex h-full items-stretch gap-0.5">
+      <nav className="hidden md:flex h-full items-stretch gap-0.5" aria-label="Main navigation">
         {links.map(({ to, label, icon: Icon }) => (
           <NavLink
             key={to}
@@ -56,6 +56,8 @@ export function TopNav() {
         <button
           className="md:hidden w-8 h-8 flex items-center justify-center text-text-2 hover:text-text-0"
           onClick={() => setMobileOpen(!mobileOpen)}
+          aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={mobileOpen}
         >
           {mobileOpen ? <X size={18} /> : <Menu size={18} />}
         </button>

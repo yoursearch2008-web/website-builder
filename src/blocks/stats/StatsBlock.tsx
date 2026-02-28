@@ -60,12 +60,36 @@ function StatsBar({ props }: { props: StatsProps }) {
   )
 }
 
+function StatsCounter({ props }: { props: StatsProps }) {
+  const items = props.items || defaultStats
+
+  return (
+    <section className="px-6 @md:px-10 py-12 @md:py-16">
+      {props.title && (
+        <h2 className="text-xl font-bold tracking-tight text-center mb-8">{props.title}</h2>
+      )}
+      <div className="grid grid-cols-2 @2xl:grid-cols-4 gap-4">
+        {items.map((item, i) => (
+          <div key={i} className="text-center p-5 rounded-xl bg-green/8 border border-green/15">
+            <div className="text-3xl @md:text-4xl font-bold tracking-tight text-text-0 mb-1">
+              {item.value}
+            </div>
+            <div className="text-[12px] text-green font-medium">{item.label}</div>
+          </div>
+        ))}
+      </div>
+    </section>
+  )
+}
+
 export function StatsBlock({ block }: { block: BlockConfig }) {
   const props = block.props as unknown as StatsProps
 
   switch (block.variant) {
     case 'bar':
       return <StatsBar props={props} />
+    case 'counter':
+      return <StatsCounter props={props} />
     default:
       return <StatsGrid props={props} />
   }

@@ -150,12 +150,45 @@ function TestimonialsCarousel({ props }: { props: TestimonialsProps }) {
   )
 }
 
+function TestimonialsSpotlight({ props }: { props: TestimonialsProps }) {
+  const items = props.items || defaultTestimonials
+  const item = items[0]
+  if (!item) return null
+
+  return (
+    <section className="px-6 @md:px-10 py-16 @md:py-24">
+      <div className="max-w-2xl mx-auto text-center">
+        <Quote size={48} className="text-green/20 mx-auto mb-6" />
+        <p className="text-xl @md:text-2xl text-text-0 leading-relaxed mb-8 italic font-display">
+          "{item.quote}"
+        </p>
+        {item.rating && (
+          <div className="flex justify-center mb-6">
+            <StarRating rating={item.rating} />
+          </div>
+        )}
+        <div className="flex items-center justify-center gap-3">
+          <div className="w-12 h-12 rounded-full bg-bg-4 border border-border-default flex items-center justify-center text-sm font-semibold text-text-2">
+            {item.name.split(' ').map(n => n[0]).join('')}
+          </div>
+          <div className="text-left">
+            <div className="text-sm font-semibold">{item.name}</div>
+            <div className="text-[12px] text-text-3">{item.role}</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 export function TestimonialsBlock({ block }: { block: BlockConfig }) {
   const props = block.props as unknown as TestimonialsProps
 
   switch (block.variant) {
     case 'carousel':
       return <TestimonialsCarousel props={props} />
+    case 'spotlight':
+      return <TestimonialsSpotlight props={props} />
     default:
       return <TestimonialsCards props={props} />
   }

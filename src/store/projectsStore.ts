@@ -28,6 +28,7 @@ export interface ProjectSettings {
 interface ProjectsState {
   projects: Project[]
   addProject: (name: string) => string
+  duplicateProject: (id: string) => string | null
   deleteProject: (id: string) => void
   renameProject: (id: string, name: string) => void
   updateProjectConfig: (id: string, config: SiteConfig) => void
@@ -84,6 +85,21 @@ export const useProjectsStore = create<ProjectsState>()(
           ],
         }))
         return id
+      },
+      duplicateProject: (id) => {
+        const state = useProjectsStore.getState()
+        const original = state.projects.find((p) => p.id === id)
+        if (!original) return null
+        const newId = `proj-${Date.now()}`
+        const clone: Project = {
+          ...JSON.parse(JSON.stringify(original)),
+          id: newId,
+          name: `${original.name} (Copy)`,
+          status: 'draft' as const,
+          updatedAt: 'Just now',
+        }
+        set((s) => ({ projects: [clone, ...s.projects] }))
+        return newId
       },
       deleteProject: (id) =>
         set((state) => ({
