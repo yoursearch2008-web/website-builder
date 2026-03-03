@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useEffect, useReducer } from 'react'
 import { X } from 'lucide-react'
 import { useEditorStore } from '@/store/editorStore'
 
@@ -9,34 +9,47 @@ const steps = [
   { label: 'Applying theme', duration: 3 },
 ]
 
+type OverlayState = {
+  elapsed: number
+  showAfterFade: boolean
+}
+
+type OverlayAction =
+  | { type: 'start' }
+  | { type: 'tick' }
+  | { type: 'hide' }
+
+function overlayReducer(state: OverlayState, action: OverlayAction): OverlayState {
+  switch (action.type) {
+    case 'start':
+      return { elapsed: 0, showAfterFade: true }
+    case 'tick':
+      return state.showAfterFade ? { ...state, elapsed: state.elapsed + 1 } : state
+    case 'hide':
+      return { ...state, showAfterFade: false }
+    default:
+      return state
+  }
+}
+
 export function GenerationOverlay() {
   const isGenerating = useEditorStore((s) => s.isGenerating)
   const clearGeneration = useEditorStore((s) => s.clearGeneration)
-  const [elapsed, setElapsed] = useState(0)
-  const [showAfterFade, setShowAfterFade] = useState(false)
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const [{ elapsed, showAfterFade }, dispatch] = useReducer(overlayReducer, {
+    elapsed: 0,
+    showAfterFade: false,
+  })
 
-  // Adjust state during render when isGenerating changes (React-recommended pattern)
-  const [prevIsGenerating, setPrevIsGenerating] = useState(false)
-  if (isGenerating !== prevIsGenerating) {
-    setPrevIsGenerating(isGenerating)
-    if (isGenerating) {
-      setShowAfterFade(true)
-      setElapsed(0)
-    }
-  }
-
-  // Timer management: all setState calls are inside callbacks, not synchronous
   useEffect(() => {
     if (isGenerating) {
-      timerRef.current = setInterval(() => setElapsed((e) => e + 1), 1000)
-      return () => { if (timerRef.current) clearInterval(timerRef.current) }
+      dispatch({ type: 'start' })
+      const timer = setInterval(() => dispatch({ type: 'tick' }), 1000)
+      return () => clearInterval(timer)
     }
-    if (showAfterFade) {
-      const t = setTimeout(() => setShowAfterFade(false), 600)
-      return () => clearTimeout(t)
-    }
-  }, [isGenerating, showAfterFade])
+
+    const timer = setTimeout(() => dispatch({ type: 'hide' }), 600)
+    return () => clearTimeout(timer)
+  }, [isGenerating])
 
   const visible = isGenerating || showAfterFade
   const fading = !isGenerating && showAfterFade
