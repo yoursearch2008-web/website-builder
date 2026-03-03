@@ -1,7 +1,14 @@
 {
   "name": "openpage",
-  "private": true,
+  "private": false,
   "version": "1.0.0",
+  "description": "Open-source website builder. Framer-quality visual editor + AI generation + JSON-first architecture.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/buildingopen/openpage.git"
+  },
+  "homepage": "https://openpage-phi.vercel.app",
   "type": "module",
   "scripts": {
     "dev": "vite",
