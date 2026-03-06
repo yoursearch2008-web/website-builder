@@ -1,12 +1,12 @@
 import { NavLink } from 'react-router-dom'
-import { LayoutDashboard, Pencil, Component, Rocket, Settings, Menu, X } from 'lucide-react'
+import { LayoutDashboard, Pencil, Component, Download, Settings, Menu, X, Star } from 'lucide-react'
 import { useState } from 'react'
 
 const links = [
   { to: '/', label: 'Dashboard', icon: LayoutDashboard },
   { to: '/editor', label: 'Editor', icon: Pencil },
   { to: '/components', label: 'Components', icon: Component },
-  { to: '/deploy', label: 'Deploy', icon: Rocket },
+  { to: '/deploy', label: 'Export', icon: Download },
   { to: '/settings', label: 'Settings', icon: Settings },
 ]
 
@@ -48,9 +48,16 @@ export function TopNav() {
 
       {/* Right side */}
       <div className="ml-auto flex items-center gap-2">
-        <div className="w-7 h-7 rounded-full bg-bg-4 border border-border-default flex items-center justify-center text-[11px] font-semibold text-text-1">
-          F
-        </div>
+        <a
+          href="https://github.com/buildingopen/openpage"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-border-default text-text-2 text-[11.5px] hover:text-text-0 hover:border-border-hover hover:bg-bg-2 transition-all"
+          title="Star on GitHub"
+        >
+          <Star size={12} />
+          GitHub
+        </a>
 
         {/* Mobile hamburger */}
         <button

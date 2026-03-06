@@ -1,21 +1,17 @@
 import { useState, useEffect, useRef } from 'react'
 import {
-  Settings2, Search as SearchIcon, Globe, BarChart3, Puzzle, Key, AlertTriangle, Check,
+  Settings2, Search as SearchIcon, Key, Check,
 } from 'lucide-react'
 import { toast } from 'sonner'
 import { useProjectsStore, type ProjectSettings } from '@/store/projectsStore'
 import { useEditorStore } from '@/store/editorStore'
 
-type SettingsTab = 'general' | 'seo' | 'domain' | 'analytics' | 'integrations' | 'api' | 'danger'
+type SettingsTab = 'general' | 'seo' | 'api'
 
 const tabDefs: { value: SettingsTab; label: string; icon: typeof Settings2 }[] = [
   { value: 'general', label: 'General', icon: Settings2 },
   { value: 'seo', label: 'SEO', icon: SearchIcon },
-  { value: 'domain', label: 'Domain', icon: Globe },
-  { value: 'analytics', label: 'Analytics', icon: BarChart3 },
-  { value: 'integrations', label: 'Integrations', icon: Puzzle },
   { value: 'api', label: 'API Keys', icon: Key },
-  { value: 'danger', label: 'Danger Zone', icon: AlertTriangle },
 ]
 
 function useSettingsState() {
@@ -126,58 +122,6 @@ function SeoPanel({ settings }: { settings: ReturnType<typeof useSettingsState> 
   )
 }
 
-function DomainPanel({ settings }: { settings: ReturnType<typeof useSettingsState> }) {
-  return (
-    <div>
-      <h2 className="text-lg font-semibold mb-4">Domain</h2>
-      <FieldGroup label="Custom Domain"><ControlledInput settingsKey="customDomain" placeholder="www.example.com" settings={settings} /></FieldGroup>
-
-      <div className="mt-4 p-4 rounded-xl bg-bg-2 border border-border-default">
-        <p className="text-[12px] text-text-2">DNS configuration will appear here once deploy integrations are available.</p>
-      </div>
-    </div>
-  )
-}
-
-function AnalyticsPanel({ settings }: { settings: ReturnType<typeof useSettingsState> }) {
-  return (
-    <div>
-      <h2 className="text-lg font-semibold mb-4">Analytics</h2>
-      <FieldGroup label="Google Analytics ID"><ControlledInput settingsKey="gaId" placeholder="G-XXXXXXXXXX" settings={settings} /></FieldGroup>
-      <FieldGroup label="PostHog Project Key"><ControlledInput settingsKey="posthogKey" placeholder="phc_..." settings={settings} /></FieldGroup>
-      <p className="text-[11px] text-text-3 mt-2">Analytics scripts will be included in future deploy integrations.</p>
-    </div>
-  )
-}
-
-function IntegrationsPanel() {
-  const integrations = [
-    { name: 'Stripe', description: 'Accept payments' },
-    { name: 'Mailchimp', description: 'Email marketing' },
-    { name: 'Slack', description: 'Form notifications' },
-    { name: 'Zapier', description: 'Workflow automation' },
-  ]
-  return (
-    <div>
-      <h2 className="text-lg font-semibold mb-4">Integrations</h2>
-      <div className="space-y-3">
-        {integrations.map((int) => (
-          <div key={int.name} className="flex items-center justify-between p-3 rounded-xl bg-bg-2 border border-border-default">
-            <div>
-              <div className="text-sm font-semibold">{int.name}</div>
-              <div className="text-[11px] text-text-3">{int.description}</div>
-            </div>
-            <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-bg-3 text-text-3 font-medium uppercase tracking-wider">
-              Coming Soon
-            </span>
-          </div>
-        ))}
-      </div>
-      <p className="text-[11px] text-text-3 mt-4">Integrations are on the roadmap. Stay tuned for updates.</p>
-    </div>
-  )
-}
-
 function ApiPanel({ settings }: { settings: ReturnType<typeof useSettingsState> }) {
   const [geminiKey, setGeminiKey] = useState(localStorage.getItem('openpage-gemini-key') || '')
   const [showKey, setShowKey] = useState(false)
@@ -255,38 +199,6 @@ function ApiPanel({ settings }: { settings: ReturnType<typeof useSettingsState> 
         </p>
       </FieldGroup>
 
-      <div className="p-4 rounded-xl bg-bg-2 border border-border-default mt-4">
-        <p className="text-[13px] text-text-1 mb-2">Programmatic API access coming soon.</p>
-        <p className="text-[11px] text-text-3">Read and update your site config via REST API for CI/CD workflows.</p>
-      </div>
-    </div>
-  )
-}
-
-function DangerPanel() {
-  return (
-    <div>
-      <h2 className="text-lg font-semibold mb-4 text-status-red">Danger Zone</h2>
-      <div className="space-y-3">
-        <div className="flex items-center justify-between p-4 rounded-xl border border-border-subtle opacity-50">
-          <div>
-            <div className="text-sm font-semibold text-text-2">Transfer Project</div>
-            <div className="text-[11px] text-text-3">Contact support to transfer this project</div>
-          </div>
-          <span className="px-3 py-1.5 rounded-lg text-xs font-medium text-text-3 border border-border-subtle cursor-not-allowed">
-            Transfer
-          </span>
-        </div>
-        <div className="flex items-center justify-between p-4 rounded-xl border border-border-subtle opacity-50">
-          <div>
-            <div className="text-sm font-semibold text-text-2">Delete Project</div>
-            <div className="text-[11px] text-text-3">Contact support to delete this project</div>
-          </div>
-          <span className="px-3 py-1.5 rounded-lg text-xs font-medium text-text-3 border border-border-subtle cursor-not-allowed">
-            Delete
-          </span>
-        </div>
-      </div>
     </div>
   )
 }
@@ -298,11 +210,7 @@ export function Settings() {
   const panels: Record<SettingsTab, React.ReactNode> = {
     general: <GeneralPanel settings={settings} />,
     seo: <SeoPanel settings={settings} />,
-    domain: <DomainPanel settings={settings} />,
-    analytics: <AnalyticsPanel settings={settings} />,
-    integrations: <IntegrationsPanel />,
     api: <ApiPanel settings={settings} />,
-    danger: <DangerPanel />,
   }
 
   return (
@@ -316,12 +224,8 @@ export function Settings() {
             style={{ animationDelay: `${i * 40}ms` }}
             className={`shrink-0 md:w-full flex items-center gap-2 px-3 py-2 rounded-lg text-[12.5px] transition-all text-left animate-fade-in-up ${
               activeTab === value
-                ? value === 'danger'
-                  ? 'bg-status-red/10 text-status-red'
-                  : 'bg-bg-3 text-text-0'
-                : value === 'danger'
-                  ? 'text-text-3 hover:text-status-red hover:bg-status-red/5'
-                  : 'text-text-2 hover:text-text-0 hover:bg-bg-2'
+                ? 'bg-bg-3 text-text-0'
+                : 'text-text-2 hover:text-text-0 hover:bg-bg-2'
             }`}
           >
             <Icon size={14} />

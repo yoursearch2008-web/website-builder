@@ -151,7 +151,7 @@ function PromptSection() {
             onClick={startBlank}
             className="text-text-3 text-[12px] hover:text-text-1 transition-colors inline-flex items-center gap-1.5 animate-fade-in stagger-5"
           >
-            or start with a blank canvas <ArrowRight size={12} />
+            or start from a template <ArrowRight size={12} />
           </button>
         </div>
       </div>
