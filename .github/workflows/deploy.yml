@@ -1,4 +1,4 @@
-name: Deploy Website Builder to Vercel
+name: Deploy Website Builder (Open Source Coolify)
 
 on:
   push:
@@ -17,10 +17,10 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npm run build
-      - uses: amondnet/vercel-action@v25
+      - name: Deploy to Coolify (Open Source)
+        uses: coolify/cli@v1
         with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.ORG_ID }}
-          vercel-project-id: ${{ secrets.PROJECT_ID }}
-          vercel-args: '--prod'
-          working-directory: ./
+          api-token: ${{ secrets.COOLIFY_TOKEN }}
+          server-url: ${{ secrets.COOLIFY_SERVER }}
+          app-id: ${{ secrets.COOLIFY_APP_ID }}
+          working-directory: ./dist
