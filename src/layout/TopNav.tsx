@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom'
 import { LayoutDashboard, Pencil, Settings, Menu, X, Star } from 'lucide-react'
 import { useState } from 'react'
+import { LanguageSwitcher } from '@/components/LanguageSwitcher'
 
 const links = [
   { to: '/', label: 'Dashboard', icon: LayoutDashboard },
@@ -46,6 +47,7 @@ export function TopNav() {
 
       {/* Right side */}
       <div className="ml-auto flex items-center gap-2">
+        <LanguageSwitcher />
         <a
           href="https://github.com/buildingopen/openpage"
           target="_blank"
