@@ -1,0 +1,35 @@
+{
+  "login": {
+    "title": "Bienvenido de Nuevo",
+    "subtitle": "Inicia sesión en tu cuenta",
+    "signupTitle": "Crear Cuenta",
+    "signupSubtitle": "Regístrate para empezar a construir",
+    "email": "Correo Electrónico",
+    "password": "Contraseña",
+    "loginBtn": "Iniciar Sesión",
+    "signupBtn": "Registrarse",
+    "switchToSignup": "¿No tienes cuenta? Regístrate",
+    "switchToLogin": "¿Ya tienes cuenta? Inicia sesión",
+    "error": "Fallo de autenticación"
+  },
+  "dashboard": {
+    "title": "Panel de Control",
+    "newSite": "Nuevo Sitio",
+    "mySites": "Mis Sitios",
+    "settings": "Configuración"
+  },
+  "editor": {
+    "save": "Guardar",
+    "preview": "Vista Previa",
+    "export": "Exportar HTML",
+    "blocks": "Bloques",
+    "design": "Diseño",
+    "json": "JSON"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar"
+  }
+}

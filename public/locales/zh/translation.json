@@ -1,0 +1,35 @@
+{
+  "login": {
+    "title": "欢迎回来",
+    "subtitle": "登录您的账户",
+    "signupTitle": "创建账户",
+    "signupSubtitle": "注册以开始构建",
+    "email": "电子邮件",
+    "password": "密码",
+    "loginBtn": "登录",
+    "signupBtn": "注册",
+    "switchToSignup": "没有账户？注册",
+    "switchToLogin": "已有账户？登录",
+    "error": "认证失败"
+  },
+  "dashboard": {
+    "title": "仪表板",
+    "newSite": "新网站",
+    "mySites": "我的网站",
+    "settings": "设置"
+  },
+  "editor": {
+    "save": "保存",
+    "preview": "预览",
+    "export": "导出HTML",
+    "blocks": "区块",
+    "design": "设计",
+    "json": "JSON"
+  },
+  "common": {
+    "loading": "加载中...",
+    "save": "保存",
+    "cancel": "取消",
+    "delete": "删除"
+  }
+}

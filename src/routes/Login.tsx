@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '@/store/authStore'
+import { useTranslation } from 'react-i18next'
 
 export function Login() {
   const [email, setEmail] = useState('')
@@ -10,6 +11,7 @@ export function Login() {
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
   const { login, signup, isAuthenticated } = useAuthStore()
+  const { t } = useTranslation()
 
   if (isAuthenticated) {
     navigate('/')
@@ -30,10 +32,10 @@ export function Login() {
       if (success) {
         navigate('/')
       } else {
-        setError('Authentication failed')
+        setError(t('login.error'))
       }
     } catch {
-      setError('An error occurred')
+      setError(t('login.error'))
     } finally {
       setLoading(false)
     }
@@ -44,10 +46,10 @@ export function Login() {
       <div class="w-full max-w-md bg-bg-2 border border-border-default rounded-xl p-8">
         <div class="text-center mb-8">
           <h1 class="text-2xl font-bold tracking-tight mb-2">
-            {isSignup ? 'Create Account' : 'Welcome Back'}
+            {isSignup ? t('login.signupTitle') : t('login.title')}
           </h1>
           <p class="text-text-2 text-sm">
-            {isSignup ? 'Sign up to start building' : 'Login to your account'}
+            {isSignup ? t('login.signupSubtitle') : t('login.subtitle')}
           </p>
         </div>
 
@@ -59,7 +61,7 @@ export function Login() {
 
         <form onSubmit={handleSubmit} class="space-y-4">
           <div>
-            <label class="block text-[11.5px] text-text-2 mb-1.5 font-medium">Email</label>
+            <label class="block text-[11.5px] text-text-2 mb-1.5 font-medium">{t('login.email')}</label>
             <input
               type="email"
               value={email}
@@ -70,7 +72,7 @@ export function Login() {
             />
           </div>
           <div>
-            <label class="block text-[11.5px] text-text-2 mb-1.5 font-medium">Password</label>
+            <label class="block text-[11.5px] text-text-2 mb-1.5 font-medium">{t('login.password')}</label>
             <input
               type="password"
               value={password}
@@ -86,7 +88,7 @@ export function Login() {
             disabled={loading}
             class="w-full py-2.5 rounded-lg bg-green text-black text-sm font-semibold hover:bg-green-dim transition-colors disabled:opacity-50"
           >
-            {loading ? 'Please wait...' : isSignup ? 'Sign Up' : 'Login'}
+            {loading ? t('common.loading') : isSignup ? t('login.signupBtn') : t('login.loginBtn')}
           </button>
         </form>
 
@@ -95,7 +97,7 @@ export function Login() {
             onClick={() => { setIsSignup(!isSignup); setError('') }}
             class="text-[12px] text-text-3 hover:text-green transition-colors"
           >
-            {isSignup ? 'Already have an account? Login' : "Don't have an account? Sign Up"}
+            {isSignup ? t('login.switchToLogin') : t('login.switchToSignup')}
           </button>
         </div>
       </div>

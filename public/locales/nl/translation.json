@@ -1,0 +1,35 @@
+{
+  "login": {
+    "title": "Welkom Terug",
+    "subtitle": "Log in op je account",
+    "signupTitle": "Account Aanmaken",
+    "signupSubtitle": "Meld je aan om te beginnen met bouwen",
+    "email": "E-mail",
+    "password": "Wachtwoord",
+    "loginBtn": "Inloggen",
+    "signupBtn": "Registreren",
+    "switchToSignup": "Nog geen account? Registreren",
+    "switchToLogin": "Al een account? Inloggen",
+    "error": "Authenticatie mislukt"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "newSite": "Nieuwe Site",
+    "mySites": "Mijn Sites",
+    "settings": "Instellingen"
+  },
+  "editor": {
+    "save": "Opslaan",
+    "preview": "Voorbeeld",
+    "export": "HTML Exporteren",
+    "blocks": "Blokken",
+    "design": "Ontwerp",
+    "json": "JSON"
+  },
+  "common": {
+    "loading": "Laden...",
+    "save": "Opslaan",
+    "cancel": "Annuleren",
+    "delete": "Verwijderen"
+  }
+}

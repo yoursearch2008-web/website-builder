@@ -1,0 +1,35 @@
+{
+  "login": {
+    "title": "مرحبًا بعودتك",
+    "subtitle": "سجل الدخول إلى حسابك",
+    "signupTitle": "إنشاء حساب",
+    "signupSubtitle": "سجل للبدء في البناء",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "loginBtn": "سجل الدخول",
+    "signupBtn": "تسجيل",
+    "switchToSignup": "ليس لديك حساب؟ سجل الآن",
+    "switchToLogin": "لديك حساب بالفعل؟ سجل الدخول",
+    "error": "فشل المصادقة"
+  },
+  "dashboard": {
+    "title": "لوحة التحكم",
+    "newSite": "موقع جديد",
+    "mySites": "مواقعي",
+    "settings": "الإعدادات"
+  },
+  "editor": {
+    "save": "حفظ",
+    "preview": "معاينة",
+    "export": "تصدير HTML",
+    "blocks": "الكتل",
+    "design": "التصميم",
+    "json": "JSON"
+  },
+  "common": {
+    "loading": "جار التحميل...",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "delete": "حذف"
+  }
+}

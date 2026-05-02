@@ -1,0 +1,35 @@
+{
+  "login": {
+    "title": "Willkommen Zurück",
+    "subtitle": "Melden Sie sich in Ihrem Konto an",
+    "signupTitle": "Konto Erstellen",
+    "signupSubtitle": "Registrieren Sie sich, um zu beginnen",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "loginBtn": "Anmelden",
+    "signupBtn": "Registrieren",
+    "switchToSignup": "Kein Konto? Registrieren",
+    "switchToLogin": "Bereits ein Konto? Anmelden",
+    "error": "Authentifizierung fehlgeschlagen"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "newSite": "Neue Webseite",
+    "mySites": "Meine Webseiten",
+    "settings": "Einstellungen"
+  },
+  "editor": {
+    "save": "Speichern",
+    "preview": "Vorschau",
+    "export": "HTML Exportieren",
+    "blocks": "Blöcke",
+    "design": "Design",
+    "json": "JSON"
+  },
+  "common": {
+    "loading": "Lädt...",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "delete": "Löschen"
+  }
+}

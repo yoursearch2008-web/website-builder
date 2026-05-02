@@ -1,0 +1,35 @@
+{
+  "login": {
+    "title": "Welcome Back",
+    "subtitle": "Login to your account",
+    "signupTitle": "Create Account",
+    "signupSubtitle": "Sign up to start building",
+    "email": "Email",
+    "password": "Password",
+    "loginBtn": "Login",
+    "signupBtn": "Sign Up",
+    "switchToSignup": "Don't have an account? Sign Up",
+    "switchToLogin": "Already have an account? Login",
+    "error": "Authentication failed"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "newSite": "New Site",
+    "mySites": "My Sites",
+    "settings": "Settings"
+  },
+  "editor": {
+    "save": "Save",
+    "preview": "Preview",
+    "export": "Export HTML",
+    "blocks": "Blocks",
+    "design": "Design",
+    "json": "JSON"
+  },
+  "common": {
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete"
+  }
+}
