@@ -1247,18 +1247,14 @@ export function exportSiteToHTML(config: SiteConfig, options?: ExportSiteOptions
   </script>`
     : ''
 
-  const adScript = settings?.adClientId && settings?.adSlot
+  const adScript = settings?.reviveZoneId && settings?.reviveServerUrl
     ? `
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${encodeURIComponent(settings.adClientId)}"
-     crossorigin="anonymous"></script>
-  <ins class="adsbygoogle"
-       style="display:block; text-align:center;"
-       data-ad-client="${escapeHtml(settings.adClientId)}"
-       data-ad-slot="${escapeHtml(settings.adSlot)}"
-       data-ad-format="auto"
-       data-full-width-responsive="true"></ins>
+  <ins class="revive-ad" data-zone-id="${escapeHtml(settings.reviveZoneId)}"></ins>
+  <script async src="${escapeHtml(settings.reviveServerUrl)}/www/delivery/asyncjs.php"></script>
   <script>
-       (adsbygoogle = window.adsbygoogle || []).push({});
+    (reviveAdserver = window.reviveAdserver || []).push({
+      params: { zoneid: "${escapeHtml(settings.reviveZoneId)}" }
+    });
   </script>`
     : ''
 
@@ -1300,10 +1296,8 @@ export function exportSiteToHTML(config: SiteConfig, options?: ExportSiteOptions
 ${descriptionMeta}  <meta property="og:title" content="${escapeHtml(ogTitle)}" />
 ${ogDescriptionMeta}${ogImageMeta}${faviconLink}
 
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="${fontUrl}" />
+  <!-- Open Source Fonts (Inter via cdnjs) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/inter/4.0.18/inter.min.css" />
 
   <!-- Tailwind CSS (Play CDN) -->
   <script src="https://cdn.tailwindcss.com"></script>
