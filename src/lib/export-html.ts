@@ -11,6 +11,8 @@ export interface ExportSiteSettings {
   ogImageUrl?: string
   gaId?: string
   posthogKey?: string
+  adClientId?: string
+  adSlot?: string
 }
 
 export interface ExportSiteOptions {
@@ -1245,6 +1247,21 @@ export function exportSiteToHTML(config: SiteConfig, options?: ExportSiteOptions
   </script>`
     : ''
 
+  const adScript = settings?.adClientId && settings?.adSlot
+    ? `
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${encodeURIComponent(settings.adClientId)}"
+     crossorigin="anonymous"></script>
+  <ins class="adsbygoogle"
+       style="display:block; text-align:center;"
+       data-ad-client="${escapeHtml(settings.adClientId)}"
+       data-ad-slot="${escapeHtml(settings.adSlot)}"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>
+       (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>`
+    : ''
+
   const faqScript = hasFaq
     ? `
     <script>
@@ -1382,6 +1399,7 @@ ${posthogScript}
 
 ${blocksHtml}
 ${faqScript}
+${adScript}
 </body>
 </html>`
 }
