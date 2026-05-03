@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Careers - OpenServe</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg0: #09090b; --bg1: #18181b; --bg2: #27272a; --bg3: #3f3f46;
+      --text0: #fafafa; --text1: #f4f4f5; --text2: #a1a1aa;
+      --accent: #22c55e;
+    }
+    body { font-family: DM Sans, system-ui, sans-serif; background: var(--bg0); color: var(--text0); line-height: 1.6; }
+    .navbar { background: var(--bg1); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 1.5rem; font-weight: 700; color: var(--accent); text-decoration: none; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--text1); text-decoration: none; }
+    .nav-links a:hover { color: var(--accent); }
+    .hero { text-align: center; padding: 6rem 2rem; }
+    .hero h1 { font-size: 3rem; margin-bottom: 1rem; }
+    .hero p { font-size: 1.25rem; color: var(--text2); margin-bottom: 2rem; }
+    .btn { display: inline-block; background: var(--accent); color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; }
+    .features { padding: 4rem 2rem; }
+    .features h2 { text-align: center; font-size: 2rem; margin-bottom: 3rem; }
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
+    .feature-card { background: var(--bg1); padding: 2rem; border-radius: 8px; }
+    .feature-card h3 { color: var(--accent); margin-bottom: 0.5rem; }
+    .stats { padding: 4rem 2rem; background: var(--bg1); }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; max-width: 800px; margin: 0 auto; text-align: center; }
+    .stat-value { font-size: 2.5rem; font-weight: 700; color: var(--accent); }
+    .stat-label { color: var(--text2); }
+    .cta { text-align: center; padding: 4rem 2rem; }
+    .cta h2 { font-size: 2rem; margin-bottom: 1rem; }
+    .content { padding: 4rem 2rem; max-width: 800px; margin: 0 auto; }
+    .content h2 { color: var(--accent); margin: 2rem 0 1rem; }
+    .content p { margin-bottom: 1rem; color: var(--text1); }
+    .content ul { margin: 1rem 0 1rem 2rem; }
+    .content li { margin-bottom: 0.5rem; }
+    .content a { color: var(--accent); }
+    .footer { text-align: center; padding: 2rem; color: var(--text2); border-top: 1px solid var(--bg2); }
+  </style>
+</head>
+<body>
+<nav class="navbar"><div class="nav-container"><a href="/" class="logo">OpenServe</a><ul class="nav-links"><li><a href="/">Home</a></li><li><a href="/about">About</a></li><li><a href="/services">Services</a></li><li><a href="/pricing">Pricing</a></li><li><a href="/blog">Blog</a></li><li><a href="/contact">Contact</a></li></ul></div></nav>
+<section class="hero"><h1>Join Our Team</h1><p>Help us revolutionize online advertising.</p></section>
+<section class="content"><h2>Open Positions</h2><h3>Senior Developer</h3><p>We're looking for an experienced developer to help build the future of open advertising. Remote work available.</p><p><strong>Requirements:</strong> 5+ years experience, knowledge of PHP/MySQL, open source contributions a plus.</p><h3>Marketing Manager</h3><p>Help spread the word about open advertising. Remote work available.</p><p><strong>Requirements:</strong> 3+ years in digital marketing, content creation experience.</p></section>
+<section class="cta"><h2>Don&#39;t See the Right Role?</h2><a href="/contact" class="btn">Contact Us</a></section>
+<footer class="footer"><p>&copy; 2026 Free ad platform for websites</p></footer>
+</body>
+</html>

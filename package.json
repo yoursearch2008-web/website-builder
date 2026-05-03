@@ -29,6 +29,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:site": "npx tsx scripts/build-static.ts",
     "lint": "eslint .",
     "test": "vitest run",
     "preview": "vite preview"

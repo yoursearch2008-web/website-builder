@@ -1,0 +1,143 @@
+{
+  "name": "OpenServe - Free Ad Platform",
+  "pages": [
+    {
+      "id": "page-home",
+      "name": "Home",
+      "path": "/",
+      "blocks": [
+        { "id": "b1", "type": "navbar", "variant": "default", "props": { "logo": "OpenServe", "links": [{"label":"Home","href":"/"},{"label":"About","href":"/about"},{"label":"Services","href":"/services"},{"label":"Pricing","href":"/pricing"},{"label":"Blog","href":"/blog"},{"label":"Contact","href":"/contact"}] }},
+        { "id": "b2", "type": "hero", "variant": "centered", "props": { "headline": "Free Ad Platform for Everyone", "subheadline": "Monetize your website with 100% open-source advertising. No middleman, no approval needed, keeps all the revenue.", "cta": "Get Started", "ctaLink": "/about" }},
+        { "id": "b3", "type": "features", "variant": "grid", "props": { "title": "Why Choose OpenServe", "features": [{"title":"100% Free","desc":"No fees, no subscriptions, ever","icon":"Free"},{"title":"Your Revenue","desc":"Keep 100% of ad earnings","icon":"Dollar"},{"title":"Open Source","desc":"Full transparency, audit anytime","icon":"Code"},{"title":"Fast Setup","desc":"Deploy in minutes","icon":"Zap"}] }},
+        { "id": "b4", "type": "stats", "variant": "grid", "props": { "stats": [{"value": "100%", "label": "Revenue Share"},{"value": "Free", "label": "Forever"},{"value": "Open", "label": "Source"},{"value": "Fast", "label": "Setup"}] }},
+        { "id": "b5", "type": "cta", "variant": "simple", "props": { "headline": "Ready to Monetize?", "cta": "Start Free", "ctaLink": "/about" }},
+        { "id": "b6", "type": "footer", "variant": "multi-column", "props": { "logo": "OpenServe", "description": "Free ad platform for websites", "columns": [{"title":"Product","links":[{"label":"Features","href":"/features"},{"label":"Pricing","href":"/pricing"},{"label":"Blog","href":"/blog"}]},{"title":"Company","links":[{"label":"About","href":"/about"},{"label":"Contact","href":"/contact"},{"label":"Careers","href":"/careers"}]},{"title":"Legal","links":[{"label":"Privacy","href":"/privacy"},{"label":"Terms","href":"/terms"},{"label":"GDPR","href":"/gdpr"}]}] }}
+      ]
+    },
+    {
+      "id": "page-about",
+      "name": "About",
+      "path": "/about",
+      "blocks": [
+        { "id": "a1", "type": "navbar", "variant": "default", "props": { "logo": "OpenServe", "links": [{"label":"Home","href":"/"},{"label":"About","href":"/about"},{"label":"Services","href":"/services"},{"label":"Pricing","href":"/pricing"},{"label":"Blog","href":"/blog"},{"label":"Contact","href":"/contact"}] }},
+        { "id": "a2", "type": "hero", "variant": "centered", "props": { "headline": "About OpenServe", "subheadline": "We believe in free and open advertising for everyone.", "cta": "", "ctaLink": "" }},
+        { "id": "a3", "type": "content", "variant": "default", "props": { "content": "<h2>Our Mission</h2><p>OpenServe exists to democratize online advertising. We believe every website publisher deserves a chance to monetize their content without giving up most of their revenue to tech giants.</p><h2>Who We Are</h2><p>We're a team of developers and marketers who have worked in online advertising for over 15 years. We've seen how traditional ad networks take 40-50% of publisher revenue. We decided to do something about it.</p><h2>What We Offer</h2><p>A complete self-hosted ad platform that puts you in control. No middleman, no fees, no contracts. Just you and your revenue.</p>" }},
+        { "id": "a4", "type": "team", "variant": "grid", "props": { "title": "Our Team", "members": [{"name":"Sarah Chen","role":"CEO & Founder","bio":"15 years in ad tech"},{"name":"Mike Johnson","role":"CTO","bio":"Open source developer"},{"name":"Ana Garcia","role":"Head of Marketing","bio":"Growth specialist"},{"name":"James Lee","role":"Lead Developer","bio":"Full stack engineer"}] }},
+        { "id": "a5", "type": "cta", "variant": "simple", "props": { "headline": "Join Us Today", "cta": "Get Started", "ctaLink": "/contact" }},
+        { "id": "a6", "type": "footer", "variant": "multi-column", "props": { "logo": "OpenServe", "description": "Free ad platform for websites", "columns": [{"title":"Product","links":[{"label":"Features","href":"/features"},{"label":"Pricing","href":"/pricing"},{"label":"Blog","href":"/blog"}]},{"title":"Company","links":[{"label":"About","href":"/about"},{"label":"Contact","href":"/contact"},{"label":"Careers","href":"/careers"}]},{"title":"Legal","links":[{"label":"Privacy","href":"/privacy"},{"label":"Terms","href":"/terms"},{"label":"GDPR","href":"/gdpr"}]}] }}
+      ]
+    },
+    {
+      "id": "page-services",
+      "name": "Services",
+      "path": "/services",
+      "blocks": [
+        { "id": "s1", "type": "navbar", "variant": "default", "props": { "logo": "OpenServe", "links": [{"label":"Home","href":"/"},{"label":"About","href":"/about"},{"label":"Services","href":"/services"},{"label":"Pricing","href":"/pricing"},{"label":"Blog","href":"/blog"},{"label":"Contact","href":"/contact"}] }},
+        { "id": "s2", "type": "hero", "variant": "centered", "props": { "headline": "Our Services", "subheadline": "Everything you need to monetize your website effectively.", "cta": "", "ctaLink": "" }},
+        { "id": "s3", "type": "features", "variant": "grid", "props": { "title": "What We Do", "features": [{"title":"Ad Server Setup","desc":"We configure Revive AdServer for your domain with optimal settings","icon":"Settings"},{"title":"Campaign Management","desc":"Create and manage ad campaigns with our easy interface","icon":"Target"},{"title":"Analytics","desc":"Detailed stats on impressions, clicks, and revenue","icon":"Chart"},{"title":"Support","desc":"Help when you need it, how you need it","icon":"Help"}] }},
+        { "id": "s4", "type": "content", "variant": "default", "props": { "content": "<h2>Who Is This For?</h2><p>Our services are perfect for:</p><ul><li>Website publishers with 1,000+ monthly visitors</li><li>Bloggers who want to monetize without AdSense</li><li>Small businesses with multiple websites</li><li>Content creators looking for alternative revenue</li></ul><h2>What's Included</h2><p>Every service package includes: full setup, training materials, and 30 days of support. After that, self-serve or upgrade for ongoing help.</p>" }},
+        { "id": "s5", "type": "cta", "variant": "simple", "props": { "headline": "Need Help Choosing?", "cta": "Contact Us", "ctaLink": "/contact" }},
+        { "id": "s6", "type": "footer", "variant": "multi-column", "props": { "logo": "OpenServe", "description": "Free ad platform for websites", "columns": [{"title":"Product","links":[{"label":"Features","href":"/features"},{"label":"Pricing","href":"/pricing"},{"label":"Blog","href":"/blog"}]},{"title":"Company","links":[{"label":"About","href":"/about"},{"label":"Contact","href":"/contact"},{"label":"Careers","href":"/careers"}]},{"title":"Legal","links":[{"label":"Privacy","href":"/privacy"},{"label":"Terms","href":"/terms"},{"label":"GDPR","href":"/gdpr"}]}] }}
+      ]
+    },
+    {
+      "id": "page-pricing",
+      "name": "Pricing",
+      "path": "/pricing",
+      "blocks": [
+        { "id": "p1", "type": "navbar", "variant": "default", "props": { "logo": "OpenServe", "links": [{"label":"Home","href":"/"},{"label":"About","href":"/about"},{"label":"Services","href":"/services"},{"label":"Pricing","href":"/pricing"},{"label":"Blog","href":"/blog"},{"label":"Contact","href":"/contact"}] }},
+        { "id": "p2", "type": "hero", "variant": "centered", "props": { "headline": "Simple Pricing", "subheadline": "No hidden fees. No surprises. Just free.", "cta": "", "ctaLink": "" }},
+        { "id": "p3", "type": "pricing", "variant": "comparison", "props": { "title": "Choose Your Plan", "plans": [{"name":"Free","price":"$0","period":"forever","features":["Self-hosted ad server","Unlimited ads","Unlimited websites","Basic support"],"cta":"Start Free","ctaLink":"/about","popular":true},{"name":"Pro","price":"$5","period":"month","features":["Everything in Free","Priority support","Advanced analytics","Custom domains","API access"],"cta":"Go Pro","ctaLink":"/contact","popular":false},{"name":"Enterprise","price":"Custom","features":["Everything in Pro","Dedicated server","Custom integration","Account manager","SLA"],"cta":"Contact Us","ctaLink":"/contact","popular":false}] }},
+        { "id": "p4", "type": "faq", "variant": "accordion", "props": { "title": "Pricing FAQs", "items": [{"question":"Is it really free?","answer":"Yes. The Free plan is free forever. No credit card required."},{"question":"What does Pro include?","answer":"Pro includes priority support, advanced analytics, custom domains, and API access for $5/month."},{"question":"Can I cancel anytime?","answer":"Yes. Cancel anytime with no penalties or fees."},{"question":"Is there a trial?","answer":"The Free plan IS your trial. Use it as long as you want."}] }},
+        { "id": "p5", "type": "cta", "variant": "simple", "props": { "headline": "Questions?", "cta": "Contact Us", "ctaLink": "/contact" }},
+        { "id": "p6", "type": "footer", "variant": "multi-column", "props": { "logo": "OpenServe", "description": "Free ad platform for websites", "columns": [{"title":"Product","links":[{"label":"Features","href":"/features"},{"label":"Pricing","href":"/pricing"},{"label":"Blog","href":"/blog"}]},{"title":"Company","links":[{"label":"About","href":"/about"},{"label":"Contact","href":"/contact"},{"label":"Careers","href":"/careers"}]},{"title":"Legal","links":[{"label":"Privacy","href":"/privacy"},{"label":"Terms","href":"/terms"},{"label":"GDPR","href":"/gdpr"}]}] }}
+      ]
+    },
+    {
+      "id": "page-blog",
+      "name": "Blog",
+      "path": "/blog",
+      "blocks": [
+        { "id": "bl1", "type": "navbar", "variant": "default", "props": { "logo": "OpenServe", "links": [{"label":"Home","href":"/"},{"label":"About","href":"/about"},{"label":"Services","href":"/services"},{"label":"Pricing","href":"/pricing"},{"label":"Blog","href":"/blog"},{"label":"Contact","href":"/contact"}] }},
+        { "id": "bl2", "type": "hero", "variant": "centered", "props": { "headline": "Blog", "subheadline": "Latest news and tips on website monetization.", "cta": "", "ctaLink": "" }},
+        { "id": "bl3", "type": "content", "variant": "default", "props": { "content": "<h2>Getting Started with Self-Hosted Ads</h2><p>Learn how to set up your own ad server and start monetizing your website today.</p><a href='/blog/getting-started' class='btn'>Read More</a><hr><h2>Maximizing Your Revenue</h2><p>Tips and strategies for getting the most out of your ad placements.</p><a href='/blog/revenue-tips' class='btn'>Read More</a><hr><h2>The Future of Digital Advertising</h2><p>Why open-source advertising is the way forward.</p><a href='/blog/future-ads' class='btn'>Read More</a>" }},
+        { "id": "bl4", "type": "newsletter", "variant": "simple", "props": { "headline": "Subscribe to Our Newsletter", "description": "Get tips and updates delivered to your inbox.", "button": "Subscribe" }},
+        { "id": "bl5", "type": "footer", "variant": "multi-column", "props": { "logo": "OpenServe", "description": "Free ad platform for websites", "columns": [{"title":"Product","links":[{"label":"Features","href":"/features"},{"label":"Pricing","href":"/pricing"},{"label":"Blog","href":"/blog"}]},{"title":"Company","links":[{"label":"About","href":"/about"},{"label":"Contact","href":"/contact"},{"label":"Careers","href":"/careers"}]},{"title":"Legal","links":[{"label":"Privacy","href":"/privacy"},{"label":"Terms","href":"/terms"},{"label":"GDPR","href":"/gdpr"}]}] }}
+      ]
+    },
+    {
+      "id": "page-contact",
+      "name": "Contact",
+      "path": "/contact",
+      "blocks": [
+        { "id": "c1", "type": "navbar", "variant": "default", "props": { "logo": "OpenServe", "links": [{"label":"Home","href":"/"},{"label":"About","href":"/about"},{"label":"Services","href":"/services"},{"label":"Pricing","href":"/pricing"},{"label":"Blog","href":"/blog"},{"label":"Contact","href":"/contact"}] }},
+        { "id": "c2", "type": "hero", "variant": "centered", "props": { "headline": "Contact Us", "subheadline": "We'd love to hear from you.", "cta": "", "ctaLink": "" }},
+        { "id": "c3", "type": "contact", "variant": "default", "props": { "title": "Get In Touch", "email": "hello@openserve.com", "phone": "+1-555-123-4567", "address": "123 Main Street, San Francisco, CA 94105", "hours": "Mon-Fri 9am-5pm PST" }},
+        { "id": "c4", "type": "content", "variant": "default", "props": { "content": "<h2>Frequently Asked Questions</h2><p><strong>How fast do you respond?</strong><br>We typically respond within 24 hours.</p><p><strong>Do you offer phone support?</strong><br>Yes, Pro and Enterprise plans include phone support.</p><p><strong>Can I schedule a demo?</strong><br>Absolutely! Contact us to schedule a personalized demo.</p>" }},
+        { "id": "c5", "type": "footer", "variant": "multi-column", "props": { "logo": "OpenServe", "description": "Free ad platform for websites", "columns": [{"title":"Product","links":[{"label":"Features","href":"/features"},{"label":"Pricing","href":"/pricing"},{"label":"Blog","href":"/blog"}]},{"title":"Company","links":[{"label":"About","href":"/about"},{"label":"Contact","href":"/contact"},{"label":"Careers","href":"/careers"}]},{"title":"Legal","links":[{"label":"Privacy","href":"/privacy"},{"label":"Terms","href":"/terms"},{"label":"GDPR","href":"/gdpr"}]}] }}
+      ]
+    },
+    {
+      "id": "page-privacy",
+      "name": "Privacy",
+      "path": "/privacy",
+      "blocks": [
+        { "id": "pr1", "type": "navbar", "variant": "default", "props": { "logo": "OpenServe", "links": [{"label":"Home","href":"/"},{"label":"About","href":"/about"},{"label":"Services","href":"/services"},{"label":"Pricing","href":"/pricing"},{"label":"Blog","href":"/blog"},{"label":"Contact","href":"/contact"}] }},
+        { "id": "pr2", "type": "hero", "variant": "centered", "props": { "headline": "Privacy Policy", "subheadline": "Your privacy is important to us.", "cta": "", "ctaLink": "" }},
+        { "id": "pr3", "type": "content", "variant": "default", "props": { "content": "<h2>Privacy Policy</h2><p>Last updated: May 2026</p><h3>Information We Collect</h3><p>We collect information you provide directly to us, such as your name and email address when you sign up for our newsletter or contact us.</p><h3>How We Use Information</h3><p>We use the information to provide and improve our services, communicate with you, and comply with legal obligations.</p><h3>Data Protection</h3><p>We implement appropriate security measures to protect your personal information.</p><h3>Your Rights</h3><p>You have the right to access, correct, or delete your personal information. Contact us to exercise these rights.</p><h3>Contact</h3><p>If you have questions about this policy, contact us at privacy@openserve.com</p>" }},
+        { "id": "pr4", "type": "footer", "variant": "multi-column", "props": { "logo": "OpenServe", "description": "Free ad platform for websites", "columns": [{"title":"Product","links":[{"label":"Features","href":"/features"},{"label":"Pricing","href":"/pricing"},{"label":"Blog","href":"/blog"}]},{"title":"Company","links":[{"label":"About","href":"/about"},{"label":"Contact","href":"/contact"},{"label":"Careers","href":"/careers"}]},{"title":"Legal","links":[{"label":"Privacy","href":"/privacy"},{"label":"Terms","href":"/terms"},{"label":"GDPR","href":"/gdpr"}]}] }}
+      ]
+    },
+    {
+      "id": "page-terms",
+      "name": "Terms",
+      "path": "/terms",
+      "blocks": [
+        { "id": "t1", "type": "navbar", "variant": "default", "props": { "logo": "OpenServe", "links": [{"label":"Home","href":"/"},{"label":"About","href":"/about"},{"label":"Services","href":"/services"},{"label":"Pricing","href":"/pricing"},{"label":"Blog","href":"/blog"},{"label":"Contact","href":"/contact"}] }},
+        { "id": "t2", "type": "hero", "variant": "centered", "props": { "headline": "Terms of Service", "subheadline": "Please read our terms carefully.", "cta": "", "ctaLink": "" }},
+        { "id": "t3", "type": "content", "variant": "default", "props": { "content": "<h2>Terms of Service</h2><p>Last updated: May 2026</p><h3> Acceptance of Terms</h3><p>By using OpenServe, you agree to these terms.</p><h3>Use of Services</h3><p>You agree to use our services lawful and in accordance with these terms.</p><h3>Accounts</h3><p>You are responsible for maintaining the security of your account.</p><h3>Intellectual Property</h3><p>Our services and content are protected by copyright and other intellectual property laws.</p><h3>Limitation of Liability</h3><p>Our services are provided 'as is' without warranties of any kind.</p>" }},
+        { "id": "t4", "type": "footer", "variant": "multi-column", "props": { "logo": "OpenServe", "description": "Free ad platform for websites", "columns": [{"title":"Product","links":[{"label":"Features","href":"/features"},{"label":"Pricing","href":"/pricing"},{"label":"Blog","href":"/blog"}]},{"title":"Company","links":[{"label":"About","href":"/about"},{"label":"Contact","href":"/contact"},{"label":"Careers","href":"/careers"}]},{"title":"Legal","links":[{"label":"Privacy","href":"/privacy"},{"label":"Terms","href":"/terms"},{"label":"GDPR","href":"/gdpr"}]}] }}
+      ]
+    },
+    {
+      "id": "page-faq",
+      "name": "FAQ",
+      "path": "/faq",
+      "blocks": [
+        { "id": "f1", "type": "navbar", "variant": "default", "props": { "logo": "OpenServe", "links": [{"label":"Home","href":"/"},{"label":"About","href":"/about"},{"label":"Services","href":"/services"},{"label":"Pricing","href":"/pricing"},{"label":"Blog","href":"/blog"},{"label":"Contact","href":"/contact"}] }},
+        { "id": "f2", "type": "hero", "variant": "centered", "props": { "headline": "Frequently Asked Questions", "subheadline": "Find answers to common questions.", "cta": "", "ctaLink": "" }},
+        { "id": "f3", "type": "faq", "variant": "accordion", "props": { "title": "Common Questions", "items": [{"question":"What is OpenServe?","answer":"OpenServe is a free, open-source advertising platform that lets you monetize your website without sharing revenue with middlemen."},{"question":"Is it really free?","answer":"Yes! Our core features are completely free. No hidden fees, no surprises."},{"question":"How do I get started?","answer":"Simply sign up for an account and follow our easy setup guide. You'll be monetizing in minutes."},{"question":"How is this different from AdSense?","answer":"Unlike AdSense, you keep 100% of your revenue, there's no approval process, and you own your data."},{"question":"What websites work best?","answer":"Any website with regular traffic can benefit. Blogs, news sites, and content sites work especially well."},{"question":"Can I use this with other ad networks?","answer":"Yes! OpenServe works alongside other ad networks without conflict."}] }},
+        { "id": "f4", "type": "cta", "variant": "simple", "props": { "headline": "Still Have Questions?", "cta": "Contact Us", "ctaLink": "/contact" }},
+        { "id": "f5", "type": "footer", "variant": "multi-column", "props": { "logo": "OpenServe", "description": "Free ad platform for websites", "columns": [{"title":"Product","links":[{"label":"Features","href":"/features"},{"label":"Pricing","href":"/pricing"},{"label":"Blog","href":"/blog"}]},{"title":"Company","links":[{"label":"About","href":"/about"},{"label":"Contact","href":"/contact"},{"label":"Careers","href":"/careers"}]},{"title":"Legal","links":[{"label":"Privacy","href":"/privacy"},{"label":"Terms","href":"/terms"},{"label":"GDPR","href":"/gdpr"}]}] }}
+      ]
+    },
+    {
+      "id": "page-features",
+      "name": "Features",
+      "path": "/features",
+      "blocks": [
+        { "id": "fe1", "type": "navbar", "variant": "default", "props": { "logo": "OpenServe", "links": [{"label":"Home","href":"/"},{"label":"About","href":"/about"},{"label":"Services","href":"/services"},{"label":"Pricing","href":"/pricing"},{"label":"Blog","href":"/blog"},{"label":"Contact","href":"/contact"}] }},
+        { "id": "fe2", "type": "hero", "variant": "centered", "props": { "headline": "Features", "subheadline": "Everything you need to succeed.", "cta": "", "ctaLink": "" }},
+        { "id": "fe3", "type": "features", "variant": "grid", "props": { "title": "Core Features", "features": [{"title":"Ad Server","desc":"Powerful Revive AdServer for serving ads across all your properties","icon":"Server"},{"title":"Campaign Management","desc":"Create, schedule, and manage unlimited campaigns","icon":"Flag"},{"title":"Real-time Analytics","desc":"Track impressions, clicks, and revenue in real-time","icon":"Chart"},{"title":"Multiple Ad Formats","desc":"Display, banner, native, and text ads supported","icon":"Image"},{"title":"Targeting Options","desc":"Geo, device, and contextual targeting","icon":"Target"},{"title":"API Access","desc":"Programmatic control for developers","icon":"Code"}] }},
+        { "id": "fe4", "type": "stats", "variant": "grid", "props": { "stats": [{"value": "100%", "label": "Revenue Keep"}, {"value": "Unlimited", "label": "Ad Zones"}, {"value": "Real-time", "label": "Analytics"}, {"value": "24/7", "label": "Uptime"}] }},
+        { "id": "fe5", "type": "content", "variant": "default", "props": { "content": "<h2>Technical Details</h2><p><strong>Storage:</strong> Your data stays on your servers.</p><p><strong>Updates:</strong> Regular security and feature updates.</p><p><strong>Support:</strong> Community forums and documentation included.</p>" }},
+        { "id": "fe6", "type": "cta", "variant": "simple", "props": { "headline": "Ready to Start?", "cta": "Get Started", "ctaLink": "/about" }},
+        { "id": "fe7", "type": "footer", "variant": "multi-column", "props": { "logo": "OpenServe", "description": "Free ad platform for websites", "columns": [{"title":"Product","links":[{"label":"Features","href":"/features"},{"label":"Pricing","href":"/pricing"},{"label":"Blog","href":"/blog"}]},{"title":"Company","links":[{"label":"About","href":"/about"},{"label":"Contact","href":"/contact"},{"label":"Careers","href":"/careers"}]},{"title":"Legal","links":[{"label":"Privacy","href":"/privacy"},{"label":"Terms","href":"/terms"},{"label":"GDPR","href":"/gdpr"}]}] }}
+      ]
+    },
+    {
+      "id": "page-careers",
+      "name": "Careers",
+      "path": "/careers",
+      "blocks": [
+        { "id": "ca1", "type": "navbar", "variant": "default", "props": { "logo": "OpenServe", "links": [{"label":"Home","href":"/"},{"label":"About","href":"/about"},{"label":"Services","href":"/services"},{"label":"Pricing","href":"/pricing"},{"label":"Blog","href":"/blog"},{"label":"Contact","href":"/contact"}] }},
+        { "id": "ca2", "type": "hero", "variant": "centered", "props": { "headline": "Join Our Team", "subheadline": "Help us revolutionize online advertising.", "cta": "", "ctaLink": "" }},
+        { "id": "ca3", "type": "content", "variant": "default", "props": { "content": "<h2>Open Positions</h2><h3>Senior Developer</h3><p>We're looking for an experienced developer to help build the future of open advertising. Remote work available.</p><p><strong>Requirements:</strong> 5+ years experience, knowledge of PHP/MySQL, open source contributions a plus.</p><h3>Marketing Manager</h3><p>Help spread the word about open advertising. Remote work available.</p><p><strong>Requirements:</strong> 3+ years in digital marketing, content creation experience.</p>" }},
+        { "id": "ca4", "type": "cta", "variant": "simple", "props": { "headline": "Don't See the Right Role?", "cta": "Contact Us", "ctaLink": "/contact" }},
+        { "id": "ca5", "type": "footer", "variant": "multi-column", "props": { "logo": "OpenServe", "description": "Free ad platform for websites", "columns": [{"title":"Product","links":[{"label":"Features","href":"/features"},{"label":"Pricing","href":"/pricing"},{"label":"Blog","href":"/blog"}]},{"title":"Company","links":[{"label":"About","href":"/about"},{"label":"Contact","href":"/contact"},{"label":"Careers","href":"/careers"}]},{"title":"Legal","links":[{"label":"Privacy","href":"/privacy"},{"label":"Terms","href":"/terms"},{"label":"GDPR","href":"/gdpr"}]}] }}
+      ]
+    }
+  ],
+  "blocks": [],
+  "theme": {}
+}
