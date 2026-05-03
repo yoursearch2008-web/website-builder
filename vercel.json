@@ -5,6 +5,12 @@
     },
     "api/deploy.ts": {
       "maxDuration": 30
+    },
+    "api/chat.ts": {
+      "maxDuration": 30
+    },
+    "api/research.ts": {
+      "maxDuration": 60
     }
   },
   "rewrites": [
