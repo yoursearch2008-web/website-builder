@@ -11,6 +11,9 @@
     },
     "api/research.ts": {
       "maxDuration": 60
+    },
+    "api/auth.ts": {
+      "maxDuration": 10
     }
   },
   "rewrites": [

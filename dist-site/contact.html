@@ -55,6 +55,16 @@
     .results-box li { color: var(--text1); margin-bottom: 0.5rem; }
     .loading { color: var(--accent); }
     .error { color: #ef4444; }
+    .ai-signup { background: var(--bg1); padding: 2rem; border-radius: 8px; margin: 2rem 0; }
+    .ai-signup h2 { color: var(--accent); margin-bottom: 1rem; }
+    .signup-form { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .signup-form input { flex: 1; min-width: 200px; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--bg3); background: var(--bg0); color: var(--text0); font-size: 1rem; }
+    .signup-form select { padding: 0.75rem; border-radius: 8px; border: 1px solid var(--bg3); background: var(--bg0); color: var(--text0); font-size: 1rem; }
+    .signup-form button { padding: 0.75rem 1.5rem; border-radius: 8px; border: none; background: var(--accent); color: white; font-size: 1rem; cursor: pointer; }
+    .signup-form button:hover { opacity: 0.9; }
+    #signup-result { margin-top: 1rem; }
+    #signup-result .success { color: var(--accent); }
+    #signup-result .error { color: #ef4444; }
   </style>
 </head>
 <body>
@@ -133,6 +143,34 @@ document.addEventListener('keypress', function(e) {
     if (document.getElementById('research-input')) doResearch();
   }
 });
+
+async function signup() {
+  const email = document.getElementById('signup-email').value.trim();
+  const plan = document.getElementById('signup-plan').value;
+  const result = document.getElementById('signup-result');
+  if (!email) {
+    result.innerHTML = '<p class="error">Please enter your email</p>';
+    return;
+  }
+  result.innerHTML = '<p class="loading">Creating account...</p>';
+  try {
+    const res = await fetch('/api/auth/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, plan })
+    });
+    const data = await res.json();
+    if (data.apiKey) {
+      localStorage.setItem('os_api_key', data.apiKey);
+      localStorage.setItem('os_plan', data.plan);
+      result.innerHTML = '<p class="success">Account created! Your API key: ' + data.apiKey + '</p><p>Save this key - you need it to use the AI.</p><button onclick="location.reload()">Go to AI Chat</button>';
+    } else {
+      result.innerHTML = '<p class="error">' + (data.error || 'Error') + '</p>';
+    }
+  } catch (e) {
+    result.innerHTML = '<p class="error">Failed to connect</p>';
+  }
+}
 </script>
 </body>
 </html>
