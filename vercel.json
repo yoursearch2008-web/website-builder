@@ -1,8 +1,8 @@
 {
   "framework": null,
-  "buildCommand": "npm run build:site",
+  "buildCommand": "",
   "outputDirectory": "dist-site",
-  "installCommand": "npm install",
+  "installCommand": "",
   "routes": [
     { "src": "/api/(.*)", "dest": "/api/$1" },
     { "src": "/ai", "dest": "/ai.html" },
