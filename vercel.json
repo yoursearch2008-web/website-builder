@@ -1,4 +1,23 @@
 {
+  "framework": null,
+  "buildCommand": "npm run build:site",
+  "outputDirectory": "dist-site",
+  "installCommand": "npm install",
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/api/$1" },
+    { "src": "/ai", "dest": "/ai.html" },
+    { "src": "/about", "dest": "/about.html" },
+    { "src": "/services", "dest": "/services.html" },
+    { "src": "/pricing", "dest": "/pricing.html" },
+    { "src": "/blog", "dest": "/blog.html" },
+    { "src": "/contact", "dest": "/contact.html" },
+    { "src": "/privacy", "dest": "/privacy.html" },
+    { "src": "/terms", "dest": "/terms.html" },
+    { "src": "/faq", "dest": "/faq.html" },
+    { "src": "/features", "dest": "/features.html" },
+    { "src": "/careers", "dest": "/careers.html" },
+    { "src": "/(.*)", "dest": "/index.html" }
+  ],
   "functions": {
     "api/generate.ts": {
       "maxDuration": 60
@@ -18,9 +37,5 @@
     "api/stripe.ts": {
       "maxDuration": 30
     }
-  },
-  "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/$1" },
-    { "source": "/((?!api/).*)", "destination": "/index.html" }
-  ]
+  }
 }
