@@ -65,10 +65,24 @@
     #signup-result { margin-top: 1rem; }
     #signup-result .success { color: var(--accent); }
     #signup-result .error { color: #ef4444; }
+    .ai-auth { max-width: 600px; margin: 2rem auto; padding: 2rem; background: var(--bg1); border-radius: 8px; }
+    .ai-auth h2 { color: var(--accent); margin-bottom: 1rem; }
+    .auth-buttons { margin: 1.5rem 0; }
+    .google-btn, .pro-btn, .logout-btn { width: 100%; padding: 1rem; border-radius: 8px; border: none; font-size: 1rem; cursor: pointer; margin-bottom: 1rem; }
+    .google-btn { background: #4285f4; color: white; }
+    .pro-btn { background: var(--accent); color: white; }
+    .logout-btn { background: var(--bg3); color: var(--text0); }
+    .or-divider { text-align: center; margin: 1rem 0; color: var(--text2); }
+    .email-signup { display: flex; flex-direction: column; gap: 0.75rem; }
+    .email-signup input, .email-signup select { padding: 0.75rem; border-radius: 8px; border: 1px solid var(--bg3); background: var(--bg0); color: var(--text0); font-size: 1rem; }
+    .email-signup button { padding: 0.75rem; border-radius: 8px; border: none; background: var(--accent); color: white; font-size: 1rem; cursor: pointer; }
+    #auth-result { margin-top: 1rem; }
+    #auth-result .success { color: var(--accent); }
+    #auth-result .error { color: #ef4444; }
   </style>
 </head>
 <body>
-<nav class="navbar"><div class="nav-container"><a href="/" class="logo">OpenServe</a><ul class="nav-links"><li><a href="/">Home</a></li><li><a href="/about">About</a></li><li><a href="/services">Services</a></li><li><a href="/pricing">Pricing</a></li><li><a href="/blog">Blog</a></li><li><a href="/contact">Contact</a></li></ul></div></nav>
+<nav class="navbar"><div class="nav-container"><a href="/" class="logo">OpenServe</a><ul class="nav-links"><li><a href="/">Home</a></li><li><a href="/ai">AI</a></li><li><a href="/about">About</a></li><li><a href="/services">Services</a></li><li><a href="/pricing">Pricing</a></li><li><a href="/blog">Blog</a></li><li><a href="/contact">Contact</a></li></ul></div></nav>
 <section class="hero"><h1>Privacy Policy</h1><p>Your privacy is important to us.</p></section>
 <section class="content"><h2>Privacy Policy</h2><p>Last updated: May 2026</p><h3>Information We Collect</h3><p>We collect information you provide directly to us, such as your name and email address when you sign up for our newsletter or contact us.</p><h3>How We Use Information</h3><p>We use the information to provide and improve our services, communicate with you, and comply with legal obligations.</p><h3>Data Protection</h3><p>We implement appropriate security measures to protect your personal information.</p><h3>Your Rights</h3><p>You have the right to access, correct, or delete your personal information. Contact us to exercise these rights.</p><h3>Contact</h3><p>If you have questions about this policy, contact us at privacy@openserve.com</p></section>
 <footer class="footer"><p>&copy; 2026 Free ad platform for websites</p></footer>
@@ -140,13 +154,35 @@ document.addEventListener('keypress', function(e) {
   if (e.key === 'Enter') {
     if (document.getElementById('chat-input')) sendChat();
     if (document.getElementById('research-input')) doResearch();
+    if (document.getElementById('email-input')) signup();
   }
 });
 
+async function checkAuth() {
+  try {
+    const res = await fetch('/api/auth/check', { credentials: 'include' });
+    const data = await res.json();
+    if (data.loggedIn) {
+      document.getElementById('logged-out-view').style.display = 'none';
+      document.getElementById('logged-in-view').style.display = 'block';
+      document.getElementById('user-name').textContent = data.name || 'User';
+      document.getElementById('user-plan').textContent = data.plan === 'pro' ? 'Pro ($5/mo)' : 'Starter ($2/mo)';
+      if (data.plan !== 'pro') {
+        document.getElementById('plan-upgrade').style.display = 'block';
+      }
+    }
+  } catch (e) {}
+}
+
+async function loginGoogle() {
+  window.location.href = '/api/auth/google-login';
+}
+
 async function signup() {
-  const email = document.getElementById('signup-email').value.trim();
-  const plan = document.getElementById('signup-plan').value;
-  const result = document.getElementById('signup-result');
+  const email = document.getElementById('email-input').value.trim();
+  const name = document.getElementById('name-input').value.trim();
+  const plan = document.getElementById('plan-select').value;
+  const result = document.getElementById('auth-result');
   if (!email) {
     result.innerHTML = '<p class="error">Please enter your email</p>';
     return;
@@ -156,13 +192,12 @@ async function signup() {
     const res = await fetch('/api/auth/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, plan })
+      credentials: 'include',
+      body: JSON.stringify({ email, name, plan })
     });
     const data = await res.json();
-    if (data.apiKey) {
-      localStorage.setItem('os_api_key', data.apiKey);
-      localStorage.setItem('os_plan', data.plan);
-      result.innerHTML = '<p class="success">Account created! Your API key: ' + data.apiKey + '</p><p>Save this key - you need it to use the AI.</p><button onclick="location.reload()">Go to AI Chat</button>';
+    if (data.success) {
+      checkAuth();
     } else {
       result.innerHTML = '<p class="error">' + (data.error || 'Error') + '</p>';
     }
@@ -170,6 +205,34 @@ async function signup() {
     result.innerHTML = '<p class="error">Failed to connect</p>';
   }
 }
+
+async function upgradePro() {
+  const btn = document.querySelector('.pro-btn');
+  btn.textContent = 'Processing...';
+  try {
+    const res = await fetch('/api/stripe/checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ plan: 'pro' })
+    });
+    const data = await res.json();
+    if (data.url) {
+      window.location.href = data.url;
+    } else {
+      btn.textContent = 'Error - try again';
+    }
+  } catch (e) {
+    btn.textContent = 'Error';
+  }
+}
+
+async function logout() {
+  await fetch('/api/auth/logout', { credentials: 'include' });
+  location.reload();
+}
+
+document.addEventListener('DOMContentLoaded', checkAuth);
 </script>
 </body>
 </html>

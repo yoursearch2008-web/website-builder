@@ -65,14 +65,28 @@
     #signup-result { margin-top: 1rem; }
     #signup-result .success { color: var(--accent); }
     #signup-result .error { color: #ef4444; }
+    .ai-auth { max-width: 600px; margin: 2rem auto; padding: 2rem; background: var(--bg1); border-radius: 8px; }
+    .ai-auth h2 { color: var(--accent); margin-bottom: 1rem; }
+    .auth-buttons { margin: 1.5rem 0; }
+    .google-btn, .pro-btn, .logout-btn { width: 100%; padding: 1rem; border-radius: 8px; border: none; font-size: 1rem; cursor: pointer; margin-bottom: 1rem; }
+    .google-btn { background: #4285f4; color: white; }
+    .pro-btn { background: var(--accent); color: white; }
+    .logout-btn { background: var(--bg3); color: var(--text0); }
+    .or-divider { text-align: center; margin: 1rem 0; color: var(--text2); }
+    .email-signup { display: flex; flex-direction: column; gap: 0.75rem; }
+    .email-signup input, .email-signup select { padding: 0.75rem; border-radius: 8px; border: 1px solid var(--bg3); background: var(--bg0); color: var(--text0); font-size: 1rem; }
+    .email-signup button { padding: 0.75rem; border-radius: 8px; border: none; background: var(--accent); color: white; font-size: 1rem; cursor: pointer; }
+    #auth-result { margin-top: 1rem; }
+    #auth-result .success { color: var(--accent); }
+    #auth-result .error { color: #ef4444; }
   </style>
 </head>
 <body>
 <nav class="navbar"><div class="nav-container"><a href="/" class="logo">OpenServe</a><ul class="nav-links"><li><a href="/">Home</a></li><li><a href="/ai">AI</a></li><li><a href="/about">About</a></li><li><a href="/services">Services</a></li><li><a href="/pricing">Pricing</a></li><li><a href="/blog">Blog</a></li><li><a href="/contact">Contact</a></li></ul></div></nav>
-<section class="hero"><h1>AI Assistant - Only $2/month</h1><p>One of the cheapest AI services. Chat, research, and content generation.</p><a href="/pricing" class="btn">Get Started</a></section>
+<section class="hero"><h1>AI Assistant - Only $2/month</h1><p>One of the cheapest AI services. Sign up with Google or email.</p><a href="/pricing" class="btn">Get Started</a></section>
 <section class="features"><h2>What You Get</h2><div class="features-grid"><div class="feature-card"><h3>AI Chat</h3><p>Ask anything, get instant answers</p></div><div class="feature-card"><h3>Web Research</h3><p>AI-powered search with summaries</p></div><div class="feature-card"><h3>Content Gen</h3><p>Generate articles for your site</p></div><div class="feature-card"><h3>24/7 Access</h3><p>AI always ready to help</p></div></div></section>
 <section class="stats"><div class="stats-grid"><div class="stat-item"><div class="stat-value">$2</div><div class="stat-label">/month</div></div><div class="stat-item"><div class="stat-value">100+</div><div class="stat-label">Daily Queries</div></div><div class="stat-item"><div class="stat-value">0.001</div><div class="stat-label">Cost/Query</div></div><div class="stat-item"><div class="stat-value">99.9%</div><div class="stat-label">Uptime</div></div></div></section>
-<section class="content"><div class='ai-signup'><h2>Start Using AI</h2><p>Sign up takes 30 seconds. No credit card required for trial.</p><div class='signup-form'><input type='email' id='signup-email' placeholder='Your email address' /><select id='signup-plan'><option value='starter'>Starter - $2/mo</option><option value='pro'>Pro - $5/mo</option></select><button onclick='signup()'>Sign Up Now</button></div><div id='signup-result'></div></div></section>
+<section class="content"><div class='ai-auth' id='auth-container'><div id='logged-out-view'><h2>Sign Up to Use AI</h2><p>Create an account to start using AI.</p><div class='auth-buttons'><button class='google-btn' id='google-btn' onclick='loginGoogle()'>Sign up with Google</button></div><p class='or-divider'>or</p><div class='email-signup'><input type='email' id='email-input' placeholder='Your email' /><input type='text' id='name-input' placeholder='Your name' /><select id='plan-select'><option value='starter'>Starter - $2/mo</option><option value='pro'>Pro - $5/mo</option></select><button onclick='signup()'>Sign Up</button></div><div id='auth-result'></div></div><div id='logged-in-view' style='display:none'><h2>Welcome, <span id='user-name'></span>!</h2><p>Plan: <span id='user-plan'></span></p><div id='plan-upgrade' style='display:none'><button class='pro-btn' onclick='upgradePro()'>Upgrade to Pro - $5/mo</button></div><hr><div class='chat-box'><input type='text' id='chat-input' placeholder='Ask AI...' /><button onclick='sendChat()'>Send</button></div><div id='chat-response' class='response-box'></div><hr><h3>Web Research</h3><div class='research-box'><input type='text' id='research-input' placeholder='Research topic...' /><button onclick='doResearch()'>Search</button></div><div id='research-results' class='results-box'></div><hr><button class='logout-btn' onclick='logout()'>Log Out</button></div></div></section>
 <section class="cta"><h2>Questions?</h2><a href="/contact" class="btn">Contact Us</a></section>
 <footer class="footer"><p>&copy; 2026 Free ad platform for websites</p></footer>
 <script>
@@ -143,13 +157,35 @@ document.addEventListener('keypress', function(e) {
   if (e.key === 'Enter') {
     if (document.getElementById('chat-input')) sendChat();
     if (document.getElementById('research-input')) doResearch();
+    if (document.getElementById('email-input')) signup();
   }
 });
 
+async function checkAuth() {
+  try {
+    const res = await fetch('/api/auth/check', { credentials: 'include' });
+    const data = await res.json();
+    if (data.loggedIn) {
+      document.getElementById('logged-out-view').style.display = 'none';
+      document.getElementById('logged-in-view').style.display = 'block';
+      document.getElementById('user-name').textContent = data.name || 'User';
+      document.getElementById('user-plan').textContent = data.plan === 'pro' ? 'Pro ($5/mo)' : 'Starter ($2/mo)';
+      if (data.plan !== 'pro') {
+        document.getElementById('plan-upgrade').style.display = 'block';
+      }
+    }
+  } catch (e) {}
+}
+
+async function loginGoogle() {
+  window.location.href = '/api/auth/google-login';
+}
+
 async function signup() {
-  const email = document.getElementById('signup-email').value.trim();
-  const plan = document.getElementById('signup-plan').value;
-  const result = document.getElementById('signup-result');
+  const email = document.getElementById('email-input').value.trim();
+  const name = document.getElementById('name-input').value.trim();
+  const plan = document.getElementById('plan-select').value;
+  const result = document.getElementById('auth-result');
   if (!email) {
     result.innerHTML = '<p class="error">Please enter your email</p>';
     return;
@@ -159,13 +195,12 @@ async function signup() {
     const res = await fetch('/api/auth/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, plan })
+      credentials: 'include',
+      body: JSON.stringify({ email, name, plan })
     });
     const data = await res.json();
-    if (data.apiKey) {
-      localStorage.setItem('os_api_key', data.apiKey);
-      localStorage.setItem('os_plan', data.plan);
-      result.innerHTML = '<p class="success">Account created! Your API key: ' + data.apiKey + '</p><p>Save this key - you need it to use the AI.</p><button onclick="location.reload()">Go to AI Chat</button>';
+    if (data.success) {
+      checkAuth();
     } else {
       result.innerHTML = '<p class="error">' + (data.error || 'Error') + '</p>';
     }
@@ -173,6 +208,34 @@ async function signup() {
     result.innerHTML = '<p class="error">Failed to connect</p>';
   }
 }
+
+async function upgradePro() {
+  const btn = document.querySelector('.pro-btn');
+  btn.textContent = 'Processing...';
+  try {
+    const res = await fetch('/api/stripe/checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ plan: 'pro' })
+    });
+    const data = await res.json();
+    if (data.url) {
+      window.location.href = data.url;
+    } else {
+      btn.textContent = 'Error - try again';
+    }
+  } catch (e) {
+    btn.textContent = 'Error';
+  }
+}
+
+async function logout() {
+  await fetch('/api/auth/logout', { credentials: 'include' });
+  location.reload();
+}
+
+document.addEventListener('DOMContentLoaded', checkAuth);
 </script>
 </body>
 </html>
