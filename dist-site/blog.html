@@ -42,6 +42,19 @@
     .content li { margin-bottom: 0.5rem; }
     .content a { color: var(--accent); }
     .footer { text-align: center; padding: 2rem; color: var(--text2); border-top: 1px solid var(--bg2); }
+    .ai-container { max-width: 800px; margin: 0 auto; }
+    .ai-container h2 { color: var(--accent); margin: 2rem 0 1rem; }
+    .chat-box, .research-box { display: flex; gap: 1rem; margin: 1rem 0 2rem; }
+    .chat-box input, .research-box input { flex: 1; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--bg3); background: var(--bg1); color: var(--text0); font-size: 1rem; }
+    .chat-box button, .research-box button { padding: 0.75rem 1.5rem; border-radius: 8px; border: none; background: var(--accent); color: white; font-size: 1rem; cursor: pointer; }
+    .chat-box button:hover, .research-box button:hover { opacity: 0.9; }
+    .chat-box button:disabled, .research-box button:disabled { opacity: 0.5; cursor: not-allowed; }
+    .response-box, .results-box { background: var(--bg1); padding: 1.5rem; border-radius: 8px; min-height: 100px; margin-bottom: 2rem; }
+    .response-box p { color: var(--text1); margin-bottom: 0.5rem; }
+    .results-box ul { margin: 0; padding-left: 1.5rem; }
+    .results-box li { color: var(--text1); margin-bottom: 0.5rem; }
+    .loading { color: var(--accent); }
+    .error { color: #ef4444; }
   </style>
 </head>
 <body>
@@ -50,5 +63,76 @@
 <section class="content"><h2>Getting Started with Self-Hosted Ads</h2><p>Learn how to set up your own ad server and start monetizing your website today.</p><a href='/blog/getting-started' class='btn'>Read More</a><hr><h2>Maximizing Your Revenue</h2><p>Tips and strategies for getting the most out of your ad placements.</p><a href='/blog/revenue-tips' class='btn'>Read More</a><hr><h2>The Future of Digital Advertising</h2><p>Why open-source advertising is the way forward.</p><a href='/blog/future-ads' class='btn'>Read More</a></section>
 
 <footer class="footer"><p>&copy; 2026 Free ad platform for websites</p></footer>
+<script>
+const API_BASE = '/api';
+
+async function sendChat() {
+  const input = document.getElementById('chat-input');
+  const responseBox = document.getElementById('chat-response');
+  const btn = responseBox.parentElement.querySelector('button');
+  const message = input.value.trim();
+  if (!message) return;
+  
+  btn.disabled = true;
+  responseBox.innerHTML = '<p class="loading">Thinking...</p>';
+  
+  try {
+    const res = await fetch(API_BASE + '/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message })
+    });
+    const data = await res.json();
+    if (data.response) {
+      responseBox.innerHTML = '<p>' + data.response.replace(/\n/g, '</p><p>') + '</p>';
+    } else {
+      responseBox.innerHTML = '<p class="error">' + (data.error || 'Error') + '</p>';
+    }
+  } catch (e) {
+    responseBox.innerHTML = '<p class="error">Failed to connect</p>';
+  }
+  btn.disabled = false;
+}
+
+async function doResearch() {
+  const input = document.getElementById('research-input');
+  const resultsBox = document.getElementById('research-results');
+  const btn = resultsBox.parentElement.querySelector('button');
+  const query = input.value.trim();
+  if (!query) return;
+  
+  btn.disabled = true;
+  resultsBox.innerHTML = '<p class="loading">Searching...</p>';
+  
+  try {
+    const res = await fetch(API_BASE + '/research', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query })
+    });
+    const data = await res.json();
+    if (data.summary) {
+      resultsBox.innerHTML = '<p>' + data.summary.replace(/\n/g, '</p><p>') + '</p>';
+      if (data.searchResults && data.searchResults.length > 0) {
+        resultsBox.innerHTML += '<hr><h3>Sources:</h3><ul>' + 
+          data.searchResults.map(function(r) { return '<li>' + r + '</li>'; }).join('') + 
+          '</ul>';
+      }
+    } else {
+      resultsBox.innerHTML = '<p class="error">' + (data.error || 'Error') + '</p>';
+    }
+  } catch (e) {
+    resultsBox.innerHTML = '<p class="error">Failed to connect</p>';
+  }
+  btn.disabled = false;
+}
+
+document.addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') {
+    if (document.getElementById('chat-input')) sendChat();
+    if (document.getElementById('research-input')) doResearch();
+  }
+});
+</script>
 </body>
 </html>
